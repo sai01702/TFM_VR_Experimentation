@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.boxqkrtm.ide.cursor": "https://github.com/boxqkrtm/com.unity.ide.cursor.git",
-    "com.thrashpanda.vr.simulator": "file:C:\\Users\\Sebas A\\Documents\\GitHub\\TFM_VR_Experimentation\\Assets\\VRSimulator\\com.thrashpanda.vr.simulator-2.1.0.tgz",
+    "com.thrashpanda.vr.simulator": "file:/Users/seyitahmetinci/Documents/GitHub/TFM_VR_Experimentation/Assets/VRSimulator/com.thrashpanda.vr.simulator-2.1.0.tgz",
     "com.unity.collab-proxy": "2.7.1",
     "com.unity.feature.development": "1.0.1",
     "com.unity.feature.vr": "1.0.0",
@@ -11,6 +11,7 @@
     "com.unity.render-pipelines.universal": "14.0.11",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.7.6",
+    "com.unity.toolchain.macos-arm64-linux-x86_64": "2.0.4",
     "com.unity.visualscripting": "1.9.4",
     "com.unity.xr.interaction.toolkit": "3.0.3",
     "com.unity.xr.management": "4.4.0",

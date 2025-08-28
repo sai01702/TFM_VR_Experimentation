@@ -10,7 +10,7 @@
       "hash": "0a98b387a92cf9f1f47012fc46d4cf33576e5916"
     },
     "com.thrashpanda.vr.simulator": {
-      "version": "file:C:\\Users\\Sebas A\\Documents\\GitHub\\TFM_VR_Experimentation\\Assets\\VRSimulator\\com.thrashpanda.vr.simulator-2.1.0.tgz",
+      "version": "file:/Users/seyitahmetinci/Documents/GitHub/TFM_VR_Experimentation/Assets/VRSimulator/com.thrashpanda.vr.simulator-2.1.0.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {
@@ -221,6 +221,22 @@
         "com.unity.searcher": "4.9.2"
       }
     },
+    "com.unity.sysroot": {
+      "version": "2.0.10",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.sysroot.linux-x86_64": {
+      "version": "2.0.9",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.sysroot": "2.0.10"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.test-framework": {
       "version": "1.1.33",
       "depth": 1,
@@ -260,6 +276,16 @@
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.toolchain.macos-arm64-linux-x86_64": {
+      "version": "2.0.4",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.sysroot": "2.0.10",
+        "com.unity.sysroot.linux-x86_64": "2.0.9"
       },
       "url": "https://packages.unity.com"
     },
