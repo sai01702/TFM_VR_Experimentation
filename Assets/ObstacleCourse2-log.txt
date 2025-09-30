@@ -1,0 +1,7 @@
+=== OBSTACLE COURSE LOG ===
+Session started: 25/09/2025 13:46:19
+Player: Player
+=====================================
+
+[13:46:19] GAME START - Attempt #1
+[13:47:06] APPLICATION LOST FOCUS
