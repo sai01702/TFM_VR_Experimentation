@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class SceneRigInstaller : MonoBehaviour
@@ -9,7 +9,15 @@ public class SceneRigInstaller : MonoBehaviour
 
     private GameObject currentRig;
 
-    void Start() => Install();
+    void Start()
+    {
+        // Only auto-install if the player already has a saved mode
+        if (GameSettings.Instance.HasSavedMode())
+        {
+            Install();
+        }
+        // else: wait. ModeSelectionUI will call ForceInstallNow() after the user chooses.
+    }
 
     public void ForceInstallNow()
     {
@@ -23,7 +31,11 @@ public class SceneRigInstaller : MonoBehaviour
         XRBootstrapper.Instance.ApplyMode(mode);
 
         var prefab = mode == GameMode.VR ? vrRigPrefab : desktopRigPrefab;
-        if (prefab == null) { Debug.LogError("Assign rig prefabs on SceneRigInstaller."); return; }
+        if (prefab == null)
+        {
+            Debug.LogError("Assign rig prefabs on SceneRigInstaller.");
+            return;
+        }
 
         var pos = spawnPoint ? spawnPoint.position : Vector3.zero;
         var rot = spawnPoint ? spawnPoint.rotation : Quaternion.identity;
@@ -35,6 +47,13 @@ public class SceneRigInstaller : MonoBehaviour
             var scheme = mode == GameMode.VR ? "VR" : "Desktop";
             pi.defaultControlScheme = scheme;
             pi.SwitchCurrentControlScheme(scheme);
+        }
+
+        // 🔥 Destroy the temporary lobby camera (if one exists)
+        var lobbyCam = Camera.main;
+        if (lobbyCam != null && !currentRig.GetComponentInChildren<Camera>())
+        {
+            Destroy(lobbyCam.gameObject);
         }
     }
 }

@@ -10,7 +10,7 @@
       "hash": "0a98b387a92cf9f1f47012fc46d4cf33576e5916"
     },
     "com.thrashpanda.vr.simulator": {
-      "version": "file:/Users/seyitahmetinci/Documents/GitHub/TFM_VR_Experimentation/Assets/VRSimulator/com.thrashpanda.vr.simulator-2.1.0.tgz",
+      "version": "file:C:\\Users\\Seyit Ahmet Inci\\Documents\\GitHub\\TFM_VR_Experimentation\\Assets\\VRSimulator\\com.thrashpanda.vr.simulator-2.1.0.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {
