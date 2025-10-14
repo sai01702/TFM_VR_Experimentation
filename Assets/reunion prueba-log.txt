@@ -178,3 +178,325 @@ Reacction time: 2,5112 seconds
 
 Manual despawn
 
+Spawned object 1: ObjetivoRea5
+Manual despawn
+
+Spawned object 2: ObjetivoRea4
+Reacction time: 2,09875 seconds
+
+Spawned object 3: ObjetivoRea1
+Reacction time: 1,79856 seconds
+
+Spawned object 4: ObjetivoRea2
+Reacction time: 1,156337 seconds
+
+Spawned object 5: ObjetivoRea3
+Reacction time: 1,734854 seconds
+
+Spawned object 6: ObjetivoRea2
+Reacction time: 1,25469 seconds
+
+Spawned object 1: ObjetivoRea1
+Reacction time: 2,1 seconds
+
+Spawned object 2: ObjetivoRea3
+Manual despawn
+
+Spawned object 3: ObjetivoRea4
+Manual despawn
+
+Spawned object 4: ObjetivoRea
+Reacction time: 2,875496 seconds
+
+Spawned object 5: ObjetivoRea
+Spawned object 1: ObjetivoRea3
+Reacction time: 3,84 seconds
+
+Spawned object 2: ObjetivoRea5
+Spawned object 1: ObjetivoRea4
+Manual despawn
+
+Spawned object 2: ObjetivoRea1
+Manual despawn
+
+Spawned object 3: ObjetivoRea4
+Spawned object 1: ObjetivoRea2
+Reacction time: 2,38 seconds
+
+Spawned object 2: ObjetivoRea3
+Reacction time: 2,838677 seconds
+
+Spawned object 3: ObjetivoRea3
+Spawned object 1: ObjetivoRea2
+Reacction time: 1,68 seconds
+
+Spawned object 2: ObjetivoRea3
+Manual despawn
+
+Spawned object 3: ObjetivoRea4
+Spawned object 1: ObjetivoRea
+Manual despawn
+
+Spawned object 2: ObjetivoRea5
+Spawned object 1: ObjetivoRea2
+Manual despawn
+
+Spawned object 2: ObjetivoRea4
+Spawned object 1: ObjetivoRea2
+Spawned object 1: ObjetivoRea1
+Manual despawn
+
+Spawned object 2: ObjetivoRea1
+Spawned object 1: ObjetivoRea4
+Manual despawn
+
+Spawned object 2: ObjetivoRea5
+Spawned object 1: ObjetivoRea3
+Manual despawn
+
+Spawned object 2: ObjetivoRea5
+Reacction time: 1,739244 seconds
+
+Spawned object 1: ObjetivoRea5
+Manual despawn
+
+Spawned object 2: ObjetivoRea
+Reacction time: 2,01795 seconds
+
+Spawned object 3: ObjetivoRea3
+Reacction time: 1,156351 seconds
+
+Spawned object 4: ObjetivoRea
+Reacction time: 1,535152 seconds
+
+Spawned object 1: ObjetivoRea3
+Spawned object 1: ObjetivoRea
+Spawned object 1: ObjetivoRea3
+Spawned object 1: ObjetivoRea
+Reacction time: 2,62 seconds
+
+Spawned object 2: ObjetivoRea
+Reacction time: 2,259357 seconds
+
+Spawned object 3: ObjetivoRea1
+Reacction time: 2,878657 seconds
+
+Spawned object 4: ObjetivoRea4
+Spawned object 1: ObjetivoRea4
+Manual despawn
+
+Spawned object 2: ObjetivoRea
+Spawned object 1: ObjetivoRea4
+Spawned object 1: ObjetivoRea1
+Manual despawn
+
+Spawned object 2: ObjetivoRea3
+Spawned object 1: ObjetivoRea5
+Spawned object 1: ObjetivoRea3
+Manual despawn
+
+Spawned object 2: ObjetivoRea5
+Spawned object 1: ObjetivoRea2
+Manual despawn
+
+Spawned object 2: ObjetivoRea2
+Spawned object 1: ObjetivoRea1
+Spawned object 1: ObjetivoRea4
+Spawned object 1: ObjetivoRea
+Spawned object 1: ObjetivoRea5
+Spawned object 1: ObjetivoRea2
+Spawned object 1: ObjetivoRea1
+Manual despawn
+
+Spawned object 2: ObjetivoRea2
+Spawned object 1: ObjetivoRea
+Spawned object 1: ObjetivoRea
+Spawned object 1: ObjetivoRea
+Spawned object 1: ObjetivoRea
+Manual despawn
+
+Spawned object 2: ObjetivoRea4
+Spawned object 1: ObjetivoRea
+Manual despawn
+
+Spawned object 2: ObjetivoRea3
+Spawned object 1: ObjetivoRea
+Spawned object 1: ObjetivoRea
+Manual despawn
+
+Spawned object 2: ObjetivoRea3
+Spawned object 1: ObjetivoRea4
+Manual despawn
+
+Spawned object 2: ObjetivoRea5
+Manual despawn
+
+Spawned object 3: ObjetivoRea4
+Reacction time: 0,5364637 seconds
+
+Spawned object 4: ObjetivoRea2
+Reacction time: 2,115084 seconds
+
+Spawned object 5: ObjetivoRea
+Reacction time: 1,57493 seconds
+
+Spawned object 6: ObjetivoRea
+Reacction time: 2,872715 seconds
+
+Spawned object 7: ObjetivoRea2
+Spawned object 1: ObjetivoRea
+Reacction time: 1,98 seconds
+
+Spawned object 2: ObjetivoRea1
+Reacction time: 1,179202 seconds
+
+Spawned object 3: ObjetivoRea3
+Reacction time: 1,077744 seconds
+
+Spawned object 4: ObjetivoRea
+Reacction time: 1,357251 seconds
+
+Spawned object 5: ObjetivoRea5
+Reacction time: 1,477043 seconds
+
+Spawned object 1: ObjetivoRea4
+Spawned object 1: ObjetivoRea3
+Manual despawn
+
+Spawned object 2: ObjetivoRea4
+Reacction time: 2,596309 seconds
+
+Spawned object 3: ObjetivoRea3
+Reacction time: 1,594553 seconds
+
+Spawned object 4: ObjetivoRea
+Reacction time: 1,35252 seconds
+
+Spawned object 5: ObjetivoRea
+Reacction time: 1,01074 seconds
+
+Spawned object 1: ObjetivoRea3
+Manual despawn
+
+Spawned object 2: ObjetivoRea5
+Reacction time: 1,902723 seconds
+
+Spawned object 3: ObjetivoRea
+Reacction time: 2,242357 seconds
+
+Spawned object 4: ObjetivoRea5
+Reacction time: 2,620934 seconds
+
+Spawned object 5: ObjetivoRea2
+Reacction time: 1,359621 seconds
+
+Spawned object 6: ObjetivoRea4
+Reacction time: 1,339371 seconds
+
+Spawned object 7: ObjetivoRea3
+Reacction time: 1,1376 seconds
+
+Spawned object 8: ObjetivoRea5
+Reacction time: 2,295464 seconds
+
+Spawned object 9: ObjetivoRea3
+Spawned object 1: ObjetivoRea3
+Manual despawn
+
+Spawned object 2: ObjetivoRea2
+Reacction time: 3,091129 seconds
+
+Spawned object 3: ObjetivoRea3
+Reacction time: 3,149143 seconds
+
+Spawned object 4: ObjetivoRea3
+Manual despawn
+
+Spawned object 5: ObjetivoRea2
+Spawned object 1: ObjetivoRea
+Manual despawn
+
+Spawned object 2: ObjetivoRea5
+Manual despawn
+
+Spawned object 3: ObjetivoRea3
+Manual despawn
+
+Spawned object 4: ObjetivoRea3
+Manual despawn
+
+Spawned object 5: ObjetivoRea2
+Manual despawn
+
+Spawned object 6: ObjetivoRea1
+Manual despawn
+
+Spawned object 7: ObjetivoRea2
+Manual despawn
+
+Spawned object 8: ObjetivoRea2
+Manual despawn
+
+Spawned object 9: ObjetivoRea3
+Manual despawn
+
+Spawned object 10: ObjetivoRea2
+Manual despawn
+
+Spawned object 11: ObjetivoRea
+Manual despawn
+
+Spawned object 12: ObjetivoRea1
+Manual despawn
+
+Spawned object 13: ObjetivoRea3
+Manual despawn
+
+Spawned object 14: ObjetivoRea3
+Manual despawn
+
+Spawned object 15: ObjetivoRea4
+Spawned object 1: ObjetivoRea4
+Manual despawn
+
+Spawned object 2: ObjetivoRea5
+Manual despawn
+
+Spawned object 3: ObjetivoRea5
+Manual despawn
+
+Spawned object 4: ObjetivoRea2
+Manual despawn
+
+Spawned object 5: ObjetivoRea
+Manual despawn
+
+Spawned object 6: ObjetivoRea5
+Spawned object 1: ObjetivoRea3
+Manual despawn
+
+Spawned object 2: ObjetivoRea2
+Manual despawn
+
+Spawned object 3: ObjetivoRea5
+Manual despawn
+
+Spawned object 4: ObjetivoRea1
+Manual despawn
+
+Spawned object 5: ObjetivoRea2
+Manual despawn
+
+Spawned object 6: ObjetivoRea1
+Manual despawn
+
+Spawned object 7: ObjetivoRea1
+Manual despawn
+
+Spawned object 8: ObjetivoRea
+Manual despawn
+
+Spawned object 9: ObjetivoRea5
+Manual despawn
+
+Spawned object 10: ObjetivoRea4

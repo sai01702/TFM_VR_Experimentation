@@ -15,3 +15,60 @@ Player: Player
 [11:55:48] APPLICATION LOST FOCUS
 [11:57:42] GAME START - Attempt #1
 [11:57:45] APPLICATION LOST FOCUS
+[12:26:43] GAME START - Attempt #1
+[12:26:50] APPLICATION LOST FOCUS
+[12:27:27] GAME START - Attempt #1
+[12:27:43] PLAYER FELL - Reset #1
+  - Fall position: (-29.12, -1.99, 2.93)
+  - Time before fall: 15,18 seconds
+  - Returned to start
+
+[12:27:48] PLAYER FELL - Reset #2
+  - Fall position: (-7.40, -1.75, 0.85)
+  - Time before fall: 20,28 seconds
+  - Returned to start
+
+[12:27:52] PLAYER FELL - Reset #3
+  - Fall position: (-9.35, -1.72, -0.48)
+  - Time before fall: 24,06 seconds
+  - Returned to start
+
+[12:28:01] PLAYER FELL - Reset #4
+  - Fall position: (-35.34, -1.80, -1.21)
+  - Time before fall: 32,92 seconds
+  - Returned to start
+
+[12:28:09] COURSE COMPLETED!
+  - Final time: 41,12 seconds
+  - Total attempts: 5
+  - Total falls: 4
+  - Success rate: 20,0%
+=====================================
+
+[12:31:50] GAME START - Attempt #1
+[12:31:57] PLAYER FELL - Reset #1
+  - Fall position: (-12.10, -1.84, 1.73)
+  - Time before fall: 5,66 seconds
+  - Returned to start
+
+[12:32:01] APPLICATION LOST FOCUS
+[12:32:26] GAME START - Attempt #1
+[12:32:36] PLAYER FELL - Reset #1
+  - Fall position: (-11.79, -1.73, 1.39)
+  - Time before fall: 9,48 seconds
+  - Returned to start
+
+[12:32:52] APPLICATION LOST FOCUS
+[12:33:07] APPLICATION GAINED FOCUS
+[12:33:20] PLAYER FELL - Reset #2
+  - Fall position: (-2.63, -1.86, -2.09)
+  - Time before fall: 52,80 seconds
+  - Returned to start
+
+[12:33:30] COURSE COMPLETED!
+  - Final time: 63,74 seconds
+  - Total attempts: 3
+  - Total falls: 2
+  - Success rate: 33,3%
+=====================================
+
