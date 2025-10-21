@@ -1,103 +1,58 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Windows.Speech;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.Windows.Speech; //para usar KeywordRecognizer
+using System; //para usar Action
+using System.Linq; //para usar ToArray
 
 public class ReconocimientoVoz : MonoBehaviour
 {
-    [Header("Shooting")]
     public Transform bulletSpawnPoint;
-    public GameObject bulletPrefab;       // make sure this is assigned if you use pooling fallback
-    public float bulletSpeed = 10f;
-
-    [Header("UI")]
+    public float bulletSpeed = 10;
     public TMP_Text scoreText;
-
-    private KeywordRecognizer keywordRecognizer;
-    private Dictionary<string, Action> wordsToActions;
+    //para reconocimiento de voz
+    KeywordRecognizer keywordRecognizer;
+    Dictionary<string, Action> wordsToActions;
 
     void Start()
     {
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-        if (!PhraseRecognitionSystem.isSupported)
-        {
-            Debug.LogWarning("[Voice] PhraseRecognitionSystem not supported on this system.");
-            return;
-        }
-
-        wordsToActions = new Dictionary<string, Action>(StringComparer.InvariantCultureIgnoreCase)
-        {
-            { "shoot", Shoot }
-            // if your Windows Speech language is Spanish, also add:
-            // { "disparar", Shoot }
-        };
-
-        var keywords = wordsToActions.Keys.ToArray();
-        if (keywords.Length == 0)
-        {
-            Debug.LogError("[Voice] No keywords configured.");
-            return;
-        }
-
-        try
-        {
-            // Use a forgiving confidence level
-            keywordRecognizer = new KeywordRecognizer(keywords, ConfidenceLevel.Low);
-            keywordRecognizer.OnPhraseRecognized += OnPhraseRecognized;
-            keywordRecognizer.Start();
-
-            Debug.Log($"[Voice] KeywordRecognizer started. Language is set in Windows Speech settings. Keywords: {string.Join(", ", keywords)}");
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"[Voice] Failed to start KeywordRecognizer: {e.Message}");
-        }
-#else
-        Debug.LogWarning("[Voice] UnityEngine.Windows.Speech works only on Windows.");
-#endif
+        wordsToActions = new Dictionary<string, Action>(); //creamos un diccionario de palabras a acciones
+        wordsToActions.Add("shoot", Shoot); //agregamos la palabra "shoot" al diccionario y la accion Disparar
+        //keywordRecognizer = new KeywordRecognizer(wordsToActions.Keys.ToArray()); //creamos un KeywordRecognizer con las palabras del diccionario convertidas a un array, OLD SCRIPT
+        keywordRecognizer = new KeywordRecognizer(wordsToActions.Keys.ToArray(), ConfidenceLevel.Low); //creamos un KeywordRecognizer con las palabras del diccionario convertidas a un array, Also, I specified a low confidence level to improve recognition accuracy.
+        keywordRecognizer.OnPhraseRecognized += WordRecognizer; //asignamos el metodo WordRecognizer al evento OnPhraseRecognized del KeywordRecognizer
+        keywordRecognizer.Start(); //iniciamos el KeywordRecognizer
     }
 
     void Update()
     {
-        if (scoreText != null)
-            scoreText.text = "Puntuación " + ObjetivosManager.Instance.puntos;
-    }
+        Puntaje();
 
-    private void OnPhraseRecognized(PhraseRecognizedEventArgs args)
+    }
+    private void WordRecognizer(PhraseRecognizedEventArgs word)
     {
-        // Normalize the recognized text
-        var key = args.text.Trim().ToLowerInvariant();
-        Debug.Log($"[Voice] Heard: {args.text} (conf: {args.confidence})");
-
-        if (wordsToActions != null && wordsToActions.TryGetValue(key, out var action))
-            action?.Invoke();
-        else
-            Debug.LogWarning($"[Voice] Unmapped keyword: '{args.text}'");
+        Debug.Log(word.text);
+        wordsToActions[word.text].Invoke();
     }
-
     public void Shoot()
     {
-        Debug.Log("[Voice] Shoot()");
-        // If you use a pool:
-        var bulletGO = PoolManager.Instance != null ? PoolManager.Instance.GetBullet() : Instantiate(bulletPrefab);
-        if (bulletGO == null || bulletSpawnPoint == null) return;
+        Debug.Log("Shoot");
+        var bullet = PoolManager.Instance.GetBullet();
+        bullet.transform.position = bulletSpawnPoint.position;
+        bullet.transform.rotation = bulletSpawnPoint.rotation;
+        bullet.SetActive(true);
+        bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
 
-        bulletGO.transform.SetPositionAndRotation(bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-        bulletGO.SetActive(true);
-
-        var rb = bulletGO.GetComponent<Rigidbody>();
-        if (rb != null) rb.velocity = bulletSpawnPoint.forward * bulletSpeed;
     }
 
-    void OnDestroy()
-    {
-        if (keywordRecognizer != null)
-        {
-            if (keywordRecognizer.IsRunning) keywordRecognizer.Stop();
-            keywordRecognizer.OnPhraseRecognized -= OnPhraseRecognized;
-            keywordRecognizer.Dispose();
-        }
+    void Puntaje()
+    { // función para mostrar el puntaje en pantalla
+        // GameObject.FindObjectOfType<UnityEngine.UI.Text>().text = "Puntuación  " + ObjetivosManager.Instance.puntos;
+        // GameObject.FindWithTag("Score").GetComponent<Text>().text = "Puntuación " + ObjetivosManager.Instance.puntos;
+        scoreText.text = "Puntuación " + ObjetivosManager.Instance.puntos;
     }
 }

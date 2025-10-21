@@ -72,3 +72,30 @@ Player: Player
   - Success rate: 33,3%
 =====================================
 
+[17:07:53] GAME START - Attempt #1
+[17:08:05] PLAYER FELL - Reset #1
+  - Fall position: (3.71, -1.82, 2.07)
+  - Time before fall: 11,62 seconds
+  - Returned to start
+
+[17:08:14] PLAYER FELL - Reset #2
+  - Fall position: (-7.74, -1.92, -3.95)
+  - Time before fall: 20,70 seconds
+  - Returned to start
+
+[17:11:13] GAME START - Attempt #1
+[17:11:30] APPLICATION LOST FOCUS
+[17:11:37] GAME START - Attempt #1
+[17:11:42] APPLICATION LOST FOCUS
+[17:11:45] APPLICATION GAINED FOCUS
+[17:11:45] APPLICATION LOST FOCUS
+[17:12:29] GAME START - Attempt #1
+[17:12:58] APPLICATION LOST FOCUS
+[09:51:19] GAME START - Attempt #1
+[09:51:48] COURSE COMPLETED!
+  - Final time: 28,42 seconds
+  - Total attempts: 1
+  - Total falls: 0
+  - Success rate: 100,0%
+=====================================
+

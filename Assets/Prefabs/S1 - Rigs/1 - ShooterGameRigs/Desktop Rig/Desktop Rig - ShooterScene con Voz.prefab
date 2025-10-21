@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 8395775499734692902}
   - component: {fileID: 4129306907158607916}
   - component: {fileID: 7161516293263517038}
+  - component: {fileID: -8802110590633547307}
   - component: {fileID: 5896452974499494579}
-  - component: {fileID: 2758536376553690122}
   - component: {fileID: 7645641261419412010}
   - component: {fileID: 7963675616846018713}
   m_Layer: 0
-  m_Name: Desktop Rig - ShooterScene
+  m_Name: Desktop Rig - ShooterScene con Voz
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,6 +118,21 @@ MonoBehaviour:
   mouseSensitivity: 0.12
   minPitch: -80
   maxPitch: 80
+--- !u!114 &-8802110590633547307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109950894710080233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8de87a11a312d94c9e0174187301457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletSpawnPoint: {fileID: 633286139172713857}
+  bulletSpeed: 30
+  scoreText: {fileID: 4888474426699775614}
 --- !u!114 &5896452974499494579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,36 +151,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   playerInput: {fileID: 0}
---- !u!114 &2758536376553690122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 109950894710080233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f79e1c99b47d43c4fa8ac52a8ddfc463, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletSpawnPoint: {fileID: 633286139172713857}
-  bulletPrefab: {fileID: 425786971985179520, guid: 8211d2a9b018d3746aec70617c52d812, type: 3}
-  shootAction:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Shoot
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 75f71a5d-bacf-4e30-bc8f-593a882f1926
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: -8745878559240763396, guid: b14599109a100481582b81f39d36f356, type: 3}
-  bulletSpeed: 30
-  disparo: 0
-  disparado: 1
-  scoreText: {fileID: 4888474426699775614}
 --- !u!114 &7645641261419412010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -701,7 +686,7 @@ GameObject:
   - component: {fileID: 8536581682488231462}
   - component: {fileID: 2563316864436743440}
   - component: {fileID: 6482115071922373694}
-  - component: {fileID: 731721881055677465}
+  - component: {fileID: 2251838148933314269}
   m_Layer: 0
   m_Name: CanvasTiempo
   m_TagString: Untagged
@@ -794,7 +779,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RaycastTriggerInteraction: 1
---- !u!114 &731721881055677465
+--- !u!114 &2251838148933314269
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
