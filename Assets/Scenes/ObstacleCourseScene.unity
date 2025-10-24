@@ -3715,7 +3715,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1e-45, y: 0, z: 0, w: 1.05e-43}
+  m_BoundingSphereOverride: {x: 1.9102077e-38, y: 1.9377584e-38, z: 1.9561258e-38, w: 1.9469425e-38}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -3890,7 +3890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5059676094504625597, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8717800925406744149, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4703,6 +4703,10 @@ PrefabInstance:
     - target: {fileID: 4538169285424341117, guid: 00630232d662f054085b8e5232a0be95, type: 3}
       propertyPath: m_Name
       value: XR Origin (XR Rig)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4538169285424341117, guid: 00630232d662f054085b8e5232a0be95, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

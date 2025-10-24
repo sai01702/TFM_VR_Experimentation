@@ -99,3 +99,13 @@ Player: Player
   - Success rate: 100,0%
 =====================================
 
+[10:55:31] GAME START - Attempt #1
+[10:55:38] APPLICATION LOST FOCUS
+[10:57:22] GAME START - Attempt #1
+[10:57:35] COURSE COMPLETED!
+  - Final time: 13,16 seconds
+  - Total attempts: 1
+  - Total falls: 0
+  - Success rate: 100,0%
+=====================================
+
