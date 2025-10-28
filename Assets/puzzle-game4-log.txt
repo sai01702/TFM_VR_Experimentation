@@ -1394,3 +1394,62 @@ Sesión iniciada el: 27/10/2025 12:50:13
 Tiempo de inicio: 27/10/2025 12:50:13
 Objetivo: Colocar 5 sombreros en sus stands correctos
 
+
+--- NUEVA SESION ---
+Sesión iniciada el: 28/10/2025 10:37:37
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 28/10/2025 10:37:37
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+
+--- NUEVA SESION ---
+Sesión iniciada el: 28/10/2025 10:38:48
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 28/10/2025 10:38:48
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[2,07s] AGARRE - Sombrero 'MagicianHat' agarrado
+[2,07s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[3,78s] SUELTA - Sombrero 'MagicianHat' soltado
+[3,94s] ERROR - Sombrero 'MagicianHat' colocado incorrectamente en stand 'CowboyHat'
+    Intentos para este sombrero: 1
+
+[5,21s] AGARRE - Sombrero 'MagicianHat' agarrado
+[5,21s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[5,72s] ERROR - Sombrero 'MagicianHat' colocado incorrectamente en stand 'CowboyHat'
+    Intentos para este sombrero: 2
+
+[5,76s] ACIERTO - Sombrero 'MagicianHat' colocado correctamente en stand 'MagicianHat'
+    Progreso: 1/5 sombreros correctos
+    Intentos para este sombrero: 3
+    Tiempo desde primer agarre: 3,69s
+
+[6,34s] REMOCION - Sombrero 'MagicianHat' removido del stand 'MagicianHat'
+    Progreso: 0/5 sombreros correctos
+
+[6,91s] SUELTA - Sombrero 'MagicianHat' soltado
+[7,06s] ERROR - Sombrero 'MagicianHat' colocado incorrectamente en stand 'CowboyHat'
+    Intentos para este sombrero: 4
+
+[11,60s] AGARRE - Sombrero 'MagicianHat' agarrado
+[11,60s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[11,60s] ACIERTO - Sombrero 'MagicianHat' colocado correctamente en stand 'MagicianHat'
+    Progreso: 1/5 sombreros correctos
+    Intentos para este sombrero: 5
+    Tiempo desde primer agarre: 9,53s
+
+[11,60s] ERROR - Sombrero 'MagicianHat' colocado incorrectamente en stand 'CowboyHat'
+    Intentos para este sombrero: 6
+
+[11,98s] REMOCION - Sombrero 'MagicianHat' removido del stand 'MagicianHat'
+    Progreso: 0/5 sombreros correctos
+
+[12,90s] SUELTA - Sombrero 'MagicianHat' soltado
+[12,98s] ERROR - Sombrero 'MagicianHat' colocado incorrectamente en stand 'VikingHelmet'
+    Intentos para este sombrero: 7
+
+[13,04s] ERROR - Sombrero 'MagicianHat' colocado incorrectamente en stand 'PoliceCap'
+    Intentos para este sombrero: 8
+

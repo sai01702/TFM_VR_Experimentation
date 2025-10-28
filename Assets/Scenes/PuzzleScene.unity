@@ -8367,7 +8367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b968f562839f54985ed99804667abb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  desktopRigPrefab: {fileID: 8955973245134529063, guid: d040d3fca23ae4b9aaadbc29a207d3e5, type: 3}
+  desktopRigPrefab: {fileID: 8955973245134529063, guid: 67e2d3a1b084fb14faacd41a07744619, type: 3}
   desktopRigPrefab_Voz: {fileID: 267058771}
   vrRigPrefab: {fileID: 574291251251584840, guid: 0c0de3f612b50e44a84e6b97ca26acfc, type: 3}
   vozObject: {fileID: 267058771}
