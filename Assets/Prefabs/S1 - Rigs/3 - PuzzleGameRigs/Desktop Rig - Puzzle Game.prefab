@@ -215,7 +215,7 @@ Transform:
   m_GameObject: {fileID: 3997739417144904893}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.14, z: 0.04}
   m_LocalScale: {x: 0.01889, y: 0.01889, z: 0.01889}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -308,6 +308,7 @@ GameObject:
   - component: {fileID: 6589274506679457211}
   - component: {fileID: 1090011720315842818}
   - component: {fileID: 3904674252029524298}
+  - component: {fileID: 1666705000427212330}
   m_Layer: 0
   m_Name: Desktop Rig - Puzzle Game
   m_TagString: Player
@@ -459,7 +460,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   dropForwardBoost: 0
-  aimHighlighter: {fileID: 0}
 --- !u!114 &3904674252029524298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,9 +472,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46fb2394923604d4e86d8f2051d40455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
+  cam: {fileID: 2323526667234873488}
   range: 3
   mask:
     serializedVersion: 2
     m_Bits: 4294967295
   requiredTag: Hat
+--- !u!114 &1666705000427212330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8955973245134529063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66843e4b24f88614dae4c83877583c34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 2323526667234873488}
+  interactDistance: 3
+  pressKey: 19

@@ -1606,7 +1606,7 @@ Transform:
   m_GameObject: {fileID: 396160410}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.029, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1625,6 +1625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctHatName: PoliceCap
+  regrabCooldownSeconds: 2
 --- !u!65 &396160413
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2155,7 +2156,7 @@ Transform:
   m_GameObject: {fileID: 505273081}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.029004395, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2174,6 +2175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctHatName: MagicianHat
+  regrabCooldownSeconds: 2
 --- !u!65 &505273084
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3726,7 +3728,7 @@ Transform:
   m_GameObject: {fileID: 722325062}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.101, y: 1.0263, z: 0.397}
+  m_LocalPosition: {x: -0.069, y: 1.0263, z: 0.397}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4141,7 +4143,7 @@ Transform:
   m_GameObject: {fileID: 878399389}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -35.401363, y: 35.442516, z: -77.47811}
+  m_LocalPosition: {x: -35.385, y: 35.442516, z: -77.473}
   m_LocalScale: {x: 0.29999998, y: 0.29999998, z: 0.29999998}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4429,7 +4431,7 @@ Transform:
   m_GameObject: {fileID: 995509168}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.029004395, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4448,6 +4450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctHatName: VikingHelmet
+  regrabCooldownSeconds: 2
 --- !u!65 &995509171
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4711,7 +4714,7 @@ Transform:
   m_GameObject: {fileID: 1003900467}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.02900976, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4730,6 +4733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctHatName: Crown
+  regrabCooldownSeconds: 2
 --- !u!65 &1003900470
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4935,7 +4939,7 @@ Transform:
   m_GameObject: {fileID: 1047999364}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -36.261364, y: 35.442516, z: -77.29311}
+  m_LocalPosition: {x: -36.266, y: 35.442516, z: -77.29311}
   m_LocalScale: {x: 0.29999998, y: 0.29999998, z: 0.29999998}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5880,7 +5884,7 @@ Transform:
   m_GameObject: {fileID: 1189602345}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -35.97636, y: 35.442516, z: -77.44911}
+  m_LocalPosition: {x: -35.995, y: 35.442516, z: -77.448}
   m_LocalScale: {x: 0.29999998, y: 0.29999998, z: 0.29999998}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6082,7 +6086,7 @@ Transform:
   m_GameObject: {fileID: 1221990358}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -35.136364, y: 35.442516, z: -77.29311}
+  m_LocalPosition: {x: -35.111, y: 35.442516, z: -77.29311}
   m_LocalScale: {x: 0.29999998, y: 0.29999998, z: 0.29999998}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6179,6 +6183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctHatName: 
+  regrabCooldownSeconds: 2
 --- !u!64 &1221990367
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6823,6 +6828,10 @@ MonoBehaviour:
   highlightMaterial: {fileID: 0}
   includeChildren: 1
   keepHighlightWhileHeld: 1
+  grab: {fileID: 0}
+  vrHovering: 0
+  desktopAiming: 0
+  isHeld: 0
 --- !u!1 &1379660451
 GameObject:
   m_ObjectHideFlags: 0
@@ -8219,7 +8228,7 @@ Transform:
   m_GameObject: {fileID: 1718681957}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.029004395, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8238,6 +8247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctHatName: CowboyHat
+  regrabCooldownSeconds: 2
 --- !u!65 &1718681960
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9124,7 +9134,7 @@ Transform:
   m_GameObject: {fileID: 1853732166}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.608364, y: -34.333355, z: 78.04511}
+  m_LocalPosition: {x: 35.621, y: -34.333355, z: 78.158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

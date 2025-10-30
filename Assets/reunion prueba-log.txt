@@ -1247,3 +1247,61 @@ Spawned object 3: ObjetivoRea3
 Manual despawn
 
 Spawned object 4: ObjetivoRea4
+Spawned object 1: ObjetivoRea1
+Manual despawn
+
+Spawned object 2: ObjetivoRea3
+Manual despawn
+
+Spawned object 3: ObjetivoRea4
+Manual despawn
+
+Spawned object 4: ObjetivoRea5
+Manual despawn
+
+Spawned object 5: ObjetivoRea1
+Manual despawn
+
+Spawned object 6: ObjetivoRea3
+Manual despawn
+
+Spawned object 7: ObjetivoRea2
+Manual despawn
+
+Spawned object 8: ObjetivoRea4
+Manual despawn
+
+Spawned object 9: ObjetivoRea3
+Manual despawn
+
+Spawned object 10: ObjetivoRea4
+Manual despawn
+
+Spawned object 11: ObjetivoRea4
+Manual despawn
+
+Spawned object 12: ObjetivoRea3
+Manual despawn
+
+Spawned object 13: ObjetivoRea2
+Manual despawn
+
+Spawned object 14: ObjetivoRea1
+Manual despawn
+
+Spawned object 15: ObjetivoRea1
+Manual despawn
+
+Spawned object 1: ObjetivoRea2
+Manual despawn
+
+Spawned object 2: ObjetivoRea5
+Manual despawn
+
+Spawned object 3: ObjetivoRea
+Manual despawn
+
+Spawned object 4: ObjetivoRea
+Manual despawn
+
+Spawned object 5: ObjetivoRea
