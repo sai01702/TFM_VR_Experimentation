@@ -11,6 +11,9 @@ public class DesktopGrabber : MonoBehaviour
     public Camera cam;
     public Transform holdPoint;
 
+    [Tooltip("Assign your crosshair/cross-aim object (e.g., the sphere under the camera).")]
+    public GameObject crossAim;
+
     [Header("Pickup")]
     public float pickupRange = 3f;
     public LayerMask pickupMask = ~0;
@@ -18,11 +21,19 @@ public class DesktopGrabber : MonoBehaviour
     [Header("Drop")]
     public float dropForwardBoost = 0f;
 
+    // the hat we're currently holding
     private XRGrabInteractable held;
 
     void Awake()
     {
         if (cam == null) cam = Camera.main;
+
+        // Optional auto-find if you didn't drag it in:
+        if (crossAim == null && cam != null)
+        {
+            var t = cam.transform.Find("CrossAim");
+            if (t != null) crossAim = t.gameObject;
+        }
     }
 
     void OnEnable()
@@ -35,6 +46,9 @@ public class DesktopGrabber : MonoBehaviour
     {
         if (interactAction != null)
             interactAction.action.performed -= OnInteract;
+
+        // Safety: if we disable mid-hold, re-show crosshair
+        SetCrossAimVisible(true);
     }
 
     void OnInteract(InputAction.CallbackContext ctx)
@@ -48,8 +62,7 @@ public class DesktopGrabber : MonoBehaviour
         if (cam == null) return;
 
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, pickupRange, pickupMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(ray, out RaycastHit hit, pickupRange, pickupMask, QueryTriggerInteraction.Ignore))
         {
             if (!hit.collider.CompareTag("Hat"))
                 return;
@@ -58,6 +71,7 @@ public class DesktopGrabber : MonoBehaviour
             if (grab == null)
                 return;
 
+            // disable XR grabbing so desktop owns it
             grab.enabled = false;
 
             Rigidbody rb = grab.GetComponent<Rigidbody>();
@@ -65,17 +79,22 @@ public class DesktopGrabber : MonoBehaviour
             {
                 rb.isKinematic = true;
                 rb.useGravity = false;
-                rb.constraints = RigidbodyConstraints.None;
+                rb.constraints = RigidbodyConstraints.None; // free while held
             }
 
+            // parent to hold point
             grab.transform.SetParent(holdPoint, worldPositionStays: false);
             grab.transform.localPosition = Vector3.zero;
             grab.transform.localRotation = Quaternion.identity;
 
+            // show clue (if you have it)
             var clue = grab.GetComponent<ShowClueOnGrab>();
             if (clue != null) clue.HandleGrab();
 
             held = grab;
+
+            // 🔻 Hide cross-aim while holding
+            SetCrossAimVisible(false);
         }
     }
 
@@ -86,6 +105,7 @@ public class DesktopGrabber : MonoBehaviour
         GameObject hatGO = held.gameObject;
         Rigidbody rb = hatGO.GetComponent<Rigidbody>();
 
+        // check if we're aiming at a stand
         HatStandTrigger stand = FindStandInFront();
 
         // Detach from hand
@@ -105,18 +125,23 @@ public class DesktopGrabber : MonoBehaviour
         }
         else
         {
-            // free drop
+            // normal free drop
             if (rb != null && cam != null && dropForwardBoost > 0f)
             {
                 rb.velocity = cam.transform.forward * dropForwardBoost;
             }
         }
 
+        // hide clue
         var clueDrop = held.GetComponent<ShowClueOnGrab>();
         if (clueDrop != null) clueDrop.HandleRelease();
 
+        // re-enable XR grabbing so VR can grab later
         held.enabled = true;
         held = null;
+
+        // 🔺 Show cross-aim again after release
+        SetCrossAimVisible(true);
     }
 
     HatStandTrigger FindStandInFront()
@@ -140,7 +165,7 @@ public class DesktopGrabber : MonoBehaviour
         return null;
     }
 
-    // Stand calls this to forcefully clear when hat was yanked at trigger time
+    // Called by HatStandTrigger when it auto-steals the hat on trigger
     public void ForceFullReleaseIfHolding(GameObject hatGO)
     {
         if (held == null) return;
@@ -167,5 +192,14 @@ public class DesktopGrabber : MonoBehaviour
 
         // clear ref
         held = null;
+
+        // 🔺 Show cross-aim again because we're no longer holding
+        SetCrossAimVisible(true);
+    }
+
+    void SetCrossAimVisible(bool visible)
+    {
+        if (crossAim != null && crossAim.activeSelf != visible)
+            crossAim.SetActive(visible);
     }
 }
