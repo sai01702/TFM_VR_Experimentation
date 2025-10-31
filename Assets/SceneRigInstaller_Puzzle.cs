@@ -1,15 +1,13 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class SceneRigInstaller_Puzzle : MonoBehaviour
 {
-    [Header("Rig Prefabs")]
-    [SerializeField] private GameObject desktopRigPrefab;          // normal Desktop rig
-    [SerializeField] private GameObject desktopRigPrefab_Voz;      // Desktop rig for voice control
-    [SerializeField] private GameObject vrRigPrefab;               // XR Origin rig
-
-    [Header("Scene References")]
-    [SerializeField] private GameObject vozObject;                 // if active -> use voice desktop rig
+    [Header("Rig Prefabs / Scene References")]
+    [SerializeField] private GameObject desktopRigPrefab;          // Normal Desktop rig
+    [SerializeField] private GameObject desktopRigPrefab_LargaD;   // Desktop rig for large distance (voice)
+    [SerializeField] private GameObject vrRigInScene;              // ✅ Existing XR Origin rig in scene (set inactive in Editor)
+    [SerializeField] private GameObject largaObject;               // Object that determines Desktop LargaD
     [SerializeField] private Transform spawnPoint;
 
     private GameObject currentRig;
@@ -18,12 +16,14 @@ public class SceneRigInstaller_Puzzle : MonoBehaviour
     {
         if (GameSettings.Instance.HasSavedMode())
             Install();
-        // else: your ModeSelectionUI will call ForceInstallNow() after user chooses.
+        // else: wait until ModeSelectionUI calls ForceInstallNow()
     }
 
     public void ForceInstallNow()
     {
-        if (currentRig != null) Destroy(currentRig);
+        if (currentRig != null && currentRig != vrRigInScene)
+            Destroy(currentRig);
+
         Install();
     }
 
@@ -32,42 +32,75 @@ public class SceneRigInstaller_Puzzle : MonoBehaviour
         var mode = GameSettings.Instance.CurrentMode;
         XRBootstrapper.Instance.ApplyMode(mode);
 
-        // Decide which prefab to use
+        // --- Decide which rig to use ---
         GameObject prefab = null;
+        bool usingSceneVRRig = false;
 
-        if (mode == GameMode.Desktop && vozObject != null && vozObject.activeInHierarchy)
+        if (mode == GameMode.Desktop && largaObject != null && largaObject.activeInHierarchy)
         {
-            prefab = desktopRigPrefab_Voz;
+            prefab = desktopRigPrefab_LargaD;
+        }
+        else if (mode == GameMode.VR)
+        {
+            prefab = vrRigInScene;  // ✅ use the in-scene VR rig
+            usingSceneVRRig = true;
         }
         else
         {
-            prefab = (mode == GameMode.VR) ? vrRigPrefab : desktopRigPrefab;
+            prefab = desktopRigPrefab;
         }
 
         if (prefab == null)
         {
-            Debug.LogError("[SceneRigInstaller_Shooter] Assign rig prefabs in the Inspector.");
+            Debug.LogError("[SceneRigInstaller_Puzzle] Rig prefab not assigned in Inspector.");
             return;
         }
 
-        var pos = spawnPoint ? spawnPoint.position : Vector3.zero;
-        var rot = spawnPoint ? spawnPoint.rotation : Quaternion.identity;
+        // --- Spawn or activate ---
+        if (usingSceneVRRig)
+        {
+            // Activate existing VR rig instead of instantiating
+            if (!vrRigInScene.activeSelf)
+            {
+                vrRigInScene.SetActive(true);
+                Debug.Log("[SceneRigInstaller_Puzzle] Activated existing VR rig in scene.");
+            }
+            currentRig = vrRigInScene;
+        }
+        else
+        {
+            // Instantiate Desktop rig
+            if (currentRig != null && currentRig != vrRigInScene)
+                Destroy(currentRig);
 
-        if (currentRig != null) Destroy(currentRig);
-        currentRig = Instantiate(prefab, pos, rot);
+            var pos = spawnPoint ? spawnPoint.position : Vector3.zero;
+            var rot = spawnPoint ? spawnPoint.rotation : Quaternion.identity;
+            currentRig = Instantiate(prefab, pos, rot);
 
+            // Ensure active
+            if (!currentRig.activeSelf)
+            {
+                currentRig.SetActive(true);
+            }
+        }
+
+        // --- Setup Input ---
         var pi = currentRig.GetComponent<PlayerInput>();
         if (pi != null)
         {
-            var scheme = (mode == GameMode.VR) ? "VR" : "Desktop";
+            string scheme = (mode == GameMode.VR) ? "XR" : "Desktop"; // ✅ use "XR" (matches Unity's default XR scheme)
             pi.defaultControlScheme = scheme;
             pi.SwitchCurrentControlScheme(scheme);
         }
 
-        // Remove any temporary camera that isn't the rig camera
+        // --- Remove extra cameras if any ---
         var cam = Camera.main;
         var rigCam = currentRig.GetComponentInChildren<Camera>();
         if (cam != null && rigCam != null && cam != rigCam)
+        {
             Destroy(cam.gameObject);
+        }
+
+        Debug.Log($"[SceneRigInstaller_Puzzle] Using {mode} rig: {currentRig.name}");
     }
 }

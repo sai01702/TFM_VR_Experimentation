@@ -3,117 +3,125 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(Collider))]
 public class CheckHatsOnTouch : MonoBehaviour
 {
-    [Header("Configuración")]
-    [Tooltip("Sombreros en la escena")]
+    [Header("Configuration")]
+    [Tooltip("Hats in the scene")]
     public GameObject[] hats;
 
-    [Tooltip("Stands de sombreros")]
+    [Tooltip("Hat stands (each with a Collider and a correctHatName)")]
     public HatStandTrigger[] hatStands;
 
-    [Tooltip("Delay antes de cambiar de escena si todos son correctos")]
+    [Tooltip("Delay before changing scene if all are correct")]
     public float sceneChangeDelay = 2f;
 
-    [Tooltip("Cooldown en segundos entre verificaciones")]
+    [Tooltip("Cooldown in seconds between checks (applies to VR trigger and desktop manual press)")]
     public float checkCooldown = 0.5f;
 
-    private Dictionary<GameObject, Vector3> initialHatPositions;
-    private Dictionary<GameObject, Quaternion> initialHatRotations;
-    private float lastCheckTime = 0f;
+    private Dictionary<GameObject, Vector3> _initialHatPositions;
+    private Dictionary<GameObject, Quaternion> _initialHatRotations;
+    private float _lastCheckTime = -999f;
 
-    private void Start()
+    void Reset()
     {
-        // Guardar posiciones iniciales de los sombreros
-        initialHatPositions = new Dictionary<GameObject, Vector3>();
-        initialHatRotations = new Dictionary<GameObject, Quaternion>();
+        // Ensure this collider is configured as a trigger (VR presses)
+        var col = GetComponent<Collider>();
+        if (col != null) col.isTrigger = true;
+    }
 
-        foreach (GameObject hat in hats)
+    void Start()
+    {
+        // Save initial transforms
+        _initialHatPositions = new Dictionary<GameObject, Vector3>();
+        _initialHatRotations = new Dictionary<GameObject, Quaternion>();
+
+        foreach (var hat in hats)
         {
-            if (hat != null)
-            {
-                initialHatPositions[hat] = hat.transform.position;
-                initialHatRotations[hat] = hat.transform.rotation;
-            }
+            if (hat == null) continue;
+            _initialHatPositions[hat] = hat.transform.position;
+            _initialHatRotations[hat] = hat.transform.rotation;
         }
     }
 
     // ─────────────────────────────────────────────
-    // VR / physical trigger path
+    // VR path: physical trigger by player/hand/controller
     // ─────────────────────────────────────────────
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        // Original trigger gate, unchanged:
-        // only "player"/hands/etc. can activate
-        if ((other.CompareTag("Player")
-             || other.name.Contains("Hand")
-             || other.name.Contains("Controller"))
-            && Time.time - lastCheckTime >= checkCooldown)
+        if (!IsVrActivator(other)) return;
+
+        if (Time.time - _lastCheckTime >= checkCooldown)
         {
-            RunCheckNow();
+            _lastCheckTime = Time.time;
+            CheckAndUpdateHats();
         }
     }
 
+    // Optional: if you want the cube to respond even when hand lingers
+    void OnTriggerStay(Collider other)
+    {
+        if (!IsVrActivator(other)) return;
+
+        if (Time.time - _lastCheckTime >= checkCooldown)
+        {
+            _lastCheckTime = Time.time;
+            CheckAndUpdateHats();
+        }
+    }
+
+    // Helper to decide if the collider belongs to the VR player/hands
+    bool IsVrActivator(Collider other)
+    {
+        // Same gates you had in the base script
+        return other.CompareTag("Player")
+            || other.name.Contains("Hand")
+            || other.name.Contains("Controller");
+    }
+
     // ─────────────────────────────────────────────
-    // Desktop "press E while looking" path
-    // This gets called by DesktopButtonInteractor
+    // Desktop path: called by DesktopButtonInteractor when user looks & presses E
     // ─────────────────────────────────────────────
     public void ManualPress()
     {
-        // Respect same cooldown so you can't spam
-        if (Time.time - lastCheckTime < checkCooldown)
+        if (Time.time - _lastCheckTime < checkCooldown)
             return;
 
-        Debug.Log("[CheckHatsOnTouch] ManualPress called (desktop).");
-        RunCheckNow();
+        _lastCheckTime = Time.time;
+        CheckAndUpdateHats();
     }
 
     // ─────────────────────────────────────────────
-    // Shared logic: score hats, reset wrong ones,
-    // maybe finish puzzle.
+    // Shared logic: count correct, reset wrong, maybe finish
     // ─────────────────────────────────────────────
-    private void RunCheckNow()
+    void CheckAndUpdateHats()
     {
-        lastCheckTime = Time.time;
-
         int correctHats = GetCorrectHatsCount();
         int totalHats = hatStands.Length;
 
-        // Actualizar marcador en la pizarra
+        // Update score board UI if present
         if (CronometerScore.Instance != null)
-        {
             CronometerScore.Instance.ActualizarSombreros(correctHats);
-        }
 
-        Debug.Log($"Sombreros correctos: {correctHats}/{totalHats}");
+        Debug.Log($"Correct hats: {correctHats}/{totalHats}");
 
         if (correctHats >= totalHats)
         {
-            // Todos correctos → victoria
-            Debug.Log("🎉 ¡Todos los sombreros están en el lugar correcto!");
+            Debug.Log("🎉 All hats are in the correct place!");
 
-            // Registrar completar puzzle en logs
+            // Logs
             if (PuzzleLogsManager.Instance != null)
-            {
                 PuzzleLogsManager.Instance.RegistrarCompletarPuzzle();
-            }
 
-            // Guardar resultados en SceneTracker
+            // Save results
             if (SceneTracker.Instance != null && PuzzleLogsManager.Instance != null)
             {
-                // Obtener estadísticas del puzzle
                 int totalIntentos, totalAciertos, totalErrores;
                 float tiempoTotal;
                 PuzzleLogsManager.Instance.ObtenerEstadisticas(
-                    out totalIntentos,
-                    out totalAciertos,
-                    out totalErrores,
-                    out tiempoTotal
-                );
+                    out totalIntentos, out totalAciertos, out totalErrores, out tiempoTotal);
 
-                // Calcular precisión
                 float accuracy = totalIntentos > 0 ? (float)totalAciertos / totalIntentos * 100f : 0f;
-
                 SceneTracker.Instance.SetPuzzleResults(tiempoTotal, accuracy);
             }
 
@@ -121,39 +129,33 @@ public class CheckHatsOnTouch : MonoBehaviour
         }
         else
         {
-            // resetear sombreros incorrectos
             ResetIncorrectHats();
         }
     }
 
-    // ─────────────────────────────────────────────
-    // Cuenta cuántos sombreros correctos están en
-    // el stand correcto.
-    // ─────────────────────────────────────────────
-    private int GetCorrectHatsCount()
+    int GetCorrectHatsCount()
     {
         int count = 0;
 
-        foreach (HatStandTrigger stand in hatStands)
+        foreach (var stand in hatStands)
         {
             if (stand == null) continue;
 
-            Collider standCollider = stand.GetComponent<Collider>();
-            if (standCollider == null) continue;
+            var standCol = stand.GetComponent<Collider>();
+            if (standCol == null) continue;
 
-            // Overlap area of the stand collider to see which hats are inside
-            Collider[] collidersInTrigger = Physics.OverlapBox(
-                standCollider.bounds.center,
-                standCollider.bounds.extents,
-                standCollider.transform.rotation
-            );
+            // Use the stand collider’s bounds for robust overlap
+            Collider[] inside = Physics.OverlapBox(
+                standCol.bounds.center,
+                standCol.bounds.extents,
+                standCol.transform.rotation);
 
-            foreach (Collider col in collidersInTrigger)
+            foreach (var col in inside)
             {
                 if (col.CompareTag("Hat") && col.name == stand.correctHatName)
                 {
                     count++;
-                    break; // don't double count this stand
+                    break; // only count one per stand
                 }
             }
         }
@@ -161,79 +163,65 @@ public class CheckHatsOnTouch : MonoBehaviour
         return count;
     }
 
-    // ─────────────────────────────────────────────
-    // Cualquier sombrero que NO esté en su stand
-    // correcto vuelve a su posición inicial.
-    // ─────────────────────────────────────────────
-    private void ResetIncorrectHats()
+    void ResetIncorrectHats()
     {
-        foreach (GameObject hat in hats)
+        foreach (var hat in hats)
         {
             if (hat == null) continue;
 
-            bool isCorrectlyPlaced = false;
+            bool placedCorrectly = false;
 
-            // check if this hat sits in its matching stand
-            foreach (HatStandTrigger stand in hatStands)
+            // Is this hat currently inside its matching stand volume?
+            foreach (var stand in hatStands)
             {
                 if (stand == null) continue;
+                if (hat.name != stand.correctHatName) continue;
 
-                if (hat.name == stand.correctHatName)
+                var standCol = stand.GetComponent<Collider>();
+                if (standCol == null) break;
+
+                Collider[] inside = Physics.OverlapBox(
+                    standCol.bounds.center,
+                    standCol.bounds.extents,
+                    standCol.transform.rotation);
+
+                foreach (var col in inside)
                 {
-                    Collider standCollider = stand.GetComponent<Collider>();
-                    if (standCollider == null) break;
-
-                    Collider[] collidersInTrigger = Physics.OverlapBox(
-                        standCollider.bounds.center,
-                        standCollider.bounds.extents,
-                        standCollider.transform.rotation
-                    );
-
-                    foreach (Collider col in collidersInTrigger)
+                    if (col.gameObject == hat)
                     {
-                        if (col.gameObject == hat)
-                        {
-                            isCorrectlyPlaced = true;
-                            break;
-                        }
+                        placedCorrectly = true;
+                        break;
                     }
-
-                    break;
                 }
+
+                break; // we checked the matching stand
             }
 
-            // If not correctly placed, snap back to initial transform
-            if (!isCorrectlyPlaced)
+            if (!placedCorrectly)
             {
-                if (initialHatPositions.ContainsKey(hat) && initialHatRotations.ContainsKey(hat))
+                if (_initialHatPositions.TryGetValue(hat, out var pos) &&
+                    _initialHatRotations.TryGetValue(hat, out var rot))
                 {
-                    Rigidbody rb = hat.GetComponent<Rigidbody>();
+                    var rb = hat.GetComponent<Rigidbody>();
                     if (rb != null)
                     {
                         rb.velocity = Vector3.zero;
                         rb.angularVelocity = Vector3.zero;
                     }
 
-                    hat.transform.position = initialHatPositions[hat];
-                    hat.transform.rotation = initialHatRotations[hat];
-
-                    Debug.Log($"🔄 Sombrero '{hat.name}' reseteado a su posición inicial");
+                    hat.transform.SetPositionAndRotation(pos, rot);
+                    Debug.Log($"🔄 Hat '{hat.name}' reset to its initial position.");
                 }
             }
         }
     }
 
-    // ─────────────────────────────────────────────
-    // Cambio de escena cuando puzzle termina.
-    // ─────────────────────────────────────────────
-    private IEnumerator DelayAndLoadScene()
+    IEnumerator DelayAndLoadScene()
     {
         yield return new WaitForSeconds(sceneChangeDelay);
 
         if (SceneTracker.Instance != null)
-        {
             SceneTracker.Instance.PreviousScene = SceneManager.GetActiveScene().name;
-        }
 
         SceneManager.LoadScene("GameOverScene");
     }
