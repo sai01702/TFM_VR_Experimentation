@@ -44,7 +44,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 4684336681224218124}
   - component: {fileID: 5944712860973532378}
   - component: {fileID: 1409343858059553150}
+  - component: {fileID: 6589274506679457211}
   m_Layer: 0
   m_Name: Desktop Rig
   m_TagString: Player
@@ -269,3 +270,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   playerInput: {fileID: 0}
+--- !u!114 &6589274506679457211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8955973245134529063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bce623170cbb034d87018913fd76280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

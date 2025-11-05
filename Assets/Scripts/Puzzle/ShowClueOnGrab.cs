@@ -1,62 +1,76 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class ShowClueOnGrab : MonoBehaviour
 {
     [Tooltip("El Clue correspondiente a este sombrero")]
     public GameObject clueToShow;
 
-    private UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable grab;
+    private XRGrabInteractable grab;
 
     void Awake()
     {
-        grab = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
-        grab.selectEntered.AddListener(OnGrabbed);
-        grab.selectExited.AddListener(OnReleased);
+        grab = GetComponent<XRGrabInteractable>(); // same as your fully-qualified type
+        if (grab != null)
+        {
+            grab.selectEntered.AddListener(OnGrabbed);
+            grab.selectExited.AddListener(OnReleased);
+        }
     }
 
-    private void OnDestroy()
+    void OnDestroy()
     {
-        grab.selectEntered.RemoveListener(OnGrabbed);
-        grab.selectExited.RemoveListener(OnReleased);
+        if (grab != null)
+        {
+            grab.selectEntered.RemoveListener(OnGrabbed);
+            grab.selectExited.RemoveListener(OnReleased);
+        }
     }
 
-    private void OnGrabbed(SelectEnterEventArgs args)
+    // === XR callbacks (VR path) ===
+    private void OnGrabbed(SelectEnterEventArgs _)
+    {
+        HandleGrab();   // use the common path
+    }
+
+    private void OnReleased(SelectExitEventArgs _)
+    {
+        HandleRelease(); // use the common path
+    }
+
+    // === PUBLIC methods you can call from Desktop grab code ===
+    public void HandleGrab()
     {
         HideAllClues();
 
         if (clueToShow != null)
             clueToShow.SetActive(true);
-            
-        // Registrar en logs
+
+        // logs (optional)
         if (PuzzleLogsManager.Instance != null)
         {
             PuzzleLogsManager.Instance.RegistrarAgarreSombrero(gameObject.name);
             if (clueToShow != null)
-            {
                 PuzzleLogsManager.Instance.RegistrarMostrarPista(gameObject.name);
-            }
         }
     }
 
-    private void OnReleased(SelectExitEventArgs args)
+    public void HandleRelease()
     {
         if (clueToShow != null)
             clueToShow.SetActive(false);
-            
-        // Registrar en logs
+
         if (PuzzleLogsManager.Instance != null)
-        {
             PuzzleLogsManager.Instance.RegistrarSueltaSombrero(gameObject.name);
-        }
     }
 
     private void HideAllClues()
     {
-        GameObject cluesParent = GameObject.Find("CluesPanels");
+        var cluesParent = GameObject.Find("CluesPanels"); // make sure this name matches your hierarchy
         if (cluesParent == null) return;
 
-        foreach (Transform clue in cluesParent.transform)
-            clue.gameObject.SetActive(false);
+        foreach (Transform t in cluesParent.transform)
+            t.gameObject.SetActive(false);
     }
 }

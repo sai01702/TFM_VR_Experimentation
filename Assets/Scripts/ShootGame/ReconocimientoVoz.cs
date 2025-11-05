@@ -22,7 +22,8 @@ public class ReconocimientoVoz : MonoBehaviour
     {
         wordsToActions = new Dictionary<string, Action>(); //creamos un diccionario de palabras a acciones
         wordsToActions.Add("shoot", Shoot); //agregamos la palabra "shoot" al diccionario y la accion Disparar
-        keywordRecognizer = new KeywordRecognizer(wordsToActions.Keys.ToArray()); //creamos un KeywordRecognizer con las palabras del diccionario convertidas a un array
+        //keywordRecognizer = new KeywordRecognizer(wordsToActions.Keys.ToArray()); //creamos un KeywordRecognizer con las palabras del diccionario convertidas a un array, OLD SCRIPT
+        keywordRecognizer = new KeywordRecognizer(wordsToActions.Keys.ToArray(), ConfidenceLevel.Low); //creamos un KeywordRecognizer con las palabras del diccionario convertidas a un array, Also, I specified a low confidence level to improve recognition accuracy.
         keywordRecognizer.OnPhraseRecognized += WordRecognizer; //asignamos el metodo WordRecognizer al evento OnPhraseRecognized del KeywordRecognizer
         keywordRecognizer.Start(); //iniciamos el KeywordRecognizer
     }
@@ -30,9 +31,9 @@ public class ReconocimientoVoz : MonoBehaviour
     void Update()
     {
         Puntaje();
-        
+
     }
-     private void WordRecognizer(PhraseRecognizedEventArgs word)
+    private void WordRecognizer(PhraseRecognizedEventArgs word)
     {
         Debug.Log(word.text);
         wordsToActions[word.text].Invoke();
@@ -45,10 +46,11 @@ public class ReconocimientoVoz : MonoBehaviour
         bullet.transform.rotation = bulletSpawnPoint.rotation;
         bullet.SetActive(true);
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-        
+
     }
 
-    void Puntaje() { // función para mostrar el puntaje en pantalla
+    void Puntaje()
+    { // función para mostrar el puntaje en pantalla
         // GameObject.FindObjectOfType<UnityEngine.UI.Text>().text = "Puntuación  " + ObjetivosManager.Instance.puntos;
         // GameObject.FindWithTag("Score").GetComponent<Text>().text = "Puntuación " + ObjetivosManager.Instance.puntos;
         scoreText.text = "Puntuación " + ObjetivosManager.Instance.puntos;
