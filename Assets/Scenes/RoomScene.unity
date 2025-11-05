@@ -10278,6 +10278,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 499840, guid: 9d79238e340446545b920b58f2cd9574, type: 3}
   m_PrefabInstance: {fileID: 1848552819}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1864478192 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8010754413446973211, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+  m_PrefabInstance: {fileID: 7324367929662813927}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1864478198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864478192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56f67e4a1d4830f459ab5dc6e24326c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desktopSceneName: PuzzleScene
+  vrSceneName: PuzzleScene
+  objectToActivateInScene: V1_Corta_Distancia
+  controllerToActivateInScene: V1_Corta_Distancia_Controller
 --- !u!1001 &1879145691
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11964,6 +11985,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8418311443534110739, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1864478198}
+    - target: {fileID: 8418311443534110739, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 8418311443534110739, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoadSceneByButton, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 8419400009242502909, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -12032,10 +12065,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9197674112151340218, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: sceneName
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 9197674112151340218, guid: 326a13103f95f7549bbe88807709218f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8010754413446973211, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 1864478198}
   m_SourcePrefab: {fileID: 100100000, guid: 326a13103f95f7549bbe88807709218f, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
