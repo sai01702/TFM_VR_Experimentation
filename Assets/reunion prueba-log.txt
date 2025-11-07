@@ -1305,3 +1305,48 @@ Spawned object 4: ObjetivoRea
 Manual despawn
 
 Spawned object 5: ObjetivoRea
+Spawned object 1: ObjetivoRea3
+Reacction time: 1,727301 seconds
+
+Spawned object 2: ObjetivoRea5
+Reacction time: 1,146929 seconds
+
+Spawned object 3: ObjetivoRea1
+Reacction time: 3,226014 seconds
+
+Spawned object 4: ObjetivoRea5
+Reacction time: 1,265096 seconds
+
+Spawned object 5: ObjetivoRea2
+Reacction time: 2,664366 seconds
+
+Spawned object 6: ObjetivoRea
+Reacction time: 1,824148 seconds
+
+Spawned object 7: ObjetivoRea3
+Reacction time: 2,123148 seconds
+
+Spawned object 8: ObjetivoRea1
+Reacction time: 1,622618 seconds
+
+Spawned object 9: ObjetivoRea4
+Reacction time: 2,241707 seconds
+
+Spawned object 10: ObjetivoRea5
+Reacction time: 1,140633 seconds
+
+Spawned object 11: ObjetivoRea2
+Reacction time: 2,09988 seconds
+
+Spawned object 12: ObjetivoRea
+Reacction time: 1,059307 seconds
+
+Spawned object 13: ObjetivoRea2
+Reacction time: 1,379093 seconds
+
+Spawned object 14: ObjetivoRea5
+Reacction time: 1,258446 seconds
+
+Spawned object 15: ObjetivoRea3
+Reacction time: 1,897205 seconds
+
