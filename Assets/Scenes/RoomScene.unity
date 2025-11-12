@@ -9525,7 +9525,7 @@ RectTransform:
   m_GameObject: {fileID: 1761805280}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.16907, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1953511971}
@@ -9533,7 +9533,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 105.4, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1761805282
@@ -10851,14 +10851,14 @@ RectTransform:
   m_GameObject: {fileID: 1953511970}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5.6088, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1761805281}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -19.9, y: 22.6}
+  m_AnchoredPosition: {x: -766, y: 54}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1953511972
@@ -10881,7 +10881,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u2022 Cambiar botones: Tab  \u2022 Confirmar: Espacio"
+  m_text: "\u2022 Cambiar botones: Tab   \u2022 Confirmar: Espacio/Intro"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10916,7 +10916,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -10944,7 +10944,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 20.239876, y: 0, z: 80.335464, w: 32.15094}
+  m_margin: {x: 20.239876, y: 0, z: 71.94623, w: 2.3935604}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -12266,11 +12266,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1813959212318816169, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -26.9
+      value: -24.8
       objectReference: {fileID: 0}
     - target: {fileID: 1865393222909629202, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 8.9
+      value: 6.7
       objectReference: {fileID: 0}
     - target: {fileID: 2233438363980374834, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_Name
@@ -12286,7 +12286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3795724135239185446, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3958610031188029992, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_Enabled
@@ -12376,8 +12376,7 @@ PrefabInstance:
       propertyPath: sceneName
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 9197674112151340218, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 517162735903419608, guid: 326a13103f95f7549bbe88807709218f, type: 3}
@@ -12388,7 +12387,7 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1624939028}
     - targetCorrespondingSourceObject: {fileID: 8010754413446973211, guid: 326a13103f95f7549bbe88807709218f, type: 3}
-      insertIndex: 2
+      insertIndex: 1
       addedObject: {fileID: 1864478198}
     - targetCorrespondingSourceObject: {fileID: 8010754413446973211, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       insertIndex: -1

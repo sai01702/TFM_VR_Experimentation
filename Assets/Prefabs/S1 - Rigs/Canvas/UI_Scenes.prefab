@@ -3000,7 +3000,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1865393222909629202}
   - component: {fileID: 8159695573930065991}
-  - component: {fileID: 9197674112151340218}
   - component: {fileID: 4561369768660282869}
   - component: {fileID: 8418311443534110739}
   m_Layer: 5
@@ -3038,21 +3037,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8010754413446973211}
   m_CullTransparentMesh: 1
---- !u!114 &9197674112151340218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8010754413446973211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9843e4ccf075554a8fc7d1043889120, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneName: PuzzleScene
-  objectToActivateInScene: V1_Corta_Distancia
-  controllerToActivateInScene: V1_Corta_Distancia_Controller
 --- !u!114 &4561369768660282869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3127,7 +3111,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9197674112151340218}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LoadSceneButton, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 1

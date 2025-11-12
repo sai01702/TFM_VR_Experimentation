@@ -5,49 +5,86 @@ using UnityEngine.InputSystem;
 
 public class UIKeyboardNavigator : MonoBehaviour
 {
-    [Tooltip("Which UI element should be selected first on Desktop?")]
+    [Tooltip("First element to focus when user presses Tab for the first time.")]
     public GameObject firstSelected;
-
-    void OnEnable()
-    {
-        if (IsDesktop() && EventSystem.current != null && firstSelected != null)
-            EventSystem.current.SetSelectedGameObject(firstSelected);
-    }
 
     void Update()
     {
-        if (!IsDesktop() || EventSystem.current == null)
-            return;
+        if (!IsDesktop()) return;
 
         var es = EventSystem.current;
-        var current = es.currentSelectedGameObject ?? firstSelected;
-        if (current == null) return;
+        if (es == null) return;
 
-        // TAB / SHIFT+TAB to move selection
-        if (Keyboard.current.tabKey.wasPressedThisFrame)
+        // --- Mouse handoff: release selection so mouse clicks work normally
+        var mouse = Mouse.current;
+        if (mouse != null)
         {
-            bool backwards = Keyboard.current.shiftKey.isPressed;
-            var sel = current.GetComponent<Selectable>();
-            if (sel != null)
+            bool mouseMoved = mouse.delta.ReadValue() != Vector2.zero;
+            bool mouseClicked = mouse.leftButton.wasPressedThisFrame
+                                || mouse.rightButton.wasPressedThisFrame
+                                || mouse.middleButton.wasPressedThisFrame;
+
+            if (mouseMoved || mouseClicked)
             {
-                Selectable next = null;
-                if (backwards)
-                    next = sel.FindSelectableOnUp() ?? sel.FindSelectableOnLeft();
-                else
-                    next = sel.FindSelectableOnDown() ?? sel.FindSelectableOnRight();
-
-                // wrap if needed
-                if (next == null && firstSelected != null)
-                    next = firstSelected.GetComponent<Selectable>();
-
-                if (next != null)
-                    es.SetSelectedGameObject(next.gameObject);
+                if (es.currentSelectedGameObject != null)
+                    es.SetSelectedGameObject(null);
             }
         }
 
-        // ENTER / SPACE to “click” the current button
-        if (Keyboard.current.enterKey.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame)
-            ExecuteEvents.Execute(current, new BaseEventData(es), ExecuteEvents.submitHandler);
+        var kb = Keyboard.current;
+        if (kb == null) return;
+
+        // --- Prevent WASD and Arrow keys from affecting UI selection
+        if (kb.wKey.wasPressedThisFrame || kb.aKey.wasPressedThisFrame ||
+            kb.sKey.wasPressedThisFrame || kb.dKey.wasPressedThisFrame ||
+            kb.upArrowKey.wasPressedThisFrame || kb.downArrowKey.wasPressedThisFrame ||
+            kb.leftArrowKey.wasPressedThisFrame || kb.rightArrowKey.wasPressedThisFrame)
+        {
+            if (es.currentSelectedGameObject != null)
+                es.SetSelectedGameObject(null);
+        }
+
+        // --- TAB / SHIFT+TAB to navigate between buttons
+        if (kb.tabKey.wasPressedThisFrame)
+        {
+            if (es.currentSelectedGameObject == null && firstSelected != null)
+            {
+                es.SetSelectedGameObject(firstSelected);
+            }
+            else
+            {
+                var current = es.currentSelectedGameObject;
+                if (current != null)
+                {
+                    var sel = current.GetComponent<Selectable>();
+                    if (sel != null)
+                    {
+                        bool backwards = kb.shiftKey.isPressed;
+                        Selectable next = backwards
+                            ? (sel.FindSelectableOnUp() ?? sel.FindSelectableOnLeft())
+                            : (sel.FindSelectableOnDown() ?? sel.FindSelectableOnRight());
+
+                        if (next == null && firstSelected != null)
+                            next = firstSelected.GetComponent<Selectable>();
+
+                        if (next != null)
+                            es.SetSelectedGameObject(next.gameObject);
+                    }
+                }
+                else if (firstSelected != null)
+                {
+                    es.SetSelectedGameObject(firstSelected);
+                }
+            }
+        }
+
+        // --- SPACE = confirm (click)
+        if (kb.spaceKey.wasPressedThisFrame)
+        {
+            var current = es.currentSelectedGameObject;
+            if (current != null)
+                ExecuteEvents.Execute(current, new BaseEventData(es), ExecuteEvents.submitHandler);
+        }
     }
 
     static bool IsDesktop() =>

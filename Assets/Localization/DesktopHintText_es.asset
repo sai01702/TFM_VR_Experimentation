@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 60897144832
-    m_Localized: "\u2022 Cambiar botones: Tab\n\u2022 Confirmar: Espacio"
+    m_Localized: "\u2022 Cambiar botones: Tab   \u2022 Confirmar: Espacio/Intro"
     m_Metadata:
       m_Items: []
   references:
