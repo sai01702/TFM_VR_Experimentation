@@ -130,6 +130,7 @@ public class HatStandTrigger : MonoBehaviour
 
         // --- VR: force release if currently selected by an XR interactor
         var grab = hatCollider.GetComponent<XRGrabInteractable>();
+        /*
         if (grab != null)
         {
             var xrMgr = grab.interactionManager as XRInteractionManager;
@@ -144,7 +145,7 @@ public class HatStandTrigger : MonoBehaviour
 
             // Temporarily disable the grab while we snap so it doesn't fight us.
             grab.enabled = false;
-        }
+        }*/
 
         // --- Physics settle while we place
         Rigidbody rb = hatCollider.attachedRigidbody ?? hatCollider.GetComponent<Rigidbody>();

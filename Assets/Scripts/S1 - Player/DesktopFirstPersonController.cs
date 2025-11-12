@@ -56,6 +56,41 @@ public class DesktopFirstPersonController : MonoBehaviour
         jumpAction = actions["Jump"];
         sprintAction = actions["Sprint"];
 
+        // --- Ensure Arrow Keys composite exists for Move (adds if missing) ---
+        if (moveAction != null)
+        {
+            bool hasArrowComposite = false;
+
+            // Look through bindings to see if any child uses upArrow (cheap detection)
+            for (int i = 0; i < moveAction.bindings.Count; i++)
+            {
+                // Find a 2DVector composite and inspect its children
+                if (moveAction.bindings[i].isComposite && moveAction.bindings[i].name == "2DVector")
+                {
+                    for (int j = i + 1; j < moveAction.bindings.Count && !moveAction.bindings[j].isComposite; j++)
+                    {
+                        var path = moveAction.bindings[j].effectivePath;
+                        if (!string.IsNullOrEmpty(path) && path.Contains("upArrow"))
+                        {
+                            hasArrowComposite = true;
+                            break;
+                        }
+                    }
+                }
+                if (hasArrowComposite) break;
+            }
+
+            if (!hasArrowComposite)
+            {
+                // Add Arrow Keys composite
+                var comp = moveAction.AddCompositeBinding("2DVector");
+                comp.With("Up", "<Keyboard>/upArrow")
+                    .With("Down", "<Keyboard>/downArrow")
+                    .With("Left", "<Keyboard>/leftArrow")
+                    .With("Right", "<Keyboard>/rightArrow");
+            }
+        }
+
         if (cameraPivot == null)
             Debug.LogWarning("Camera Pivot not set. Drag your PlayerCamera into the cameraPivot field.");
     }
