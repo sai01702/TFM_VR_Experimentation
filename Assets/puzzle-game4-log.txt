@@ -96034,3 +96034,11 @@ Objetivo: Colocar 5 sombreros en sus stands correctos
 [10,25s] AGARRE - Sombrero 'PoliceCap' agarrado
 [10,25s] PISTA - Pista mostrada para sombrero 'PoliceCap'
 [11,18s] SUELTA - Sombrero 'PoliceCap' soltado
+
+--- NUEVA SESION ---
+Sesión iniciada el: 12/11/2025 11:41:13
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 12/11/2025 11:41:13
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
