@@ -10,6 +10,13 @@ public class CheckHatsOnTouch : MonoBehaviour
     [Tooltip("Hats in the scene")]
     public GameObject[] hats;
 
+    [Header("Button Materials")]
+    [Tooltip("Renderer of the moving/top part of the 3D button (e.g. 'Press' mesh).")]
+    public Renderer pressRenderer;          // drag the Press object's Renderer here
+    public Color normalColor = Color.red;   // will be overwritten by material color at Start
+    public Color pressedColor = Color.green;
+    public float colorResetDelay = 0.3f;
+
     [Tooltip("Hat stands (each with a Collider and a correctHatName)")]
     public HatStandTrigger[] hatStands;
 
@@ -42,6 +49,10 @@ public class CheckHatsOnTouch : MonoBehaviour
             _initialHatPositions[hat] = hat.transform.position;
             _initialHatRotations[hat] = hat.transform.rotation;
         }
+
+        // Capture the current material color as "normal"
+        if (pressRenderer != null)
+            normalColor = pressRenderer.material.color;
     }
 
     // ─────────────────────────────────────────────
@@ -54,6 +65,7 @@ public class CheckHatsOnTouch : MonoBehaviour
         if (Time.time - _lastCheckTime >= checkCooldown)
         {
             _lastCheckTime = Time.time;
+            StartCoroutine(FlashButtonColor());
             CheckAndUpdateHats();
         }
     }
@@ -66,6 +78,7 @@ public class CheckHatsOnTouch : MonoBehaviour
         if (Time.time - _lastCheckTime >= checkCooldown)
         {
             _lastCheckTime = Time.time;
+            StartCoroutine(FlashButtonColor());
             CheckAndUpdateHats();
         }
     }
@@ -88,6 +101,7 @@ public class CheckHatsOnTouch : MonoBehaviour
             return;
 
         _lastCheckTime = Time.time;
+        StartCoroutine(FlashButtonColor());
         CheckAndUpdateHats();
     }
 
@@ -224,5 +238,23 @@ public class CheckHatsOnTouch : MonoBehaviour
             SceneTracker.Instance.PreviousScene = SceneManager.GetActiveScene().name;
 
         SceneManager.LoadScene("GameOverScene");
+    }
+
+    // ─────────────────────────────────────────────
+    // Button color feedback
+    // ─────────────────────────────────────────────
+    IEnumerator FlashButtonColor()
+    {
+        if (pressRenderer == null)
+            yield break;
+
+        // Change to pressed color
+        pressRenderer.material.color = pressedColor;
+
+        // Wait a short time
+        yield return new WaitForSeconds(colorResetDelay);
+
+        // Return to normal color
+        pressRenderer.material.color = normalColor;
     }
 }

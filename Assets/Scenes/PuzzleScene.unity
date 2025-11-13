@@ -5107,8 +5107,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0653737, y: 1.0208467, z: 1}
-  m_Center: {x: -0.008902025, y: -0.3196215, z: 0}
+  m_Size: {x: 1.0653737, y: 1.4714236, z: 1}
+  m_Center: {x: -0.008902025, y: -0.094332874, z: 0}
 --- !u!1001 &1004011962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10331,6 +10331,10 @@ MonoBehaviour:
   - {fileID: 1290372462}
   - {fileID: 1784911252}
   - {fileID: 997927207}
+  pressRenderer: {fileID: 1423442041}
+  normalColor: {r: 1, g: 0, b: 0, a: 1}
+  pressedColor: {r: 0, g: 1, b: 0, a: 1}
+  colorResetDelay: 0.3
   hatStands:
   - {fileID: 1003900469}
   - {fileID: 505273083}
