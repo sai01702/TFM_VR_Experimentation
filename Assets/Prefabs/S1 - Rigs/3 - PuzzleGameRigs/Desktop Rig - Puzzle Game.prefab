@@ -599,7 +599,7 @@ MonoBehaviour:
   cam: {fileID: 2323526667234873488}
   holdPoint: {fileID: 2166032916740944808}
   crossAim: {fileID: 3997739417144904893}
-  pickupRange: 3
+  pickupRange: 1.7
   pickupMask:
     serializedVersion: 2
     m_Bits: 4294967295

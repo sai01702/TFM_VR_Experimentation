@@ -12145,6 +12145,46 @@ PrefabInstance:
       propertyPath: m_RenderMode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1997517945018321340, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_Colors.m_PressedColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997517945018321340, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_Colors.m_PressedColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997517945018321340, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_Colors.m_PressedColor.r
+      value: 0.32941985
+      objectReference: {fileID: 0}
+    - target: {fileID: 2168542442598245522, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -42.500008
+      objectReference: {fileID: 0}
+    - target: {fileID: 2254883728957043271, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_margin.z
+      value: -161.25354
+      objectReference: {fileID: 0}
+    - target: {fileID: 2896069835576295758, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_Colors.m_PressedColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2896069835576295758, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_Colors.m_PressedColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2896069835576295758, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_Colors.m_PressedColor.r
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 3199777199525853315, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -104.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3199777199525853315, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 65.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4695408159385444097, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.029
@@ -12161,6 +12201,22 @@ PrefabInstance:
       propertyPath: desktopRigPrefab
       value: 
       objectReference: {fileID: 8955973245134529063, guid: d040d3fca23ae4b9aaadbc29a207d3e5, type: 3}
+    - target: {fileID: 4881370745487758889, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -42.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5047467181719120382, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5047467181719120382, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_Color.g
+      value: 0.7149368
+      objectReference: {fileID: 0}
+    - target: {fileID: 5047467181719120382, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5059676094504625597, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
       propertyPath: m_Name
       value: SeyitSettings
@@ -12286,7 +12342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3795724135239185446, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3958610031188029992, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_Enabled

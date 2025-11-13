@@ -2,252 +2,210 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class HatStandTrigger : MonoBehaviour
 {
-    [Header("Nombre correcto del sombrero para este stand")]
-    [Tooltip("Pon aquí el nombre EXACTO del sombrero correcto (sin '(Clone)')")]
+    [Header("Correct hat name (no '(Clone)')")]
     public string correctHatName;
 
-    // total correct hats across the scene
     private static int correctHatsPlaced = 0;
 
-    // puzzle state for THIS stand
-    private bool hatAlreadyPlaced = false;          // did this stand get its correct hat?
-    private GameObject placedCorrectHatGO = null;   // which hat counted as correct
+    // scoring state
+    private bool hatAlreadyPlaced = false;
+    private GameObject placedCorrectHatGO = null;
 
-    // cooldown so stand doesn't instantly re-grab when you steal a hat
-    [Header("Cooldown after removing a hat")]
-    [Tooltip("Seconds the stand will IGNORE hats after you take one off.")]
-    public float regrabCooldownSeconds = 2f;
-    private float cooldownUntil = 0f; // world time until which we ignore snapping
+    // occupancy state
+    private GameObject currentOccupant = null;
+
+    [Header("Cooldown & Debounce")]
+    public float regrabCooldownSeconds = 2f;   // after removal
+    public float occupyDebounceSeconds = 0.15f; // ignore trig events right after snap
+    public float releaseDistance = 0.20f;      // how far from SnapPoint to consider "really left"
+    private float cooldownUntil = 0f;
+    private float ignoreEventsUntil = 0f;
 
     [Header("Snapping")]
-    public GameObject SnapPoint; // Optional: specific point to snap hats to
-    [Tooltip("Seconds to keep the hat kinematic while it settles on the stand.")]
+    public GameObject SnapPoint;
     public float settleKinematicTime = 0.15f;
 
     void Reset()
     {
         var col = GetComponent<Collider>();
-        if (col != null) col.isTrigger = true;
+        if (col) col.isTrigger = true;
     }
 
-    private void OnTriggerEnter(Collider other) => TryAcceptHat(other, fromStay: false);
+    void OnTriggerEnter(Collider other) => TryAcceptHat(other, false);
+    void OnTriggerStay(Collider other) => TryAcceptHat(other, true);
 
-    private void OnTriggerStay(Collider other) => TryAcceptHat(other, fromStay: true);
-
-    private void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)
     {
-        // If the correct hat (the one that counted for score) leaves,
-        // undo score and start cooldown.
-        if (placedCorrectHatGO != null && other.gameObject == placedCorrectHatGO)
+        var root = GetHatRoot(other);
+        if (root == null) return;
+
+        // Ignore noisy exits during debounce window
+        if (Time.time < ignoreEventsUntil) return;
+
+        // Only clear if this exact occupant is truly away from the snap area
+        if (currentOccupant != null && root == currentOccupant)
         {
-            if (hatAlreadyPlaced)
+            if (!IsInsideHoldArea(root))
             {
-                hatAlreadyPlaced = false;
-                correctHatsPlaced--;
-                Debug.Log($"[Stand {name}] Correct hat REMOVED. Total correct now: {correctHatsPlaced}");
-
-                if (PuzzleLogsManager.Instance != null)
+                // If it was the counted correct hat, undo score
+                if (placedCorrectHatGO != null && root == placedCorrectHatGO && hatAlreadyPlaced)
                 {
-                    PuzzleLogsManager.Instance.RegistrarRemoverSombrero(
-                        Clean(other.name),
-                        correctHatName
-                    );
+                    hatAlreadyPlaced = false;
+                    placedCorrectHatGO = null;
+                    correctHatsPlaced--;
+                    Debug.Log($"[Stand {name}] Correct hat REMOVED. Total: {correctHatsPlaced}");
+                    PuzzleLogsManager.Instance?.RegistrarRemoverSombrero(Clean(root.name), correctHatName);
                 }
+
+                currentOccupant = null;
+                cooldownUntil = Time.time + regrabCooldownSeconds;
             }
-
-            placedCorrectHatGO = null;
         }
-
-        // no matter what hat left, we trigger cooldown so we don't regrab instantly
-        cooldownUntil = Time.time + regrabCooldownSeconds;
     }
 
-    private void TryAcceptHat(Collider other, bool fromStay)
+    void TryAcceptHat(Collider other, bool fromStay)
     {
-        if (!other.CompareTag("Hat"))
-            return;
+        if (Time.time < cooldownUntil) return;
 
-        if (Time.time < cooldownUntil)
-            return;
+        var hatRoot = GetHatRoot(other);
+        if (hatRoot == null) return;
 
-        GameObject hatGO = other.gameObject;
-        string incomingName = Clean(other.name);
+        // Must be tagged on the root OR collider
+        if (!(other.CompareTag("Hat") || hatRoot.CompareTag("Hat"))) return;
 
-        // ALWAYS snap and make sure any hand (desktop or VR) releases
-        SnapAndSettle(other);
-        ForceHandReleaseDesktop(hatGO);       // desktop release (existing behavior)
+        // If stand looks occupied (occupant still inside hold area), refuse any other hat
+        if (IsOccupiedByAnother(hatRoot)) return;
 
-        // puzzle correctness logic (unchanged)
-        bool isCorrectForThisStand =
-            !string.IsNullOrEmpty(correctHatName) &&
-            incomingName == correctHatName;
+        // If same hat already registered as occupant (extra colliders firing), ignore
+        if (currentOccupant == hatRoot) return;
 
-        if (isCorrectForThisStand && !hatAlreadyPlaced)
+        // Accept & snap
+        SnapAndSettle(hatRoot);
+        currentOccupant = hatRoot;
+        ignoreEventsUntil = Time.time + occupyDebounceSeconds;
+
+        // Auto release ONLY for Desktop
+        if (IsDesktop())
+            ForceHandReleaseDesktop(hatRoot);
+
+        // Scoring
+        string incoming = Clean(hatRoot.name);
+        bool isCorrect = !string.IsNullOrEmpty(correctHatName) && incoming == correctHatName;
+
+        if (isCorrect && !hatAlreadyPlaced)
         {
             hatAlreadyPlaced = true;
-            placedCorrectHatGO = hatGO;
+            placedCorrectHatGO = hatRoot;
             correctHatsPlaced++;
-
             if (fromStay)
-                Debug.Log($"(Stay catch) ✅ Correct hat '{incomingName}' on '{correctHatName}'. Total correct: {correctHatsPlaced}");
+                Debug.Log($"(Stay) ✅ '{incoming}' on '{correctHatName}'. Total: {correctHatsPlaced}");
             else
-                Debug.Log($"✅ Correct hat '{incomingName}' on '{correctHatName}'. Total correct: {correctHatsPlaced}");
-
-            if (PuzzleLogsManager.Instance != null)
-            {
-                PuzzleLogsManager.Instance.RegistrarColocacionCorrecta(
-                    incomingName,
-                    correctHatName
-                );
-            }
+                Debug.Log($"✅ '{incoming}' on '{correctHatName}'. Total: {correctHatsPlaced}");
+            PuzzleLogsManager.Instance?.RegistrarColocacionCorrecta(incoming, correctHatName);
         }
-        else if (!isCorrectForThisStand && !fromStay)
+        else if (!isCorrect && !fromStay)
         {
-            Debug.LogWarning($"❌ Wrong hat '{incomingName}' placed on stand '{correctHatName}' (stand object: {gameObject.name})");
-
-            if (PuzzleLogsManager.Instance != null)
-            {
-                PuzzleLogsManager.Instance.RegistrarColocacionIncorrecta(
-                    incomingName,
-                    correctHatName
-                );
-            }
+            Debug.LogWarning($"❌ Wrong hat '{incoming}' on stand '{correctHatName}'.");
+            PuzzleLogsManager.Instance?.RegistrarColocacionIncorrecta(incoming, correctHatName);
         }
     }
 
-    private string Clean(string raw) => raw.Replace("(Clone)", "").Trim();
-
-    /// <summary>
-    /// Put hat on the stand and ensure both Desktop and VR hands have released it.
-    /// </summary>
-    private void SnapAndSettle(Collider hatCollider)
+    GameObject GetHatRoot(Collider col)
     {
-        if (hatCollider == null) return;
+        var rb = col.attachedRigidbody ?? col.GetComponentInParent<Rigidbody>();
+        return rb ? rb.gameObject : null;
+    }
 
-        // --- VR: force release if currently selected by an XR interactor
-        var grab = hatCollider.GetComponent<XRGrabInteractable>();
-        /*
-        if (grab != null)
-        {
-            var xrMgr = grab.interactionManager as XRInteractionManager;
-            if (xrMgr != null && grab.interactorsSelecting.Count > 0)
-            {
-                // Politely ask all selecting interactors to release this grab
-                // (copy to array to avoid modifying collection during iteration)
-                var selecting = new System.Collections.Generic.List<IXRSelectInteractor>(grab.interactorsSelecting);
-                foreach (var interactor in selecting)
-                    xrMgr.SelectExit(interactor, grab);
-            }
+    bool IsOccupiedByAnother(GameObject incomingRoot)
+    {
+        if (currentOccupant == null) return false;
+        // Treat as occupied only if the current occupant is still inside the hold area
+        if (IsInsideHoldArea(currentOccupant) && currentOccupant != incomingRoot)
+            return true;
+        // If occupant drifted out, free it
+        if (!IsInsideHoldArea(currentOccupant))
+            currentOccupant = null;
+        return false;
+    }
 
-            // Temporarily disable the grab while we snap so it doesn't fight us.
-            grab.enabled = false;
-        }*/
+    bool IsInsideHoldArea(GameObject hatRoot)
+    {
+        var refPos = (SnapPoint ? SnapPoint.transform.position : transform.position);
+        return Vector3.Distance(hatRoot.transform.position, refPos) <= releaseDistance;
+    }
 
-        // --- Physics settle while we place
-        Rigidbody rb = hatCollider.attachedRigidbody ?? hatCollider.GetComponent<Rigidbody>();
-        if (rb == null) return;
+    string Clean(string raw) => raw.Replace("(Clone)", "").Trim();
 
-        Transform hatT = rb.transform;
+    void SnapAndSettle(GameObject hatRoot)
+    {
+        var rb = hatRoot.GetComponent<Rigidbody>();
+        if (!rb) return;
 
-        // compute final pose
-        Vector3 pos = (SnapPoint != null) ? SnapPoint.transform.position : transform.position;
-        Quaternion rot;
-        if (SnapPoint != null)
-        {
-            rot = Quaternion.Euler(0f, 180f, 0f);
-            
-        }
-        else
-        {
-            // Upright with stand's yaw (your previous behavior used a fixed 180°; keep if you want)
-            //var e = transform.eulerAngles;
-            rot = SnapPoint.transform.rotation;
-        }
+        Vector3 pos = SnapPoint ? SnapPoint.transform.position : transform.position;
+        Quaternion rot = SnapPoint
+            ? Quaternion.Euler(0f, 180f, 0f)                  // keep your fixed yaw with SnapPoint
+            : Quaternion.Euler(0f, transform.eulerAngles.y, 0f);
 
-        // put in place with a short kinematic settle
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        rb.isKinematic = true;     // no gravity or physics while we snap
+        rb.isKinematic = true;
         rb.useGravity = false;
         rb.constraints = RigidbodyConstraints.None;
 
-        hatT.SetParent(null, true);
-        hatT.position = pos;
-        hatT.rotation = rot;
+        hatRoot.transform.SetParent(null, true);
+        hatRoot.transform.position = pos;
+        hatRoot.transform.rotation = rot;
 
-        // finish snap after a brief delay: restore gravity and freeze pose on stand
-        StartCoroutine(FinishSnap(rb, grab));
+        StartCoroutine(FinishSnap(rb));
     }
 
-    private IEnumerator FinishSnap(Rigidbody rb, XRGrabInteractable grab)
+    IEnumerator FinishSnap(Rigidbody rb)
     {
         yield return new WaitForSeconds(settleKinematicTime);
-
-        // allow resting on the stand but don't drift
         rb.isKinematic = false;
         rb.useGravity = true;
-        rb.constraints = RigidbodyConstraints.FreezeAll;
-
-        if (grab != null)
-            grab.enabled = true; // re-enable VR grabbing after placement
+        rb.constraints = RigidbodyConstraints.FreezeAll; // your HatGrabPhysicsReset frees on grab
     }
 
-    // Desktop helper (unchanged)
-    private void ForceHandReleaseDesktop(GameObject hatGO)
+    void ForceHandReleaseDesktop(GameObject hatRoot)
     {
-        DesktopGrabber grabber = FindObjectOfType<DesktopGrabber>();
-        if (grabber == null) return;
-        grabber.ForceFullReleaseIfHolding(hatGO);
+        var grabber = FindObjectOfType<DesktopGrabber>();
+        grabber?.ForceFullReleaseIfHolding(hatRoot);
     }
 
-    // Public for desktop ray-drop path
-    public void ForcePlaceHat(GameObject hatGO)
+    public void ForcePlaceHat(GameObject hatRoot)
     {
-        if (hatGO == null) return;
-
+        if (!hatRoot) return;
         if (Time.time < cooldownUntil) return;
+        if (IsOccupiedByAnother(hatRoot)) return;
 
-        Collider col = hatGO.GetComponent<Collider>();
-        if (col != null) SnapAndSettle(col);
+        SnapAndSettle(hatRoot);
+        currentOccupant = hatRoot;
+        ignoreEventsUntil = Time.time + occupyDebounceSeconds;
 
-        ForceHandReleaseDesktop(hatGO);
+        if (IsDesktop())
+            ForceHandReleaseDesktop(hatRoot);
 
-        string incomingName = Clean(hatGO.name);
-        bool isCorrectForThisStand =
-            !string.IsNullOrEmpty(correctHatName) &&
-            incomingName == correctHatName;
-
-        if (isCorrectForThisStand && !hatAlreadyPlaced)
+        string incoming = Clean(hatRoot.name);
+        bool isCorrect = !string.IsNullOrEmpty(correctHatName) && incoming == correctHatName;
+        if (isCorrect && !hatAlreadyPlaced)
         {
             hatAlreadyPlaced = true;
-            placedCorrectHatGO = hatGO;
+            placedCorrectHatGO = hatRoot;
             correctHatsPlaced++;
-
-            Debug.Log($"[ForcePlace] ✅ Correct hat '{incomingName}' on '{correctHatName}'. Total correct: {correctHatsPlaced}");
-
-            if (PuzzleLogsManager.Instance != null)
-            {
-                PuzzleLogsManager.Instance.RegistrarColocacionCorrecta(
-                    incomingName,
-                    correctHatName
-                );
-            }
+            Debug.Log($"[ForcePlace] ✅ '{incoming}' on '{correctHatName}'. Total: {correctHatsPlaced}");
+            PuzzleLogsManager.Instance?.RegistrarColocacionCorrecta(incoming, correctHatName);
         }
-        else if (!isCorrectForThisStand)
+        else if (!isCorrect)
         {
-            Debug.LogWarning($"[ForcePlace] ❌ Wrong hat '{incomingName}' on stand '{correctHatName}' (not counted).");
-
-            if (PuzzleLogsManager.Instance != null)
-            {
-                PuzzleLogsManager.Instance.RegistrarColocacionIncorrecta(
-                    incomingName,
-                    correctHatName
-                );
-            }
+            Debug.LogWarning($"[ForcePlace] ❌ '{incoming}' on '{correctHatName}' (not counted).");
+            PuzzleLogsManager.Instance?.RegistrarColocacionIncorrecta(incoming, correctHatName);
         }
     }
+
+    static bool IsDesktop() =>
+        GameSettings.Instance != null && GameSettings.Instance.CurrentMode == GameMode.Desktop;
 }
