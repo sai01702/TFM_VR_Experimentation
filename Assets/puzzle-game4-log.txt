@@ -108618,3 +108618,38 @@ Sesión iniciada el: 12/11/2025 19:19:27
 Tiempo de inicio: 12/11/2025 19:19:27
 Objetivo: Colocar 5 sombreros en sus stands correctos
 
+
+--- NUEVA SESION ---
+Sesión iniciada el: 13/11/2025 9:24:43
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 13/11/2025 9:24:43
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[2,44s] AGARRE - Sombrero 'PoliceCap' agarrado
+[2,44s] PISTA - Pista mostrada para sombrero 'PoliceCap'
+[3,61s] SUELTA - Sombrero 'PoliceCap' soltado
+[3,61s] ERROR - Sombrero 'PoliceCap' colocado incorrectamente en stand 'MagicianHat'
+    Intentos para este sombrero: 1
+
+[4,26s] AGARRE - Sombrero 'PoliceCap' agarrado
+[4,26s] PISTA - Pista mostrada para sombrero 'PoliceCap'
+[4,63s] SUELTA - Sombrero 'PoliceCap' soltado
+[5,59s] AGARRE - Sombrero 'PoliceCap' agarrado
+[5,59s] PISTA - Pista mostrada para sombrero 'PoliceCap'
+[6,24s] SUELTA - Sombrero 'PoliceCap' soltado
+[7,48s] AGARRE - Sombrero 'PoliceCap' agarrado
+[7,48s] PISTA - Pista mostrada para sombrero 'PoliceCap'
+[7,75s] SUELTA - Sombrero 'PoliceCap' soltado
+[7,75s] ERROR - Sombrero 'PoliceCap' colocado incorrectamente en stand 'MagicianHat'
+    Intentos para este sombrero: 2
+
+[9,53s] AGARRE - Sombrero 'MagicianHat' agarrado
+[9,53s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[10,75s] SUELTA - Sombrero 'MagicianHat' soltado
+[10,75s] ERROR - Sombrero 'MagicianHat' colocado incorrectamente en stand 'Crown'
+    Intentos para este sombrero: 1
+
+[11,77s] AGARRE - Sombrero 'MagicianHat' agarrado
+[11,77s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[13,91s] SUELTA - Sombrero 'MagicianHat' soltado
