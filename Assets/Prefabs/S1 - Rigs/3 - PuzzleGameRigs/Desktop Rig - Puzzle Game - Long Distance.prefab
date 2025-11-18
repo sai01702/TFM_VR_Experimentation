@@ -460,11 +460,9 @@ GameObject:
   - component: {fileID: 4170309759946626023}
   - component: {fileID: 4684336681224218124}
   - component: {fileID: 5944712860973532378}
-  - component: {fileID: 1409343858059553150}
   - component: {fileID: 1666705000427212330}
   - component: {fileID: 5436434412167748787}
-  - component: {fileID: 6699781979116156415}
-  - component: {fileID: 6617441272765510152}
+  - component: {fileID: 4710467114309291794}
   m_Layer: 0
   m_Name: Desktop Rig - Puzzle Game - Long Distance
   m_TagString: Player
@@ -566,24 +564,6 @@ MonoBehaviour:
   mouseSensitivity: 0.12
   minPitch: -80
   maxPitch: 80
---- !u!114 &1409343858059553150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8955973245134529063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2d4874cc9b2448f4915a753826ae783, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 2323526667234873488}
-  range: 20
-  interactLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  playerInput: {fileID: 0}
 --- !u!114 &1666705000427212330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -611,7 +591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b2aad0f92bd0f47894e5b5d5bec077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6699781979116156415
+--- !u!114 &4710467114309291794
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -620,35 +600,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 8955973245134529063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 191abacb6314b43c5b85ca3f1552e254, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 2323526667234873488}
-  desktopGrabberLongDistance: {fileID: 0}
-  maxDistance: 50
-  standLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  highlightMaterial: {fileID: -5354028657143720620, guid: 81db4ff5da6fe284697560445d666e4e, type: 3}
-  interactAction: {fileID: 8189621524469189278, guid: b14599109a100481582b81f39d36f356, type: 3}
---- !u!114 &6617441272765510152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8955973245134529063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baa4aac62c8ba6c47a8ffae6cd585be2, type: 3}
+  m_Script: {fileID: 11500000, guid: f6a302c7c7912a449a5dbc7d9c94df28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactAction: {fileID: 8189621524469189278, guid: b14599109a100481582b81f39d36f356, type: 3}
   cam: {fileID: 2323526667234873488}
   holdPoint: {fileID: 2166032916740944808}
-  crossAim: {fileID: 3997739417144904893}
-  pickupRange: 20
+  pickupRange: 40
   pickupMask:
     serializedVersion: 2
     m_Bits: 4294967295
   dropForwardBoost: 0
+  standLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  standMaxDistance: 50
+  crosshairRenderer: {fileID: 4644127766692845238}
+  crosshairTargetColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}

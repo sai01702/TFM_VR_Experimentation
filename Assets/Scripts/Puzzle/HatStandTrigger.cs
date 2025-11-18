@@ -172,8 +172,14 @@ public class HatStandTrigger : MonoBehaviour
 
     void ForceHandReleaseDesktop(GameObject hatRoot)
     {
-        var grabber = FindObjectOfType<DesktopGrabber>();
-        grabber?.ForceFullReleaseIfHolding(hatRoot);
+        var closeGrabber = FindObjectOfType<DesktopGrabber>();
+        if (closeGrabber != null)
+            closeGrabber.ForceFullReleaseIfHolding(hatRoot);
+
+        // Long-distance desktop grabber
+        var longGrabber = FindObjectOfType<DesktopLongDistanceGrabber>();
+        if (longGrabber != null)
+            longGrabber.ForceFullReleaseIfHolding(hatRoot);
     }
 
     public void ForcePlaceHat(GameObject hatRoot)
