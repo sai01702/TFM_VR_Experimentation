@@ -18,9 +18,9 @@ public class HatStandTrigger : MonoBehaviour
     private GameObject currentOccupant = null;
 
     [Header("Cooldown & Debounce")]
-    public float regrabCooldownSeconds = 2f;   // after removal
+    public float regrabCooldownSeconds = 2f;    // after removal
     public float occupyDebounceSeconds = 0.15f; // ignore trig events right after snap
-    public float releaseDistance = 0.20f;      // how far from SnapPoint to consider "really left"
+    public float releaseDistance = 0.20f;       // how far from SnapPoint to consider "really left"
     private float cooldownUntil = 0f;
     private float ignoreEventsUntil = 0f;
 
@@ -208,4 +208,26 @@ public class HatStandTrigger : MonoBehaviour
 
     static bool IsDesktop() =>
         GameSettings.Instance != null && GameSettings.Instance.CurrentMode == GameMode.Desktop;
+
+    // ─────────────────────────────────────────────
+    // HIGHLIGHT SUPPORT
+    // ─────────────────────────────────────────────
+    [Header("Highlight (optional)")]
+    public Renderer standRenderer;          // assign the MeshRenderer from your visible stand
+    public Material highlightMaterial;      // glowing yellow, etc.
+    private Material _defaultMaterial;      // cached original
+
+    void Awake()
+    {
+        if (standRenderer != null)
+            _defaultMaterial = standRenderer.material;
+    }
+
+    public void SetHighlighted(bool on)
+    {
+        if (standRenderer == null || _defaultMaterial == null || highlightMaterial == null)
+            return;
+
+        standRenderer.material = on ? highlightMaterial : _defaultMaterial;
+    }
 }

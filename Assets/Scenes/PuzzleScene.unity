@@ -470,6 +470,8 @@ MonoBehaviour:
   releaseDistance: 0.2
   SnapPoint: {fileID: 313735990}
   settleKinematicTime: 0.15
+  standRenderer: {fileID: 1926392322}
+  highlightMaterial: {fileID: -5354028657143720620, guid: 81db4ff5da6fe284697560445d666e4e, type: 3}
 --- !u!65 &57833728
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1766,6 +1768,8 @@ MonoBehaviour:
   releaseDistance: 0.2
   SnapPoint: {fileID: 500912137}
   settleKinematicTime: 0.15
+  standRenderer: {fileID: 0}
+  highlightMaterial: {fileID: 0}
 --- !u!65 &396160413
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2383,6 +2387,8 @@ MonoBehaviour:
   releaseDistance: 0.2
   SnapPoint: {fileID: 427244238}
   settleKinematicTime: 0.15
+  standRenderer: {fileID: 1189602347}
+  highlightMaterial: {fileID: -5354028657143720620, guid: 81db4ff5da6fe284697560445d666e4e, type: 3}
 --- !u!65 &505273084
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4384,7 +4390,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 812642613}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c69e88d30074d9b4badb2a07f8187786, type: 3}
   m_Name: 
@@ -4785,6 +4791,8 @@ MonoBehaviour:
   releaseDistance: 0.2
   SnapPoint: {fileID: 109305712}
   settleKinematicTime: 0.15
+  standRenderer: {fileID: 878399391}
+  highlightMaterial: {fileID: -5354028657143720620, guid: 81db4ff5da6fe284697560445d666e4e, type: 3}
 --- !u!65 &995509171
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5008,7 +5016,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 997927207}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c69e88d30074d9b4badb2a07f8187786, type: 3}
   m_Name: 
@@ -5088,6 +5096,8 @@ MonoBehaviour:
   releaseDistance: 0.2
   SnapPoint: {fileID: 874084459}
   settleKinematicTime: 0.15
+  standRenderer: {fileID: 1047999366}
+  highlightMaterial: {fileID: -5354028657143720620, guid: 81db4ff5da6fe284697560445d666e4e, type: 3}
 --- !u!65 &1003900470
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6626,6 +6636,8 @@ MonoBehaviour:
   releaseDistance: 0.2
   SnapPoint: {fileID: 0}
   settleKinematicTime: 0.15
+  standRenderer: {fileID: 0}
+  highlightMaterial: {fileID: 0}
 --- !u!64 &1221990367
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6970,7 +6982,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1290372462}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c69e88d30074d9b4badb2a07f8187786, type: 3}
   m_Name: 
@@ -7254,7 +7266,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1343820009}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c69e88d30074d9b4badb2a07f8187786, type: 3}
   m_Name: 
@@ -7269,7 +7281,7 @@ MonoBehaviour:
   useColliderBounds: 1
   magnetDistance: 5
   magnetStrength: 0.2
-  highlightMaterial: {fileID: 0}
+  highlightMaterial: {fileID: 2100000, guid: 2c994d22a9398f64d9292e3849f59f92, type: 2}
 --- !u!114 &1343820028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8703,6 +8715,8 @@ MonoBehaviour:
   releaseDistance: 0.2
   SnapPoint: {fileID: 769989917}
   settleKinematicTime: 0.15
+  standRenderer: {fileID: 714835858}
+  highlightMaterial: {fileID: -5354028657143720620, guid: 81db4ff5da6fe284697560445d666e4e, type: 3}
 --- !u!65 &1718681960
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8837,7 +8851,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desktopRigPrefab: {fileID: 8955973245134529063, guid: 67e2d3a1b084fb14faacd41a07744619, type: 3}
-  desktopRigPrefab_LargaD: {fileID: 0}
+  desktopRigPrefab_LargaD: {fileID: 8955973245134529063, guid: 5513129271ad644f08bc1d04f8dc631d, type: 3}
   vrRigInScene: {fileID: 1091647199}
   largaObject: {fileID: 267058771}
   spawnPoint: {fileID: 1730125507}
@@ -9359,7 +9373,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1784911252}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c69e88d30074d9b4badb2a07f8187786, type: 3}
   m_Name: 
@@ -10758,7 +10772,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950939249288935051}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c69e88d30074d9b4badb2a07f8187786, type: 3}
   m_Name: 

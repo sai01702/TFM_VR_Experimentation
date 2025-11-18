@@ -1,22 +1,35 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class SceneRigInstaller_Puzzle : MonoBehaviour
 {
     [Header("Rig Prefabs / Scene References")]
     [SerializeField] private GameObject desktopRigPrefab;          // Normal Desktop rig
-    [SerializeField] private GameObject desktopRigPrefab_LargaD;   // Desktop rig for large distance (voice)
-    [SerializeField] private GameObject vrRigInScene;              // ✅ Existing XR Origin rig in scene (set inactive in Editor)
+    [SerializeField] private GameObject desktopRigPrefab_LargaD;   // Desktop rig for large distance
+    [SerializeField] private GameObject vrRigInScene;              // Existing XR Origin rig in scene (set inactive in Editor)
     [SerializeField] private GameObject largaObject;               // Object that determines Desktop LargaD
     [SerializeField] private Transform spawnPoint;
 
     private GameObject currentRig;
 
+    // ✅ Make Start a normal method that kicks off a coroutine
     void Start()
     {
-        if (GameSettings.Instance.HasSavedMode())
+        // We delay one frame so other Start() methods (like ActivateObjectOnStart)
+        // can activate largaObject before we decide which rig to spawn.
+        StartCoroutine(DelayedInstall());
+    }
+
+    private IEnumerator DelayedInstall()
+    {
+        // Wait one frame
+        yield return null;
+
+        if (GameSettings.Instance != null && GameSettings.Instance.HasSavedMode())
+        {
             Install();
-        // else: wait until ModeSelectionUI calls ForceInstallNow()
+        }
     }
 
     public void ForceInstallNow()
@@ -36,18 +49,22 @@ public class SceneRigInstaller_Puzzle : MonoBehaviour
         GameObject prefab = null;
         bool usingSceneVRRig = false;
 
+        // ✅ Now largaObject.activeInHierarchy is correct because all Start() have run.
         if (mode == GameMode.Desktop && largaObject != null && largaObject.activeInHierarchy)
         {
             prefab = desktopRigPrefab_LargaD;
+            Debug.Log("[SceneRigInstaller_Puzzle] Using Desktop LargaD rig (largaObject is active).");
         }
         else if (mode == GameMode.VR)
         {
-            prefab = vrRigInScene;  // ✅ use the in-scene VR rig
+            prefab = vrRigInScene;  // use the in-scene VR rig
             usingSceneVRRig = true;
+            Debug.Log("[SceneRigInstaller_Puzzle] Using VR rig in scene.");
         }
         else
         {
             prefab = desktopRigPrefab;
+            Debug.Log("[SceneRigInstaller_Puzzle] Using normal Desktop rig.");
         }
 
         if (prefab == null)
@@ -88,7 +105,7 @@ public class SceneRigInstaller_Puzzle : MonoBehaviour
         var pi = currentRig.GetComponent<PlayerInput>();
         if (pi != null)
         {
-            string scheme = (mode == GameMode.VR) ? "XR" : "Desktop"; // ✅ use "XR" (matches Unity's default XR scheme)
+            string scheme = (mode == GameMode.VR) ? "XR" : "Desktop"; // or "VR" if that's your control scheme name
             pi.defaultControlScheme = scheme;
             pi.SwitchCurrentControlScheme(scheme);
         }

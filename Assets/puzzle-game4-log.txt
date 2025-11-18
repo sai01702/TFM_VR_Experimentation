@@ -108768,3 +108768,145 @@ Objetivo: Colocar 5 sombreros en sus stands correctos
     Intentos para este sombrero: 4
     Tiempo desde primer agarre: 15,20s
 
+
+--- NUEVA SESION ---
+Sesión iniciada el: 11/14/2025 12:41:38 PM
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 11/14/2025 12:41:38 PM
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+
+--- NUEVA SESION ---
+Sesión iniciada el: 11/14/2025 12:42:43 PM
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 11/14/2025 12:42:43 PM
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+
+--- NUEVA SESION ---
+Sesión iniciada el: 11/14/2025 12:45:25 PM
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 11/14/2025 12:45:25 PM
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[4.94s] AGARRE - Sombrero 'MagicianHat' agarrado
+[4.94s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[8.60s] SUELTA - Sombrero 'MagicianHat' soltado
+[10.50s] AGARRE - Sombrero 'MagicianHat' agarrado
+[10.50s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[13.41s] SUELTA - Sombrero 'MagicianHat' soltado
+
+--- NUEVA SESION ---
+Sesión iniciada el: 11/14/2025 1:05:05 PM
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 11/14/2025 1:05:05 PM
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[4.98s] AGARRE - Sombrero 'MagicianHat' agarrado
+[4.98s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[11.76s] SUELTA - Sombrero 'MagicianHat' soltado
+[13.81s] AGARRE - Sombrero 'MagicianHat' agarrado
+[13.81s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[16.05s] SUELTA - Sombrero 'MagicianHat' soltado
+[18.05s] AGARRE - Sombrero 'MagicianHat' agarrado
+[18.05s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[19.00s] SUELTA - Sombrero 'MagicianHat' soltado
+
+--- NUEVA SESION ---
+Sesión iniciada el: 11/14/2025 1:06:19 PM
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 11/14/2025 1:06:19 PM
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[2.46s] AGARRE - Sombrero 'MagicianHat' agarrado
+[2.46s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[4.87s] SUELTA - Sombrero 'MagicianHat' soltado
+[4.87s] ERROR - Sombrero 'MagicianHat' colocado incorrectamente en stand 'CowboyHat'
+    Intentos para este sombrero: 1
+
+[5.59s] AGARRE - Sombrero 'MagicianHat' agarrado
+[5.59s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[6.45s] SUELTA - Sombrero 'MagicianHat' soltado
+[6.45s] ERROR - Sombrero 'MagicianHat' colocado incorrectamente en stand 'CowboyHat'
+    Intentos para este sombrero: 2
+
+[7.43s] AGARRE - Sombrero 'MagicianHat' agarrado
+[7.43s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+
+--- NUEVA SESION ---
+Sesión iniciada el: 11/17/2025 10:44:12 AM
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 11/17/2025 10:44:12 AM
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[3.83s] AGARRE - Sombrero 'MagicianHat' agarrado
+[3.83s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[9.14s] SUELTA - Sombrero 'MagicianHat' soltado
+[9.14s] ERROR - Sombrero 'MagicianHat' colocado incorrectamente en stand 'VikingHelmet'
+    Intentos para este sombrero: 1
+
+[10.84s] AGARRE - Sombrero 'MagicianHat' agarrado
+[10.84s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[13.46s] SUELTA - Sombrero 'MagicianHat' soltado
+[13.46s] ERROR - Sombrero 'MagicianHat' colocado incorrectamente en stand 'CowboyHat'
+    Intentos para este sombrero: 2
+
+[14.70s] AGARRE - Sombrero 'MagicianHat' agarrado
+[14.70s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[20.22s] SUELTA - Sombrero 'MagicianHat' soltado
+[22.26s] AGARRE - Sombrero 'MagicianHat' agarrado
+[22.26s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[23.48s] SUELTA - Sombrero 'MagicianHat' soltado
+[24.39s] AGARRE - Sombrero 'MagicianHat' agarrado
+[24.39s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[25.64s] SUELTA - Sombrero 'MagicianHat' soltado
+[27.83s] AGARRE - Sombrero 'MagicianHat' agarrado
+[27.83s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[28.42s] SUELTA - Sombrero 'MagicianHat' soltado
+[29.07s] AGARRE - Sombrero 'MagicianHat' agarrado
+[29.07s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[31.32s] SUELTA - Sombrero 'MagicianHat' soltado
+[31.96s] AGARRE - Sombrero 'MagicianHat' agarrado
+[31.96s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[37.62s] SUELTA - Sombrero 'MagicianHat' soltado
+[56.57s] AGARRE - Sombrero 'Sombrero' agarrado
+[56.57s] PISTA - Pista mostrada para sombrero 'Sombrero'
+[57.69s] SUELTA - Sombrero 'Sombrero' soltado
+
+--- NUEVA SESION ---
+Sesión iniciada el: 11/17/2025 10:46:48 AM
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 11/17/2025 10:46:48 AM
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+
+--- NUEVA SESION ---
+Sesión iniciada el: 11/17/2025 10:50:40 AM
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 11/17/2025 10:50:40 AM
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[3.77s] AGARRE - Sombrero 'MagicianHat' agarrado
+[3.77s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+
+--- NUEVA SESION ---
+Sesión iniciada el: 11/17/2025 10:51:18 AM
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 11/17/2025 10:51:18 AM
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[5.13s] AGARRE - Sombrero 'MagicianHat' agarrado
+[5.13s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[8.16s] SUELTA - Sombrero 'MagicianHat' soltado
+[12.35s] AGARRE - Sombrero 'PoliceCap' agarrado
+[12.35s] PISTA - Pista mostrada para sombrero 'PoliceCap'
+[13.04s] SUELTA - Sombrero 'PoliceCap' soltado
