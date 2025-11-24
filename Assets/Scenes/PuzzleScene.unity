@@ -465,7 +465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctHatName: PoliceCap
-  regrabCooldownSeconds: 0.5
+  regrabCooldownSeconds: 0.9
   occupyDebounceSeconds: 0.15
   releaseDistance: 0.2
   SnapPoint: {fileID: 313735990}
@@ -491,8 +491,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.0653486, z: 1}
-  m_Center: {x: 0, y: -0.2973711, z: 0}
+  m_Size: {x: 1, y: 1.4025266, z: 1}
+  m_Center: {x: 0, y: -0.12878166, z: 0}
 --- !u!1001 &70447088
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2382,7 +2382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctHatName: MagicianHat
-  regrabCooldownSeconds: 0.5
+  regrabCooldownSeconds: 0.9
   occupyDebounceSeconds: 0.15
   releaseDistance: 0.2
   SnapPoint: {fileID: 427244238}
@@ -2408,8 +2408,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.1031778, z: 1}
-  m_Center: {x: 0, y: -0.28745797, z: 0}
+  m_Size: {x: 1, y: 1.3206111, z: 1}
+  m_Center: {x: 0, y: -0.17874086, z: 0}
 --- !u!1 &519841776
 GameObject:
   m_ObjectHideFlags: 0
@@ -4786,7 +4786,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctHatName: VikingHelmet
-  regrabCooldownSeconds: 0.5
+  regrabCooldownSeconds: 0.9
   occupyDebounceSeconds: 0.15
   releaseDistance: 0.2
   SnapPoint: {fileID: 109305712}
@@ -4812,8 +4812,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.036175, z: 1}
-  m_Center: {x: 0, y: -0.26956844, z: 0}
+  m_Size: {x: 1, y: 1.2711481, z: 1}
+  m_Center: {x: 0, y: -0.15208155, z: 0}
 --- !u!1001 &997246947
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5091,7 +5091,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctHatName: Crown
-  regrabCooldownSeconds: 0.5
+  regrabCooldownSeconds: 0.9
   occupyDebounceSeconds: 0.15
   releaseDistance: 0.2
   SnapPoint: {fileID: 874084459}
@@ -5117,8 +5117,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0653737, y: 1.4714236, z: 1}
-  m_Center: {x: -0.008902025, y: -0.094332874, z: 0}
+  m_Size: {x: 1.0653737, y: 1.3764544, z: 1}
+  m_Center: {x: -0.008902025, y: -0.14181714, z: 0}
 --- !u!1001 &1004011962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8710,7 +8710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctHatName: CowboyHat
-  regrabCooldownSeconds: 0.5
+  regrabCooldownSeconds: 0.9
   occupyDebounceSeconds: 0.15
   releaseDistance: 0.2
   SnapPoint: {fileID: 769989917}
@@ -8736,8 +8736,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.9569633, z: 1}
-  m_Center: {x: 0, y: -0.21573016, z: 0}
+  m_Size: {x: 1, y: 1.239025, z: 1}
+  m_Center: {x: 0, y: -0.074698746, z: 0}
 --- !u!1001 &1730125506
 PrefabInstance:
   m_ObjectHideFlags: 0

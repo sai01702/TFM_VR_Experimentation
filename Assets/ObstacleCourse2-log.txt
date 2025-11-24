@@ -109,3 +109,69 @@ Player: Player
   - Success rate: 100,0%
 =====================================
 
+[17:23:51] GAME START - Attempt #1
+[17:24:59] COURSE COMPLETED!
+  - Final time: 67,68 seconds
+  - Total attempts: 1
+  - Total falls: 0
+  - Success rate: 100,0%
+=====================================
+
+[11:18:24] GAME START - Attempt #1
+[11:18:28] APPLICATION LOST FOCUS
+[11:18:46] GAME START - Attempt #1
+[11:18:52] PLAYER FELL - Reset #1
+  - Fall position: (-1.78, -1.63, -3.66)
+  - Time before fall: 5,77 seconds
+  - Returned to start
+
+[11:18:55] PLAYER FELL - Reset #2
+  - Fall position: (-2.69, -1.70, -3.22)
+  - Time before fall: 9,21 seconds
+  - Returned to start
+
+[11:19:05] PLAYER FELL - Reset #3
+  - Fall position: (-21.21, -1.97, -0.80)
+  - Time before fall: 19,23 seconds
+  - Returned to start
+
+[11:19:08] PLAYER FELL - Reset #4
+  - Fall position: (-5.17, -1.74, -2.03)
+  - Time before fall: 22,11 seconds
+  - Returned to start
+
+[11:19:26] PLAYER FELL - Reset #5
+  - Fall position: (-32.79, -1.97, -3.06)
+  - Time before fall: 40,19 seconds
+  - Returned to start
+
+[11:19:29] PLAYER FELL - Reset #6
+  - Fall position: (-5.39, -1.79, -2.27)
+  - Time before fall: 42,97 seconds
+  - Returned to start
+
+[11:19:34] PLAYER FELL - Reset #7
+  - Fall position: (-16.07, -1.78, -0.22)
+  - Time before fall: 48,63 seconds
+  - Returned to start
+
+[11:19:42] PLAYER FELL - Reset #8
+  - Fall position: (-17.02, -1.78, -1.30)
+  - Time before fall: 55,83 seconds
+  - Returned to start
+
+[11:19:58] COURSE COMPLETED!
+  - Final time: 71,79 seconds
+  - Total attempts: 9
+  - Total falls: 8
+  - Success rate: 11,1%
+=====================================
+
+[11:41:51] GAME START - Attempt #1
+[11:42:11] COURSE COMPLETED!
+  - Final time: 19,91 seconds
+  - Total attempts: 1
+  - Total falls: 0
+  - Success rate: 100,0%
+=====================================
+
