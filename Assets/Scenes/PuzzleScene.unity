@@ -491,8 +491,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.4025266, z: 1}
-  m_Center: {x: 0, y: -0.12878166, z: 0}
+  m_Size: {x: 1, y: 1.0859125, z: 1}
+  m_Center: {x: 0, y: -0.28708878, z: 0}
 --- !u!1001 &70447088
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1716,6 +1716,58 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0575404, y: 0.06161183, z: 0.24076243}
   m_Center: {x: -0.004606992, y: 0.40450308, z: 0.4546948}
+--- !u!1 &356774873
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 356774874}
+  - component: {fileID: 356774875}
+  m_Layer: 0
+  m_Name: VRHatRaycastToggle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &356774874
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356774873}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1095765666}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &356774875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356774873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73e0b27a378a6924ea87da0a630da0df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  largaObject: {fileID: 267058771}
+  hats:
+  - {fileID: 1343820022}
+  - {fileID: 950939249288935064}
+  - {fileID: 1290372475}
+  - {fileID: 1784911265}
+  - {fileID: 997927220}
+  - {fileID: 812642626}
 --- !u!1 &396160410
 GameObject:
   m_ObjectHideFlags: 0
@@ -2408,8 +2460,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.3206111, z: 1}
-  m_Center: {x: 0, y: -0.17874086, z: 0}
+  m_Size: {x: 1, y: 1.0648401, z: 1}
+  m_Center: {x: 0, y: -0.30662626, z: 0}
 --- !u!1 &519841776
 GameObject:
   m_ObjectHideFlags: 0
@@ -4278,6 +4330,22 @@ PrefabInstance:
       propertyPath: m_InteractionManager
       value: 
       objectReference: {fileID: 1825280435}
+    - target: {fileID: 6348617293461196244, guid: e482f639ac03df94aaca260f1cd0500c, type: 3}
+      propertyPath: m_Size.x
+      value: 0.24301936
+      objectReference: {fileID: 0}
+    - target: {fileID: 6348617293461196244, guid: e482f639ac03df94aaca260f1cd0500c, type: 3}
+      propertyPath: m_Size.z
+      value: 0.31630218
+      objectReference: {fileID: 0}
+    - target: {fileID: 6348617293461196244, guid: e482f639ac03df94aaca260f1cd0500c, type: 3}
+      propertyPath: m_Center.x
+      value: -0.0008995831
+      objectReference: {fileID: 0}
+    - target: {fileID: 6348617293461196244, guid: e482f639ac03df94aaca260f1cd0500c, type: 3}
+      propertyPath: m_Center.z
+      value: 0.029684702
+      objectReference: {fileID: 0}
     - target: {fileID: 8409287361680368642, guid: e482f639ac03df94aaca260f1cd0500c, type: 3}
       propertyPath: m_Name
       value: Sombrero
@@ -4390,7 +4458,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 812642613}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c69e88d30074d9b4badb2a07f8187786, type: 3}
   m_Name: 
@@ -4401,11 +4469,11 @@ MonoBehaviour:
   rayDistance: 10
   detectionRadius: 0.2
   heightOffset: 0.1
-  stabilizeTime: 1
+  stabilizeTime: 0
   useColliderBounds: 1
   magnetDistance: 5
   magnetStrength: 1
-  highlightMaterial: {fileID: 0}
+  highlightMaterial: {fileID: 2100000, guid: 5476ae29e2e50194abce19e5cacce575, type: 2}
 --- !u!114 &812642632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4812,8 +4880,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.2711481, z: 1}
-  m_Center: {x: 0, y: -0.15208155, z: 0}
+  m_Size: {x: 1, y: 1.0469447, z: 1}
+  m_Center: {x: 0, y: -0.26418307, z: 0}
 --- !u!1001 &997246947
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5016,7 +5084,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 997927207}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c69e88d30074d9b4badb2a07f8187786, type: 3}
   m_Name: 
@@ -5027,11 +5095,11 @@ MonoBehaviour:
   rayDistance: 10
   detectionRadius: 0.2
   heightOffset: 0.1
-  stabilizeTime: 1
+  stabilizeTime: 0
   useColliderBounds: 1
   magnetDistance: 5
   magnetStrength: 1
-  highlightMaterial: {fileID: 0}
+  highlightMaterial: {fileID: 2100000, guid: 5476ae29e2e50194abce19e5cacce575, type: 2}
 --- !u!114 &997927226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5117,8 +5185,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0653737, y: 1.3764544, z: 1}
-  m_Center: {x: -0.008902025, y: -0.14181714, z: 0}
+  m_Size: {x: 1.0653737, y: 1.0779605, z: 1}
+  m_Center: {x: -0.008902025, y: -0.29106405, z: 0}
 --- !u!1001 &1004011962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5843,6 +5911,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 829960780152227480, guid: 0c0de3f612b50e44a84e6b97ca26acfc, type: 3}
+      propertyPath: m_InteractionManager
+      value: 
+      objectReference: {fileID: 1825280435}
+    - target: {fileID: 1352118617091625762, guid: 0c0de3f612b50e44a84e6b97ca26acfc, type: 3}
+      propertyPath: m_InteractionManager
+      value: 
+      objectReference: {fileID: 1825280435}
     - target: {fileID: 1506929904181849493, guid: 0c0de3f612b50e44a84e6b97ca26acfc, type: 3}
       propertyPath: m_LocomotionProvider
       value: 
@@ -5870,6 +5946,11 @@ GameObject:
 Transform:
   m_CorrespondingSourceObject: {fileID: 503276128796625132, guid: 0c0de3f612b50e44a84e6b97ca26acfc, type: 3}
   m_PrefabInstance: {fileID: 1091647198}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1095765666 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8717800925406744149, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+  m_PrefabInstance: {fileID: 1730125506}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1141873057
 PrefabInstance:
@@ -6982,7 +7063,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1290372462}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c69e88d30074d9b4badb2a07f8187786, type: 3}
   m_Name: 
@@ -6993,11 +7074,11 @@ MonoBehaviour:
   rayDistance: 10
   detectionRadius: 0.2
   heightOffset: 0.1
-  stabilizeTime: 1
+  stabilizeTime: 0
   useColliderBounds: 1
   magnetDistance: 5
   magnetStrength: 1
-  highlightMaterial: {fileID: 0}
+  highlightMaterial: {fileID: 2100000, guid: 5476ae29e2e50194abce19e5cacce575, type: 2}
 --- !u!114 &1290372481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7146,6 +7227,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 699027977}
     m_Modifications:
+    - target: {fileID: -6660865808117673462, guid: 5b94240d0ab45824eb9debad5c99ae4d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 612534725752001817, guid: 5b94240d0ab45824eb9debad5c99ae4d, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.4
@@ -7210,6 +7295,26 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Hat
       objectReference: {fileID: 0}
+    - target: {fileID: 612534725754427385, guid: 5b94240d0ab45824eb9debad5c99ae4d, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 612534725754427385, guid: 5b94240d0ab45824eb9debad5c99ae4d, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 612534725754427385, guid: 5b94240d0ab45824eb9debad5c99ae4d, type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1279129603846700731, guid: 5b94240d0ab45824eb9debad5c99ae4d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1279129603846700731, guid: 5b94240d0ab45824eb9debad5c99ae4d, type: 3}
+      propertyPath: m_ThrowOnDetach
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1279129603846700731, guid: 5b94240d0ab45824eb9debad5c99ae4d, type: 3}
       propertyPath: m_InteractionManager
       value: 
@@ -7266,7 +7371,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1343820009}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c69e88d30074d9b4badb2a07f8187786, type: 3}
   m_Name: 
@@ -7277,11 +7382,11 @@ MonoBehaviour:
   rayDistance: 10
   detectionRadius: 0.2
   heightOffset: 0.1
-  stabilizeTime: 1
+  stabilizeTime: 0
   useColliderBounds: 1
   magnetDistance: 5
   magnetStrength: 0.2
-  highlightMaterial: {fileID: 2100000, guid: 2c994d22a9398f64d9292e3849f59f92, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: 5476ae29e2e50194abce19e5cacce575, type: 2}
 --- !u!114 &1343820028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8736,8 +8841,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.239025, z: 1}
-  m_Center: {x: 0, y: -0.074698746, z: 0}
+  m_Size: {x: 1, y: 0.940531, z: 1}
+  m_Center: {x: 0, y: -0.2239456, z: 0}
 --- !u!1001 &1730125506
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8822,7 +8927,10 @@ PrefabInstance:
     - {fileID: 4743986483913284456, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
     m_RemovedGameObjects:
     - {fileID: 3661522790076040465, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8717800925406744149, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 356774874}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5735641159042291069, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
       insertIndex: -1
@@ -9373,7 +9481,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1784911252}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c69e88d30074d9b4badb2a07f8187786, type: 3}
   m_Name: 
@@ -9384,11 +9492,11 @@ MonoBehaviour:
   rayDistance: 10
   detectionRadius: 0.2
   heightOffset: 0.1
-  stabilizeTime: 1
+  stabilizeTime: 0
   useColliderBounds: 1
   magnetDistance: 5
   magnetStrength: 1
-  highlightMaterial: {fileID: 0}
+  highlightMaterial: {fileID: 2100000, guid: 5476ae29e2e50194abce19e5cacce575, type: 2}
 --- !u!114 &1784911271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10325,8 +10433,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 78.051956, z: 1.0000001}
-  m_Center: {x: 0.000000041392116, y: -34.3639, z: -0.00000008278423}
+  m_Size: {x: 1, y: 10.4025, z: 1.0000001}
+  m_Center: {x: 0.000000041392116, y: -0.5391692, z: -0.00000008278423}
 --- !u!114 &2032196893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10345,10 +10453,7 @@ MonoBehaviour:
   - {fileID: 1290372462}
   - {fileID: 1784911252}
   - {fileID: 997927207}
-  pressRenderer: {fileID: 1423442041}
-  normalColor: {r: 1, g: 0, b: 0, a: 1}
-  pressedColor: {r: 0, g: 1, b: 0, a: 1}
-  colorResetDelay: 0.3
+  - {fileID: 812642613}
   hatStands:
   - {fileID: 1003900469}
   - {fileID: 505273083}
@@ -10357,6 +10462,10 @@ MonoBehaviour:
   - {fileID: 57833727}
   sceneChangeDelay: 2
   checkCooldown: 0.5
+  pressRenderer: {fileID: 1423442041}
+  normalColor: {r: 1, g: 0, b: 0, a: 1}
+  pressedColor: {r: 0, g: 1, b: 0, a: 1}
+  colorResetDelay: 0.3
 --- !u!1001 &2095953099
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10772,7 +10881,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950939249288935051}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c69e88d30074d9b4badb2a07f8187786, type: 3}
   m_Name: 
@@ -10783,11 +10892,11 @@ MonoBehaviour:
   rayDistance: 10
   detectionRadius: 0.2
   heightOffset: 0.1
-  stabilizeTime: 1
+  stabilizeTime: 0
   useColliderBounds: 1
   magnetDistance: 5
   magnetStrength: 1
-  highlightMaterial: {fileID: 0}
+  highlightMaterial: {fileID: 2100000, guid: 5476ae29e2e50194abce19e5cacce575, type: 2}
 --- !u!114 &950939249288935070
 MonoBehaviour:
   m_ObjectHideFlags: 0
