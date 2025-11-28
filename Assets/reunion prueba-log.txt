@@ -1350,3 +1350,48 @@ Reacction time: 1,258446 seconds
 Spawned object 15: ObjetivoRea3
 Reacction time: 1,897205 seconds
 
+Spawned object 1: ObjetivoRea4
+Reacction time: 1,888702 seconds
+
+Spawned object 2: ObjetivoRea3
+Reacction time: 2,008581 seconds
+
+Spawned object 3: ObjetivoRea3
+Reacction time: 1,06702 seconds
+
+Spawned object 4: ObjetivoRea
+Reacction time: 1,705374 seconds
+
+Spawned object 5: ObjetivoRea2
+Reacction time: 1,325291 seconds
+
+Spawned object 6: ObjetivoRea4
+Reacction time: 1,86396 seconds
+
+Spawned object 7: ObjetivoRea
+Reacction time: 1,24329 seconds
+
+Spawned object 8: ObjetivoRea
+Reacction time: 1,241611 seconds
+
+Spawned object 9: ObjetivoRea1
+Reacction time: 1,880672 seconds
+
+Spawned object 10: ObjetivoRea2
+Reacction time: 1,200058 seconds
+
+Spawned object 11: ObjetivoRea3
+Reacction time: 2,918758 seconds
+
+Spawned object 12: ObjetivoRea3
+Reacction time: 2,398136 seconds
+
+Spawned object 13: ObjetivoRea4
+Reacction time: 2,156685 seconds
+
+Spawned object 14: ObjetivoRea
+Reacction time: 1,555496 seconds
+
+Spawned object 15: ObjetivoRea3
+Reacction time: 1,074234 seconds
+

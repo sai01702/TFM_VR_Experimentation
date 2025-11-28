@@ -1,0 +1,8 @@
+Participant: Seyit
+Session start: 28/11/2025 11:55:41
+=========================================
+
+SessionStart
+[GameOver] From scene 'ShooterScene' - Score = 15
+Session finished.
+

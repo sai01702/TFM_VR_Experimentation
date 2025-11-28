@@ -5,9 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleSceneVR.unity
-    guid: 55daccc09a3b69647bbab145b54a3ab3
+  - enabled: 1
+    path: Assets/Scenes/0-StartMenu.unity
+    guid: 8e3a2320dbe451947b007d700bcbcecd
   - enabled: 1
     path: Assets/Scenes/RoomScene.unity
     guid: 7f9cc7548e675474bb619d43eb61c374
@@ -17,21 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ObstacleCourseScene.unity
     guid: 4f2d46845f081f541b3de8f6d0d5a935
-  - enabled: 0
-    path: Assets/Scenes/GameOver_ShootGame.unity
-    guid: f6be584f6b4589b4da71e9aac648f115
   - enabled: 1
     path: Assets/Scenes/PuzzleScene.unity
     guid: 02a6ed3335870e4428eaa0473ba61dfb
-  - enabled: 1
-    path: Assets/Scenes/PuzzleSceneVR.unity
-    guid: dd38b541cb72e1147b911c63798dc534
-  - enabled: 0
-    path: Assets/Scenes/GameOver_ObstacleCourse.unity
-    guid: 38bc71240535eb744a015579f4064409
-  - enabled: 0
-    path: Assets/Scenes/GameOver_Puzzle.unity
-    guid: 2e1abc00755613b4a91106fd368b444c
   - enabled: 1
     path: Assets/Scenes/GameOverScene.unity
     guid: d65fc8c87883ddd46b9b7785c92df98e

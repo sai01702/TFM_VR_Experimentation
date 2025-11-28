@@ -4165,11 +4165,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tagToFind: Disparable
   tiempoRespawn: 4
+  logFileBaseName: reaction-time
+  customLogDirectory: Assets/Logs/1-ShooterSceneLogs
   smthSpawned: 0
-  tiempo: 0
   fuera: 0
-  nombreArchivoLogs: reunion prueba
-  path: 
+  tiempo: 0
   momentodeSpawn: 0
   momentodeDespawn: 0
   desdeF: 0

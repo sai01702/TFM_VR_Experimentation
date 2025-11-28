@@ -1,26 +1,38 @@
+using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
-using System;
 
 public class ObjetivosManager : MonoBehaviour
 {
     public static ObjetivosManager Instance;
-     public string tagToFind = "Disparable";
-     private GameObject[] objetivos;
+
+    [Header("Target Settings")]
+    public string tagToFind = "Disparable";
     public float tiempoRespawn = 4f;
-    public bool smthSpawned = false;
+
+    [Header("Log Settings")]
+    [Tooltip("Base name for the log file, without extension.")]
+    public string logFileBaseName = "reaction-time";
+
+    [Tooltip("Optional ABSOLUTE directory path. If empty, uses Application.persistentDataPath.")]
+    public string customLogDirectory;
+
+    private GameObject[] objetivos;
     private GameObject spawneado = null;
-    public float tiempo = 0f;
+
+    public bool smthSpawned = false;
     public bool fuera = false;
-    public string nombreArchivoLogs = " ";
-    public string path;
+    public float tiempo = 0f;
     public float momentodeSpawn;
     public float momentodeDespawn;
     public bool desdeF = false;
     public int puntos = 0;
-    private int nlogs =1;
+
+    private string logPath;
+    private int nlogs = 1;
+
     void Awake()
     {
         Instance = this;
@@ -30,87 +42,164 @@ public class ObjetivosManager : MonoBehaviour
     {
         objetivos = GameObject.FindGameObjectsWithTag(tagToFind);
         Debug.Log("Objetivos encontrados: " + objetivos.Length);
+
         PrintAllTaggedObjectNames();
         DisableAllTaggedObjects();
-        CrearTexto();
+
+        InitLogFile();   // <- prepare log
         Spawn();
-        tiempo = Time.time + tiempoRespawn; 
+        tiempo = Time.time + tiempoRespawn;
     }
 
-    void Update() {
-        if((Time.time > tiempo) && !fuera) {
+    void Update()
+    {
+        if ((Time.time > tiempo) && !fuera)
+        {
             Despawn();
             Spawn();
             tiempo = Time.time + tiempoRespawn;
         }
     }
 
-    public void Spawn(){
+    // -------------------- SPAWN / DESPAWN --------------------
+
+    public void Spawn()
+    {
+        if (objetivos == null || objetivos.Length == 0)
+        {
+            Debug.LogWarning("[ObjetivosManager] No objetivos found to spawn.");
+            return;
+        }
+
         int indice = UnityEngine.Random.Range(0, objetivos.Length);
         GameObject obj = objetivos[indice];
         obj.SetActive(true);
         momentodeSpawn = Time.time;
-        if(nlogs<16){
-            File.AppendAllText(path, "Spawned object "+nlogs+ ": " + obj.name + "\n");
+
+        if (nlogs < 16)
+        {
+            SafeAppendLog($"Spawned object {nlogs}: {obj.name}");
             nlogs++;
         }
+
         smthSpawned = true;
         desdeF = false;
         Debug.Log("Objeto activado: " + obj.name);
         spawneado = obj;
     }
 
-    public void Despawn(){
+    public void Despawn()
+    {
+        if (spawneado == null) return;
+
         spawneado.SetActive(false);
         momentodeDespawn = Time.time;
         smthSpawned = false;
-        if(fuera){
-            File.AppendAllText(path, "Reacction time: " + (momentodeDespawn-momentodeSpawn) + " seconds\n\n");
-            desdeF=true;
-        } else {
-            if(!desdeF){
-                File.AppendAllText(path, "Manual despawn\n\n");
+
+        if (fuera)
+        {
+            SafeAppendLog($"Reaction time: {momentodeDespawn - momentodeSpawn:F3} seconds");
+            SafeAppendLog("");   // blank line
+            desdeF = true;
+        }
+        else
+        {
+            if (!desdeF)
+            {
+                SafeAppendLog("Manual despawn");
+                SafeAppendLog("");
             }
         }
+
         Debug.Log("Objeto desactivado: " + spawneado.name);
     }
 
-     public void CrearTexto() {
-        path = Application.dataPath + "/" +  nombreArchivoLogs + "-log.txt";
-        Debug.Log("Log file path: " + path);
-        try {
-            if (!File.Exists(path)) {
-                File.WriteAllText(path, "Reaction time Log Inmersive\n\n");
-                Debug.Log("Log file creada en: " + path);
-            } else {
-                Debug.Log("Log file ya existe en: " + path);
+    // -------------------- LOGGING --------------------
+
+    void InitLogFile()
+    {
+        try
+        {
+            // choose directory
+            string dir = string.IsNullOrWhiteSpace(customLogDirectory)
+                ? Application.persistentDataPath      // default safe location
+                : customLogDirectory;
+
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+                Debug.Log($"[ObjetivosManager] Created log directory: {dir}");
             }
+
+            string baseName = string.IsNullOrWhiteSpace(logFileBaseName)
+                ? "reaction-time"
+                : logFileBaseName.Trim();
+
+            string timestamp = DateTime.Now.ToString("yyyyMMdd-HHmmss");
+            string fileName = $"{baseName}-{timestamp}.txt";
+
+            logPath = Path.Combine(dir, fileName);
+
+            File.WriteAllText(logPath, "Reaction time Log Inmersive\n");
+            File.AppendAllText(logPath, $"Created: {DateTime.Now:G}\n");
+            File.AppendAllText(logPath, "=====================================\n\n");
+
+            Debug.Log($"[ObjetivosManager] Log file created at: {logPath}");
         }
-        catch (Exception ex) {
-            Debug.LogError("Error al crear el log: " + ex.Message);
+        catch (Exception ex)
+        {
+            Debug.LogError("[ObjetivosManager] Error creating log file: " + ex);
+            logPath = null;
         }
     }
 
-    public void PrintAllTaggedObjectNames() {
-        foreach (GameObject obj in objetivos) {
+    void SafeAppendLog(string line)
+    {
+        if (string.IsNullOrEmpty(logPath)) return;
+
+        try
+        {
+            File.AppendAllText(logPath, line + "\n");
+            // Optional: Debug.Log($"[ObjetivosManager] LOG: {line}");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("[ObjetivosManager] Error writing log: " + ex);
+        }
+    }
+
+    // -------------------- HELPERS --------------------
+
+    public void PrintAllTaggedObjectNames()
+    {
+        foreach (GameObject obj in objetivos)
+        {
             Debug.Log("Tagged Object: " + obj.name);
         }
     }
-    void DisableAllTaggedObjects() {
-        foreach (GameObject obj in objetivos) {
+
+    void DisableAllTaggedObjects()
+    {
+        foreach (GameObject obj in objetivos)
+        {
             obj.SetActive(false);
         }
     }
-    public void EnableAllTaggedObjects() {
-        foreach (GameObject obj in objetivos) {
+
+    public void EnableAllTaggedObjects()
+    {
+        foreach (GameObject obj in objetivos)
+        {
             obj.SetActive(true);
         }
     }
-    public bool IsAnyObjectActive() {
-        foreach (GameObject obj in objetivos) {
-            if (obj.activeSelf) {
+
+    public bool IsAnyObjectActive()
+    {
+        foreach (GameObject obj in objetivos)
+        {
+            if (obj.activeSelf)
                 return true;
-            }
         }
         return false;
     }

@@ -3345,7 +3345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nombreArchivoLogs: ObstacleCourse2
   nombrePlayer: Player
-  path: 
+  path: Assets/Logs/2-PlatformSceneLogs
   numeroReiniciosPorCaida: 0
 --- !u!1001 &1765193553
 PrefabInstance:
@@ -3715,7 +3715,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 6e-44}
+  m_BoundingSphereOverride: {x: 0, y: 2.97e-43, z: 1e-45, w: 3.879503e+32}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0

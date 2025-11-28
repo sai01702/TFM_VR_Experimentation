@@ -175,3 +175,11 @@ Player: Player
   - Success rate: 100,0%
 =====================================
 
+[12:12:39] GAME START - Attempt #1
+[12:12:49] COURSE COMPLETED!
+  - Final time: 9,35 seconds
+  - Total attempts: 1
+  - Total falls: 0
+  - Success rate: 100,0%
+=====================================
+

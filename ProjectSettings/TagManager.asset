@@ -13,6 +13,8 @@ TagManager:
   - Bala
   - Disparable
   - Stand
+  - New tag
+  - Button3D
   layers:
   - Default
   - TransparentFX
@@ -22,7 +24,7 @@ TagManager:
   - UI
   - HatStand
   - CrossAim
-  - 
+  - Button3D
   - 
   - 
   - 
