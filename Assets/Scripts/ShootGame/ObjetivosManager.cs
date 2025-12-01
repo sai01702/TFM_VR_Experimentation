@@ -46,9 +46,31 @@ public class ObjetivosManager : MonoBehaviour
         PrintAllTaggedObjectNames();
         DisableAllTaggedObjects();
 
-        InitLogFile();   // <- prepare log
+        InitLogFile();   // <- prepare local log file
+        InitSessionLog(); // <- also log to ParticipantSession
         Spawn();
         tiempo = Time.time + tiempoRespawn;
+    }
+
+    /// <summary>
+    /// Write a header to ParticipantSession log for shooter game details
+    /// </summary>
+    void InitSessionLog()
+    {
+        if (ParticipantSession.Instance == null) return;
+
+        // Get current game mode
+        string gameMode = "Unknown";
+        if (GameSettings.Instance != null)
+        {
+            gameMode = GameSettings.Instance.CurrentMode == GameMode.VR ? "VR" : "Desktop";
+        }
+
+        ParticipantSession.Instance.AppendLog("");
+        ParticipantSession.Instance.AppendLog("=== Shooter Game - Reaction Time Log ===");
+        ParticipantSession.Instance.AppendLog($"Mode: {gameMode}");
+        ParticipantSession.Instance.AppendLog($"Started: {DateTime.Now:G}");
+        ParticipantSession.Instance.AppendLog("");
     }
 
     void Update()
@@ -155,16 +177,23 @@ public class ObjetivosManager : MonoBehaviour
 
     void SafeAppendLog(string line)
     {
-        if (string.IsNullOrEmpty(logPath)) return;
-
-        try
+        // Write to local detailed log file
+        if (!string.IsNullOrEmpty(logPath))
         {
-            File.AppendAllText(logPath, line + "\n");
-            // Optional: Debug.Log($"[ObjetivosManager] LOG: {line}");
+            try
+            {
+                File.AppendAllText(logPath, line + "\n");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("[ObjetivosManager] Error writing log: " + ex);
+            }
         }
-        catch (Exception ex)
+
+        // Also write to ParticipantSession log (main session log)
+        if (ParticipantSession.Instance != null && !string.IsNullOrEmpty(line))
         {
-            Debug.LogError("[ObjetivosManager] Error writing log: " + ex);
+            ParticipantSession.Instance.AppendLog(line);
         }
     }
 
@@ -202,5 +231,20 @@ public class ObjetivosManager : MonoBehaviour
                 return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// Called when scene ends - write summary to session log
+    /// </summary>
+    void OnDestroy()
+    {
+        if (ParticipantSession.Instance != null)
+        {
+            ParticipantSession.Instance.AppendLog("");
+            ParticipantSession.Instance.AppendLog($"=== Shooter Game Ended ===");
+            ParticipantSession.Instance.AppendLog($"Final Score: {puntos}");
+            ParticipantSession.Instance.AppendLog($"Total Spawns: {nlogs - 1}");
+            ParticipantSession.Instance.AppendLog("");
+        }
     }
 }
