@@ -813,3 +813,733 @@ Detalles por sombrero:
 Juego completado el: 28/11/2025 14:47:15
 =====================================
 
+
+--- NUEVA SESION ---
+Sesión iniciada el: 01/12/2025 9:38:35
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 01/12/2025 9:38:35
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[3,13s] AGARRE - Sombrero 'MagicianHat' agarrado
+[3,13s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[4,02s] SUELTA - Sombrero 'MagicianHat' soltado
+[4,02s] ACIERTO - Sombrero 'MagicianHat' colocado correctamente en stand 'MagicianHat'
+    Progreso: 1/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 0,88s
+
+[5,54s] AGARRE - Sombrero 'PoliceCap' agarrado
+[5,54s] PISTA - Pista mostrada para sombrero 'PoliceCap'
+[7,66s] SUELTA - Sombrero 'PoliceCap' soltado
+[7,66s] ACIERTO - Sombrero 'PoliceCap' colocado correctamente en stand 'PoliceCap'
+    Progreso: 2/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 2,12s
+
+[8,67s] AGARRE - Sombrero 'Crown' agarrado
+[8,67s] PISTA - Pista mostrada para sombrero 'Crown'
+[10,08s] SUELTA - Sombrero 'Crown' soltado
+[10,08s] ACIERTO - Sombrero 'Crown' colocado correctamente en stand 'Crown'
+    Progreso: 3/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 1,41s
+
+[11,27s] AGARRE - Sombrero 'VikingHelmet' agarrado
+[11,27s] PISTA - Pista mostrada para sombrero 'VikingHelmet'
+[12,96s] SUELTA - Sombrero 'VikingHelmet' soltado
+[12,96s] ACIERTO - Sombrero 'VikingHelmet' colocado correctamente en stand 'VikingHelmet'
+    Progreso: 4/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 1,69s
+
+[14,16s] AGARRE - Sombrero 'CowboyHat' agarrado
+[14,16s] PISTA - Pista mostrada para sombrero 'CowboyHat'
+[15,38s] SUELTA - Sombrero 'CowboyHat' soltado
+[15,38s] ACIERTO - Sombrero 'CowboyHat' colocado correctamente en stand 'CowboyHat'
+    Progreso: 5/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 1,21s
+
+=== PUZZLE COMPLETADO ===
+Todos los sombreros colocados correctamente!
+Tiempo total: 16,06 segundos (0,3 minutos)
+Estadisticas finales:
+    - Total de intentos: 5
+    - Aciertos: 5
+    - Errores: 0
+    - Precisión: 100,0%
+    - Promedio de tiempo por acierto: 3,21s
+
+Detalles por sombrero:
+    - MagicianHat: 1 intentos
+    - PoliceCap: 1 intentos
+    - Crown: 1 intentos
+    - VikingHelmet: 1 intentos
+    - CowboyHat: 1 intentos
+
+Juego completado el: 01/12/2025 9:38:51
+=====================================
+
+
+--- NUEVA SESION ---
+Sesión iniciada el: 01/12/2025 9:39:10
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 01/12/2025 9:39:10
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[1,13s] AGARRE - Sombrero 'MagicianHat' agarrado
+[1,13s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[5,12s] SUELTA - Sombrero 'MagicianHat' soltado
+[5,12s] ACIERTO - Sombrero 'MagicianHat' colocado correctamente en stand 'MagicianHat'
+    Progreso: 1/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 3,99s
+
+[6,36s] AGARRE - Sombrero 'PoliceCap' agarrado
+[6,36s] PISTA - Pista mostrada para sombrero 'PoliceCap'
+[8,80s] SUELTA - Sombrero 'PoliceCap' soltado
+[8,80s] ACIERTO - Sombrero 'PoliceCap' colocado correctamente en stand 'PoliceCap'
+    Progreso: 2/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 2,44s
+
+[11,06s] AGARRE - Sombrero 'VikingHelmet' agarrado
+[11,06s] PISTA - Pista mostrada para sombrero 'VikingHelmet'
+[12,22s] SUELTA - Sombrero 'VikingHelmet' soltado
+[12,22s] ACIERTO - Sombrero 'VikingHelmet' colocado correctamente en stand 'VikingHelmet'
+    Progreso: 3/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 1,16s
+
+[13,27s] AGARRE - Sombrero 'Crown' agarrado
+[13,27s] PISTA - Pista mostrada para sombrero 'Crown'
+[14,62s] SUELTA - Sombrero 'Crown' soltado
+[14,62s] ACIERTO - Sombrero 'Crown' colocado correctamente en stand 'Crown'
+    Progreso: 4/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 1,35s
+
+[16,06s] AGARRE - Sombrero 'CowboyHat' agarrado
+[16,06s] PISTA - Pista mostrada para sombrero 'CowboyHat'
+[17,32s] SUELTA - Sombrero 'CowboyHat' soltado
+[17,32s] ACIERTO - Sombrero 'CowboyHat' colocado correctamente en stand 'CowboyHat'
+    Progreso: 5/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 1,26s
+
+=== PUZZLE COMPLETADO ===
+Todos los sombreros colocados correctamente!
+Tiempo total: 17,91 segundos (0,3 minutos)
+Estadisticas finales:
+    - Total de intentos: 5
+    - Aciertos: 5
+    - Errores: 0
+    - Precisión: 100,0%
+    - Promedio de tiempo por acierto: 3,58s
+
+Detalles por sombrero:
+    - MagicianHat: 1 intentos
+    - PoliceCap: 1 intentos
+    - VikingHelmet: 1 intentos
+    - Crown: 1 intentos
+    - CowboyHat: 1 intentos
+
+Juego completado el: 01/12/2025 9:39:28
+=====================================
+
+
+--- NUEVA SESION ---
+Sesión iniciada el: 01/12/2025 9:42:20
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 01/12/2025 9:42:20
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[13,17s] AGARRE - Sombrero 'PoliceCap' agarrado
+[13,17s] PISTA - Pista mostrada para sombrero 'PoliceCap'
+[16,61s] SUELTA - Sombrero 'PoliceCap' soltado
+[16,75s] ACIERTO - Sombrero 'PoliceCap' colocado correctamente en stand 'PoliceCap'
+    Progreso: 1/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 3,59s
+
+[18,79s] AGARRE - Sombrero 'MagicianHat' agarrado
+[18,79s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[21,76s] SUELTA - Sombrero 'MagicianHat' soltado
+[21,91s] ACIERTO - Sombrero 'MagicianHat' colocado correctamente en stand 'MagicianHat'
+    Progreso: 2/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 3,12s
+
+[25,29s] AGARRE - Sombrero 'Crown' agarrado
+[25,29s] PISTA - Pista mostrada para sombrero 'Crown'
+[28,05s] SUELTA - Sombrero 'Crown' soltado
+[28,19s] ACIERTO - Sombrero 'Crown' colocado correctamente en stand 'Crown'
+    Progreso: 3/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 2,90s
+
+[30,12s] AGARRE - Sombrero 'VikingHelmet' agarrado
+[30,12s] PISTA - Pista mostrada para sombrero 'VikingHelmet'
+[31,57s] SUELTA - Sombrero 'VikingHelmet' soltado
+[31,71s] ACIERTO - Sombrero 'VikingHelmet' colocado correctamente en stand 'VikingHelmet'
+    Progreso: 4/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 1,59s
+
+[33,44s] AGARRE - Sombrero 'CowboyHat' agarrado
+[33,44s] PISTA - Pista mostrada para sombrero 'CowboyHat'
+[34,78s] SUELTA - Sombrero 'CowboyHat' soltado
+[34,93s] ACIERTO - Sombrero 'CowboyHat' colocado correctamente en stand 'CowboyHat'
+    Progreso: 5/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 1,49s
+
+=== PUZZLE COMPLETADO ===
+Todos los sombreros colocados correctamente!
+Tiempo total: 36,46 segundos (0,6 minutos)
+Estadisticas finales:
+    - Total de intentos: 5
+    - Aciertos: 5
+    - Errores: 0
+    - Precisión: 100,0%
+    - Promedio de tiempo por acierto: 7,29s
+
+Detalles por sombrero:
+    - PoliceCap: 1 intentos
+    - MagicianHat: 1 intentos
+    - Crown: 1 intentos
+    - VikingHelmet: 1 intentos
+    - CowboyHat: 1 intentos
+
+Juego completado el: 01/12/2025 9:42:57
+=====================================
+
+
+--- NUEVA SESION ---
+Sesión iniciada el: 01/12/2025 9:44:15
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 01/12/2025 9:44:15
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[4,12s] AGARRE - Sombrero 'Crown' agarrado
+[4,12s] PISTA - Pista mostrada para sombrero 'Crown'
+[6,87s] SUELTA - Sombrero 'Crown' soltado
+[7,03s] ACIERTO - Sombrero 'Crown' colocado correctamente en stand 'Crown'
+    Progreso: 1/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 2,90s
+
+
+--- NUEVA SESION ---
+Sesión iniciada el: 01/12/2025 10:22:58
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 01/12/2025 10:22:58
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+
+--- NUEVA SESION ---
+Sesión iniciada el: 01/12/2025 10:32:15
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 01/12/2025 10:32:15
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+
+--- NUEVA SESION ---
+Sesión iniciada el: 01/12/2025 10:36:35
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 01/12/2025 10:36:35
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[15,86s] AGARRE - Sombrero 'PoliceCap' agarrado
+[15,86s] PISTA - Pista mostrada para sombrero 'PoliceCap'
+[19,51s] SUELTA - Sombrero 'PoliceCap' soltado
+[19,65s] ACIERTO - Sombrero 'PoliceCap' colocado correctamente en stand 'PoliceCap'
+    Progreso: 1/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 3,80s
+
+[20,59s] AGARRE - Sombrero 'MagicianHat' agarrado
+[20,59s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[21,59s] SUELTA - Sombrero 'MagicianHat' soltado
+[21,73s] ACIERTO - Sombrero 'MagicianHat' colocado correctamente en stand 'MagicianHat'
+    Progreso: 2/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 1,14s
+
+[23,74s] AGARRE - Sombrero 'Crown' agarrado
+[23,74s] PISTA - Pista mostrada para sombrero 'Crown'
+[25,19s] SUELTA - Sombrero 'Crown' soltado
+[25,33s] ACIERTO - Sombrero 'Crown' colocado correctamente en stand 'Crown'
+    Progreso: 3/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 1,59s
+
+[26,27s] AGARRE - Sombrero 'VikingHelmet' agarrado
+[26,27s] PISTA - Pista mostrada para sombrero 'VikingHelmet'
+[27,52s] SUELTA - Sombrero 'VikingHelmet' soltado
+[27,67s] ACIERTO - Sombrero 'VikingHelmet' colocado correctamente en stand 'VikingHelmet'
+    Progreso: 4/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 1,40s
+
+[29,52s] AGARRE - Sombrero 'CowboyHat' agarrado
+[29,52s] PISTA - Pista mostrada para sombrero 'CowboyHat'
+[33,48s] SUELTA - Sombrero 'CowboyHat' soltado
+[34,45s] AGARRE - Sombrero 'CowboyHat' agarrado
+[34,45s] PISTA - Pista mostrada para sombrero 'CowboyHat'
+[35,37s] SUELTA - Sombrero 'CowboyHat' soltado
+[35,51s] ACIERTO - Sombrero 'CowboyHat' colocado correctamente en stand 'CowboyHat'
+    Progreso: 5/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 5,99s
+
+=== PUZZLE COMPLETADO ===
+Todos los sombreros colocados correctamente!
+Tiempo total: 36,73 segundos (0,6 minutos)
+Estadisticas finales:
+    - Total de intentos: 5
+    - Aciertos: 5
+    - Errores: 0
+    - Precisión: 100,0%
+    - Promedio de tiempo por acierto: 7,35s
+
+Detalles por sombrero:
+    - PoliceCap: 1 intentos
+    - MagicianHat: 1 intentos
+    - Crown: 1 intentos
+    - VikingHelmet: 1 intentos
+    - CowboyHat: 1 intentos
+
+Juego completado el: 01/12/2025 10:37:12
+=====================================
+
+
+--- NUEVA SESION ---
+Sesión iniciada el: 01/12/2025 10:55:01
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 01/12/2025 10:55:01
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[3,76s] AGARRE - Sombrero 'PoliceCap' agarrado
+[3,76s] PISTA - Pista mostrada para sombrero 'PoliceCap'
+[5,19s] SUELTA - Sombrero 'PoliceCap' soltado
+[5,19s] ACIERTO - Sombrero 'PoliceCap' colocado correctamente en stand 'PoliceCap'
+    Progreso: 1/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 1,43s
+
+[6,14s] AGARRE - Sombrero 'MagicianHat' agarrado
+[6,14s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[7,03s] SUELTA - Sombrero 'MagicianHat' soltado
+[7,03s] ACIERTO - Sombrero 'MagicianHat' colocado correctamente en stand 'MagicianHat'
+    Progreso: 2/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 0,88s
+
+[8,33s] AGARRE - Sombrero 'CowboyHat' agarrado
+[8,33s] PISTA - Pista mostrada para sombrero 'CowboyHat'
+[9,25s] SUELTA - Sombrero 'CowboyHat' soltado
+[9,25s] ACIERTO - Sombrero 'CowboyHat' colocado correctamente en stand 'CowboyHat'
+    Progreso: 3/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 0,92s
+
+[10,32s] AGARRE - Sombrero 'Crown' agarrado
+[10,32s] PISTA - Pista mostrada para sombrero 'Crown'
+[11,41s] SUELTA - Sombrero 'Crown' soltado
+[11,41s] ACIERTO - Sombrero 'Crown' colocado correctamente en stand 'Crown'
+    Progreso: 4/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 1,09s
+
+[13,65s] AGARRE - Sombrero 'VikingHelmet' agarrado
+[13,65s] PISTA - Pista mostrada para sombrero 'VikingHelmet'
+[14,41s] SUELTA - Sombrero 'VikingHelmet' soltado
+[14,41s] ACIERTO - Sombrero 'VikingHelmet' colocado correctamente en stand 'VikingHelmet'
+    Progreso: 5/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 0,76s
+
+=== PUZZLE COMPLETADO ===
+Todos los sombreros colocados correctamente!
+Tiempo total: 15,44 segundos (0,3 minutos)
+Estadisticas finales:
+    - Total de intentos: 5
+    - Aciertos: 5
+    - Errores: 0
+    - Precisión: 100,0%
+    - Promedio de tiempo por acierto: 3,09s
+
+Detalles por sombrero:
+    - PoliceCap: 1 intentos
+    - MagicianHat: 1 intentos
+    - CowboyHat: 1 intentos
+    - Crown: 1 intentos
+    - VikingHelmet: 1 intentos
+
+Juego completado el: 01/12/2025 10:55:16
+=====================================
+
+
+--- NUEVA SESION ---
+Sesión iniciada el: 01/12/2025 10:55:34
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 01/12/2025 10:55:34
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[1,89s] AGARRE - Sombrero 'PoliceCap' agarrado
+[1,89s] PISTA - Pista mostrada para sombrero 'PoliceCap'
+[7,21s] SUELTA - Sombrero 'PoliceCap' soltado
+[7,21s] ACIERTO - Sombrero 'PoliceCap' colocado correctamente en stand 'PoliceCap'
+    Progreso: 1/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 5,31s
+
+[9,15s] AGARRE - Sombrero 'MagicianHat' agarrado
+[9,15s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[9,98s] SUELTA - Sombrero 'MagicianHat' soltado
+[9,98s] ACIERTO - Sombrero 'MagicianHat' colocado correctamente en stand 'MagicianHat'
+    Progreso: 2/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 0,83s
+
+[11,04s] AGARRE - Sombrero 'Crown' agarrado
+[11,04s] PISTA - Pista mostrada para sombrero 'Crown'
+[12,08s] SUELTA - Sombrero 'Crown' soltado
+[12,08s] ACIERTO - Sombrero 'Crown' colocado correctamente en stand 'Crown'
+    Progreso: 3/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 1,03s
+
+[13,76s] AGARRE - Sombrero 'VikingHelmet' agarrado
+[13,76s] PISTA - Pista mostrada para sombrero 'VikingHelmet'
+[14,49s] SUELTA - Sombrero 'VikingHelmet' soltado
+[14,49s] ACIERTO - Sombrero 'VikingHelmet' colocado correctamente en stand 'VikingHelmet'
+    Progreso: 4/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 0,73s
+
+[15,74s] AGARRE - Sombrero 'CowboyHat' agarrado
+[15,74s] PISTA - Pista mostrada para sombrero 'CowboyHat'
+[16,53s] SUELTA - Sombrero 'CowboyHat' soltado
+[17,47s] AGARRE - Sombrero 'CowboyHat' agarrado
+[17,47s] PISTA - Pista mostrada para sombrero 'CowboyHat'
+[18,24s] SUELTA - Sombrero 'CowboyHat' soltado
+[19,12s] AGARRE - Sombrero 'CowboyHat' agarrado
+[19,12s] PISTA - Pista mostrada para sombrero 'CowboyHat'
+[19,80s] SUELTA - Sombrero 'CowboyHat' soltado
+[19,80s] ACIERTO - Sombrero 'CowboyHat' colocado correctamente en stand 'CowboyHat'
+    Progreso: 5/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 4,05s
+
+=== PUZZLE COMPLETADO ===
+Todos los sombreros colocados correctamente!
+Tiempo total: 20,56 segundos (0,3 minutos)
+Estadisticas finales:
+    - Total de intentos: 5
+    - Aciertos: 5
+    - Errores: 0
+    - Precisión: 100,0%
+    - Promedio de tiempo por acierto: 4,11s
+
+Detalles por sombrero:
+    - PoliceCap: 1 intentos
+    - MagicianHat: 1 intentos
+    - Crown: 1 intentos
+    - VikingHelmet: 1 intentos
+    - CowboyHat: 1 intentos
+
+Juego completado el: 01/12/2025 10:55:55
+=====================================
+
+
+--- NUEVA SESION ---
+Sesión iniciada el: 01/12/2025 10:56:39
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 01/12/2025 10:56:39
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[17,93s] AGARRE - Sombrero 'MagicianHat' agarrado
+[17,93s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[17,98s] SUELTA - Sombrero 'MagicianHat' soltado
+[18,44s] AGARRE - Sombrero 'MagicianHat' agarrado
+[18,44s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[18,50s] SUELTA - Sombrero 'MagicianHat' soltado
+[18,94s] AGARRE - Sombrero 'MagicianHat' agarrado
+[18,94s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[19,00s] SUELTA - Sombrero 'MagicianHat' soltado
+[19,45s] AGARRE - Sombrero 'MagicianHat' agarrado
+[19,45s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[19,51s] SUELTA - Sombrero 'MagicianHat' soltado
+[19,97s] AGARRE - Sombrero 'MagicianHat' agarrado
+[19,97s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[20,02s] SUELTA - Sombrero 'MagicianHat' soltado
+[20,47s] AGARRE - Sombrero 'MagicianHat' agarrado
+[20,47s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[20,52s] SUELTA - Sombrero 'MagicianHat' soltado
+[21,03s] SUELTA - Sombrero 'MagicianHat' soltado
+[21,03s] AGARRE - Sombrero 'MagicianHat' agarrado
+[21,03s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[21,57s] SUELTA - Sombrero 'MagicianHat' soltado
+[21,57s] AGARRE - Sombrero 'MagicianHat' agarrado
+[21,57s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[22,07s] SUELTA - Sombrero 'MagicianHat' soltado
+[22,07s] AGARRE - Sombrero 'MagicianHat' agarrado
+[22,07s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[22,61s] SUELTA - Sombrero 'MagicianHat' soltado
+[22,61s] AGARRE - Sombrero 'MagicianHat' agarrado
+[22,61s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[23,11s] SUELTA - Sombrero 'MagicianHat' soltado
+[23,11s] AGARRE - Sombrero 'MagicianHat' agarrado
+[23,11s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[23,66s] SUELTA - Sombrero 'MagicianHat' soltado
+[23,66s] AGARRE - Sombrero 'MagicianHat' agarrado
+[23,66s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[24,16s] SUELTA - Sombrero 'MagicianHat' soltado
+[24,16s] AGARRE - Sombrero 'MagicianHat' agarrado
+[24,16s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[24,71s] SUELTA - Sombrero 'MagicianHat' soltado
+[24,71s] AGARRE - Sombrero 'MagicianHat' agarrado
+[24,71s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[25,21s] SUELTA - Sombrero 'MagicianHat' soltado
+[25,21s] AGARRE - Sombrero 'MagicianHat' agarrado
+[25,21s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[25,75s] SUELTA - Sombrero 'MagicianHat' soltado
+[25,75s] AGARRE - Sombrero 'MagicianHat' agarrado
+[25,75s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[26,25s] SUELTA - Sombrero 'MagicianHat' soltado
+[26,25s] AGARRE - Sombrero 'MagicianHat' agarrado
+[26,25s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[26,79s] SUELTA - Sombrero 'MagicianHat' soltado
+[26,79s] AGARRE - Sombrero 'MagicianHat' agarrado
+[26,79s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[27,29s] SUELTA - Sombrero 'MagicianHat' soltado
+[27,29s] AGARRE - Sombrero 'MagicianHat' agarrado
+[27,29s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[27,84s] SUELTA - Sombrero 'MagicianHat' soltado
+[27,84s] AGARRE - Sombrero 'MagicianHat' agarrado
+[27,84s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[28,34s] SUELTA - Sombrero 'MagicianHat' soltado
+[28,34s] AGARRE - Sombrero 'MagicianHat' agarrado
+[28,34s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[28,88s] SUELTA - Sombrero 'MagicianHat' soltado
+[28,88s] AGARRE - Sombrero 'MagicianHat' agarrado
+[28,88s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[29,06s] ACIERTO - Sombrero 'MagicianHat' colocado correctamente en stand 'MagicianHat'
+    Progreso: 1/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 11,13s
+
+
+--- NUEVA SESION ---
+Sesión iniciada el: 01/12/2025 10:58:08
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 01/12/2025 10:58:08
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[8,55s] AGARRE - Sombrero 'Crown' agarrado
+[8,55s] PISTA - Pista mostrada para sombrero 'Crown'
+[8,99s] AGARRE - Sombrero 'VikingHelmet' agarrado
+[8,99s] PISTA - Pista mostrada para sombrero 'VikingHelmet'
+[12,13s] SUELTA - Sombrero 'VikingHelmet' soltado
+[12,31s] ACIERTO - Sombrero 'VikingHelmet' colocado correctamente en stand 'VikingHelmet'
+    Progreso: 1/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 3,32s
+
+[15,74s] SUELTA - Sombrero 'Crown' soltado
+[15,89s] ACIERTO - Sombrero 'Crown' colocado correctamente en stand 'Crown'
+    Progreso: 2/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 7,34s
+
+[23,35s] AGARRE - Sombrero 'MagicianHat' agarrado
+[23,35s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[23,78s] AGARRE - Sombrero 'PoliceCap' agarrado
+[23,78s] PISTA - Pista mostrada para sombrero 'PoliceCap'
+[27,61s] SUELTA - Sombrero 'MagicianHat' soltado
+[27,77s] ACIERTO - Sombrero 'MagicianHat' colocado correctamente en stand 'MagicianHat'
+    Progreso: 3/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 4,42s
+
+[29,68s] SUELTA - Sombrero 'PoliceCap' soltado
+[29,83s] ACIERTO - Sombrero 'PoliceCap' colocado correctamente en stand 'PoliceCap'
+    Progreso: 4/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 6,04s
+
+[44,22s] AGARRE - Sombrero 'VikingHelmet' agarrado
+[44,22s] PISTA - Pista mostrada para sombrero 'VikingHelmet'
+[45,64s] SUELTA - Sombrero 'VikingHelmet' soltado
+[48,06s] AGARRE - Sombrero 'VikingHelmet' agarrado
+[48,06s] PISTA - Pista mostrada para sombrero 'VikingHelmet'
+[49,02s] SUELTA - Sombrero 'VikingHelmet' soltado
+[53,10s] AGARRE - Sombrero 'CowboyHat' agarrado
+[53,10s] PISTA - Pista mostrada para sombrero 'CowboyHat'
+[55,61s] SUELTA - Sombrero 'CowboyHat' soltado
+[57,28s] AGARRE - Sombrero 'CowboyHat' agarrado
+[57,28s] PISTA - Pista mostrada para sombrero 'CowboyHat'
+[58,04s] SUELTA - Sombrero 'CowboyHat' soltado
+[58,15s] ACIERTO - Sombrero 'CowboyHat' colocado correctamente en stand 'CowboyHat'
+    Progreso: 5/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 5,05s
+
+=== PUZZLE COMPLETADO ===
+Todos los sombreros colocados correctamente!
+Tiempo total: 58,93 segundos (1,0 minutos)
+Estadisticas finales:
+    - Total de intentos: 5
+    - Aciertos: 5
+    - Errores: 0
+    - Precisión: 100,0%
+    - Promedio de tiempo por acierto: 11,79s
+
+Detalles por sombrero:
+    - VikingHelmet: 1 intentos
+    - Crown: 1 intentos
+    - MagicianHat: 1 intentos
+    - PoliceCap: 1 intentos
+    - CowboyHat: 1 intentos
+
+Juego completado el: 01/12/2025 10:59:07
+=====================================
+
+
+--- NUEVA SESION ---
+Sesión iniciada el: 01/12/2025 11:06:28
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 01/12/2025 11:06:28
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[40,31s] AGARRE - Sombrero 'MagicianHat' agarrado
+[40,31s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[47,35s] SUELTA - Sombrero 'MagicianHat' soltado
+[47,49s] ACIERTO - Sombrero 'MagicianHat' colocado correctamente en stand 'MagicianHat'
+    Progreso: 1/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 7,19s
+
+[49,64s] AGARRE - Sombrero 'Crown' agarrado
+[49,64s] PISTA - Pista mostrada para sombrero 'Crown'
+[52,50s] SUELTA - Sombrero 'Crown' soltado
+[52,50s] AGARRE - Sombrero 'Crown' agarrado
+[52,50s] PISTA - Pista mostrada para sombrero 'Crown'
+[52,52s] AGARRE - Sombrero 'VikingHelmet' agarrado
+[52,52s] PISTA - Pista mostrada para sombrero 'VikingHelmet'
+[54,75s] SUELTA - Sombrero 'VikingHelmet' soltado
+[54,89s] ACIERTO - Sombrero 'VikingHelmet' colocado correctamente en stand 'VikingHelmet'
+    Progreso: 2/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 2,38s
+
+[58,77s] SUELTA - Sombrero 'Crown' soltado
+[58,77s] AGARRE - Sombrero 'Crown' agarrado
+[58,77s] PISTA - Pista mostrada para sombrero 'Crown'
+[61,10s] SUELTA - Sombrero 'Crown' soltado
+[61,25s] ACIERTO - Sombrero 'Crown' colocado correctamente en stand 'Crown'
+    Progreso: 3/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 11,61s
+
+[62,53s] AGARRE - Sombrero 'PoliceCap' agarrado
+[62,53s] PISTA - Pista mostrada para sombrero 'PoliceCap'
+[64,21s] SUELTA - Sombrero 'PoliceCap' soltado
+[64,35s] ACIERTO - Sombrero 'PoliceCap' colocado correctamente en stand 'PoliceCap'
+    Progreso: 4/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 1,82s
+
+[65,46s] AGARRE - Sombrero 'CowboyHat' agarrado
+[65,46s] PISTA - Pista mostrada para sombrero 'CowboyHat'
+[66,78s] SUELTA - Sombrero 'CowboyHat' soltado
+[66,93s] ACIERTO - Sombrero 'CowboyHat' colocado correctamente en stand 'CowboyHat'
+    Progreso: 5/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 1,47s
+
+=== PUZZLE COMPLETADO ===
+Todos los sombreros colocados correctamente!
+Tiempo total: 67,78 segundos (1,1 minutos)
+Estadisticas finales:
+    - Total de intentos: 5
+    - Aciertos: 5
+    - Errores: 0
+    - Precisión: 100,0%
+    - Promedio de tiempo por acierto: 13,56s
+
+Detalles por sombrero:
+    - MagicianHat: 1 intentos
+    - VikingHelmet: 1 intentos
+    - Crown: 1 intentos
+    - PoliceCap: 1 intentos
+    - CowboyHat: 1 intentos
+
+Juego completado el: 01/12/2025 11:07:36
+=====================================
+
+
+--- NUEVA SESION ---
+Sesión iniciada el: 01/12/2025 11:08:08
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 01/12/2025 11:08:08
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[13,93s] AGARRE - Sombrero 'Crown' agarrado
+[13,93s] PISTA - Pista mostrada para sombrero 'Crown'
+[17,29s] SUELTA - Sombrero 'Crown' soltado
+[22,70s] AGARRE - Sombrero 'CowboyHat' agarrado
+[22,70s] PISTA - Pista mostrada para sombrero 'CowboyHat'
+[27,99s] SUELTA - Sombrero 'CowboyHat' soltado
+[33,22s] AGARRE - Sombrero 'CowboyHat' agarrado
+[33,22s] PISTA - Pista mostrada para sombrero 'CowboyHat'
+[37,53s] SUELTA - Sombrero 'CowboyHat' soltado
+[52,72s] AGARRE - Sombrero 'VikingHelmet' agarrado
+[52,72s] PISTA - Pista mostrada para sombrero 'VikingHelmet'
+[59,13s] SUELTA - Sombrero 'VikingHelmet' soltado
+[62,03s] AGARRE - Sombrero 'VikingHelmet' agarrado
+[62,03s] PISTA - Pista mostrada para sombrero 'VikingHelmet'
+[64,08s] SUELTA - Sombrero 'VikingHelmet' soltado
+[64,14s] ACIERTO - Sombrero 'VikingHelmet' colocado correctamente en stand 'VikingHelmet'
+    Progreso: 1/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 11,42s
+
+[65,56s] AGARRE - Sombrero 'VikingHelmet' agarrado
+[65,56s] PISTA - Pista mostrada para sombrero 'VikingHelmet'
+[66,51s] SUELTA - Sombrero 'VikingHelmet' soltado
+[66,76s] ERROR - Sombrero 'VikingHelmet' colocado incorrectamente en stand 'PoliceCap'
+    Intentos para este sombrero: 2
+
+[67,92s] AGARRE - Sombrero 'VikingHelmet' agarrado
+[67,92s] PISTA - Pista mostrada para sombrero 'VikingHelmet'
+[68,93s] SUELTA - Sombrero 'VikingHelmet' soltado
+[69,71s] AGARRE - Sombrero 'VikingHelmet' agarrado
+[69,71s] PISTA - Pista mostrada para sombrero 'VikingHelmet'
+[70,36s] SUELTA - Sombrero 'VikingHelmet' soltado
+[73,87s] AGARRE - Sombrero 'MagicianHat' agarrado
+[73,87s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[76,10s] ACIERTO - Sombrero 'MagicianHat' colocado correctamente en stand 'MagicianHat'
+    Progreso: 2/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 2,22s
+
+[79,10s] ERROR - Sombrero 'MagicianHat' colocado incorrectamente en stand 'Crown'
+    Intentos para este sombrero: 2
+
+[79,31s] SUELTA - Sombrero 'MagicianHat' soltado

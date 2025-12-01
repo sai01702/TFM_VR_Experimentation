@@ -45,25 +45,66 @@ public class PlaceHatWithRaycast : MonoBehaviour
     private bool isBeingGrabbed = false;
     private bool isPlacedOnStand = false;
     private Vector3 originalScale;
+    private bool listenersSubscribed = false;
 
     void Awake()
     {
         grab = GetComponent<XRGrabInteractable>();
-        grab.selectEntered.AddListener(OnGrabbed);
-        grab.selectExited.AddListener(OnReleased);
         
         // Guardar escala original
         originalScale = transform.localScale;
     }
 
+    /// <summary>
+    /// Subscribe to grab events ONLY when enabled.
+    /// This ensures short-distance mode (disabled) won't teleport hats.
+    /// </summary>
+    void OnEnable()
+    {
+        if (grab != null && !listenersSubscribed)
+        {
+            grab.selectEntered.AddListener(OnGrabbed);
+            grab.selectExited.AddListener(OnReleased);
+            listenersSubscribed = true;
+        }
+    }
+
+    /// <summary>
+    /// Unsubscribe from grab events when disabled.
+    /// This stops the long-distance placement behavior for short-distance mode.
+    /// </summary>
+    void OnDisable()
+    {
+        if (grab != null && listenersSubscribed)
+        {
+            grab.selectEntered.RemoveListener(OnGrabbed);
+            grab.selectExited.RemoveListener(OnReleased);
+            listenersSubscribed = false;
+        }
+
+        // Clean up any active state
+        ClearStandHighlight();
+        isBeingGrabbed = false;
+        handTransform = null;
+        currentTargetStand = null;
+    }
+
     private void OnDestroy()
     {
-        grab.selectEntered.RemoveListener(OnGrabbed);
-        grab.selectExited.RemoveListener(OnReleased);
+        // Safety cleanup in case OnDisable wasn't called
+        if (grab != null && listenersSubscribed)
+        {
+            grab.selectEntered.RemoveListener(OnGrabbed);
+            grab.selectExited.RemoveListener(OnReleased);
+            listenersSubscribed = false;
+        }
     }
 
     private void OnGrabbed(SelectEnterEventArgs args)
     {
+        // Double-check we're enabled (safety check)
+        if (!enabled) return;
+
         handTransform = args.interactorObject.transform;
         isBeingGrabbed = true;
         isPlacedOnStand = false;
@@ -78,12 +119,22 @@ public class PlaceHatWithRaycast : MonoBehaviour
 
     private void OnReleased(SelectExitEventArgs args)
     {
+        // Double-check we're enabled - if disabled, don't teleport!
+        if (!enabled)
+        {
+            // Just clean up state, no teleport
+            isBeingGrabbed = false;
+            handTransform = null;
+            currentTargetStand = null;
+            return;
+        }
+
         isBeingGrabbed = false;
         
         // Limpiar highlight si existe
         ClearStandHighlight();
 
-        // Intentar colocar el sombrero en un stand
+        // Intentar colocar el sombrero en un stand (ONLY if enabled)
         HatStandTrigger targetStand = FindBestStand();
         
         if (targetStand != null)
