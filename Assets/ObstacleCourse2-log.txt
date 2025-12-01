@@ -183,3 +183,93 @@ Player: Player
   - Success rate: 100,0%
 =====================================
 
+[12:23:39] GAME START - Attempt #1
+[12:23:49] COURSE COMPLETED!
+  - Final time: 9,41 seconds
+  - Total attempts: 1
+  - Total falls: 0
+  - Success rate: 100,0%
+=====================================
+
+[12:26:13] GAME START - Attempt #1
+[12:26:20] APPLICATION LOST FOCUS
+[12:31:28] GAME START - Attempt #1
+[12:31:34] APPLICATION LOST FOCUS
+[12:39:58] GAME START - Attempt #1
+[12:40:03] APPLICATION LOST FOCUS
+[12:43:07] GAME START - Attempt #1
+[12:43:29] APPLICATION GAINED FOCUS
+[12:43:29] APPLICATION LOST FOCUS
+[12:47:56] GAME START - Attempt #1
+[12:48:00] PLAYER FELL - Reset #1
+  - Fall position: (-0.38, -1.77, 1.88)
+  - Time before fall: 4,04 seconds
+  - Returned to start
+
+[12:48:30] APPLICATION LOST FOCUS
+[12:51:03] GAME START - Attempt #1
+[12:51:37] PLAYER FELL - Reset #1
+  - Fall position: (4.04, -1.60, -1.95)
+  - Time before fall: 33,53 seconds
+  - Returned to start
+
+[12:51:52] PLAYER FELL - Reset #2
+  - Fall position: (-3.94, -1.62, -1.38)
+  - Time before fall: 48,33 seconds
+  - Returned to start
+
+[12:51:59] APPLICATION GAINED FOCUS
+[12:51:59] APPLICATION LOST FOCUS
+[12:53:34] GAME START - Attempt #1
+[12:53:42] PLAYER FELL - Reset #1
+  - Fall position: (-3.40, -1.59, -2.08)
+  - Time before fall: 6,74 seconds
+  - Returned to start
+
+[12:53:49] PLAYER FELL - Reset #2
+  - Fall position: (-3.21, -1.74, -0.40)
+  - Time before fall: 13,70 seconds
+  - Returned to start
+
+[12:54:11] PLAYER FELL - Reset #3
+  - Fall position: (-3.88, -1.62, -2.65)
+  - Time before fall: 35,54 seconds
+  - Returned to start
+
+[12:54:28] APPLICATION LOST FOCUS
+[12:56:43] GAME START - Attempt #1
+[12:57:29] COURSE COMPLETED!
+  - Final time: 45,31 seconds
+  - Total attempts: 1
+  - Total falls: 0
+  - Success rate: 100,0%
+=====================================
+
+[12:57:56] GAME START - Attempt #1
+[12:58:20] APPLICATION LOST FOCUS
+[12:58:24] GAME START - Attempt #1
+[12:58:37] APPLICATION LOST FOCUS
+[12:58:41] GAME START - Attempt #1
+[12:58:42] APPLICATION LOST FOCUS
+[12:59:26] GAME START - Attempt #1
+[12:59:46] APPLICATION LOST FOCUS
+[13:00:56] GAME START - Attempt #1
+[13:01:50] COURSE COMPLETED!
+  - Final time: 52,47 seconds
+  - Total attempts: 1
+  - Total falls: 0
+  - Success rate: 100,0%
+=====================================
+
+[13:06:04] GAME START - Attempt #1
+[13:06:20] APPLICATION LOST FOCUS
+[13:09:46] GAME START - Attempt #1
+[13:09:57] APPLICATION LOST FOCUS
+[13:13:09] GAME START - Attempt #1
+[13:14:05] COURSE COMPLETED!
+  - Final time: 54,71 seconds
+  - Total attempts: 1
+  - Total falls: 0
+  - Success rate: 100,0%
+=====================================
+

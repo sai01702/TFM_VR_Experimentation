@@ -1626,6 +1626,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 539573282}
+  - component: {fileID: 539573283}
   m_Layer: 0
   m_Name: V3_Walk
   m_TagString: Untagged
@@ -1649,6 +1650,30 @@ Transform:
   - {fileID: 122082859}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &539573283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539573281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 236c980b7dbf8c847b6286e059b1e398, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkModeObject: {fileID: 539573281}
+  leftController: {fileID: 0}
+  rightController: {fileID: 0}
+  xrRig: {fileID: 0}
+  headTransform: {fileID: 0}
+  moveSpeed: 2.5
+  minSwingSpeed: 0.3
+  movementDecay: 2
+  directTransformMovement: 1
+  applyGravity: 1
+  showDebugInfo: 1
+  showFrameDebug: 1
 --- !u!64 &547843068
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4471,7 +4496,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: -3.6394323e+32}
+  m_BoundingSphereOverride: {x: 9.1835e-41, y: 0, z: 0, w: 3.67342e-40}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -4794,12 +4819,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4743986483913284456, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
     m_RemovedGameObjects:
     - {fileID: 3661522790076040465, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5735641159042291069, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1933958096}
   m_SourcePrefab: {fileID: 100100000, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+--- !u!4 &1933958094 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4695408159385444097, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+  m_PrefabInstance: {fileID: 1933958093}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1933958095 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5735641159042291069, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+  m_PrefabInstance: {fileID: 1933958093}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1933958096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1933958095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aa1d7e32fa49be4fb2627c24a722210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desktopRigPrefab: {fileID: 109950894710080233, guid: c8b45505bf594f04288971e9576848b3, type: 3}
+  vrRigInScene: {fileID: 491781704918994463}
+  spawnPoint: {fileID: 1933958094}
 --- !u!64 &1963432311
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5528,7 +5582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2541185596634147806, guid: 00630232d662f054085b8e5232a0be95, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.62
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2541185596634147806, guid: 00630232d662f054085b8e5232a0be95, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5575,6 +5629,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00630232d662f054085b8e5232a0be95, type: 3}
+--- !u!1 &491781704918994463 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4538169285424341117, guid: 00630232d662f054085b8e5232a0be95, type: 3}
+  m_PrefabInstance: {fileID: 491781704918994462}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
