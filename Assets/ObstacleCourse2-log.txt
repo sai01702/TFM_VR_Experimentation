@@ -273,3 +273,531 @@ Player: Player
   - Success rate: 100,0%
 =====================================
 
+[10:14:23] GAME START - Attempt #1
+[10:15:11] APPLICATION GAINED FOCUS
+[10:15:11] APPLICATION LOST FOCUS
+[10:15:30] GAME START - Attempt #1
+[10:16:15] COURSE COMPLETED!
+  - Final time: 44,98 seconds
+  - Total attempts: 1
+  - Total falls: 0
+  - Success rate: 100,0%
+=====================================
+
+[10:18:15] GAME START - Attempt #1
+[10:19:06] PLAYER FELL - Reset #1
+  - Fall position: (-3.40, -1.71, -1.65)
+  - Time before fall: 50,34 seconds
+  - Returned to start
+
+[10:19:30] APPLICATION LOST FOCUS
+[10:20:10] GAME START - Attempt #1
+[10:21:05] COURSE COMPLETED!
+  - Final time: 55,33 seconds
+  - Total attempts: 1
+  - Total falls: 0
+  - Success rate: 100,0%
+=====================================
+
+[10:22:32] GAME START - Attempt #1
+[10:23:02] APPLICATION LOST FOCUS
+[09:42:55] GAME START - Attempt #1
+[09:42:56] APPLICATION LOST FOCUS
+[09:42:57] PLAYER FELL - Reset #1
+  - Fall position: (0.00, -1.70, -0.01)
+  - Time before fall: 0,58 seconds
+  - Returned to start
+
+[09:42:57] PLAYER FELL - Reset #2
+  - Fall position: (0.00, -1.71, 0.00)
+  - Time before fall: 0,82 seconds
+  - Returned to start
+
+[09:42:57] PLAYER FELL - Reset #3
+  - Fall position: (0.00, -1.83, 0.00)
+  - Time before fall: 1,02 seconds
+  - Returned to start
+
+[09:42:57] PLAYER FELL - Reset #4
+  - Fall position: (0.00, -1.77, 0.00)
+  - Time before fall: 1,18 seconds
+  - Returned to start
+
+[09:42:57] PLAYER FELL - Reset #5
+  - Fall position: (0.00, -1.99, 0.00)
+  - Time before fall: 1,34 seconds
+  - Returned to start
+
+[09:42:58] PLAYER FELL - Reset #6
+  - Fall position: (0.00, -1.97, 0.00)
+  - Time before fall: 1,48 seconds
+  - Returned to start
+
+[09:42:58] PLAYER FELL - Reset #7
+  - Fall position: (0.00, -2.16, 0.00)
+  - Time before fall: 1,62 seconds
+  - Returned to start
+
+[09:42:58] PLAYER FELL - Reset #8
+  - Fall position: (0.00, -2.01, 0.00)
+  - Time before fall: 1,74 seconds
+  - Returned to start
+
+[09:42:58] APPLICATION GAINED FOCUS
+[09:42:58] PLAYER FELL - Reset #9
+  - Fall position: (0.00, -2.12, 0.00)
+  - Time before fall: 1,86 seconds
+  - Returned to start
+
+[09:42:58] PLAYER FELL - Reset #10
+  - Fall position: (0.00, -1.93, 0.00)
+  - Time before fall: 1,96 seconds
+  - Returned to start
+
+[09:42:58] PLAYER FELL - Reset #11
+  - Fall position: (0.00, -1.98, 0.00)
+  - Time before fall: 2,06 seconds
+  - Returned to start
+
+[09:42:58] PLAYER FELL - Reset #12
+  - Fall position: (0.00, -2.08, 0.00)
+  - Time before fall: 2,16 seconds
+  - Returned to start
+
+[09:42:58] PLAYER FELL - Reset #13
+  - Fall position: (0.00, -2.16, 0.00)
+  - Time before fall: 2,26 seconds
+  - Returned to start
+
+[09:42:58] PLAYER FELL - Reset #14
+  - Fall position: (0.00, -2.29, 0.00)
+  - Time before fall: 2,36 seconds
+  - Returned to start
+
+[09:42:59] PLAYER FELL - Reset #15
+  - Fall position: (0.00, -2.41, 0.00)
+  - Time before fall: 2,46 seconds
+  - Returned to start
+
+[09:42:59] PLAYER FELL - Reset #16
+  - Fall position: (0.00, -2.46, 0.00)
+  - Time before fall: 2,56 seconds
+  - Returned to start
+
+[09:42:59] PLAYER FELL - Reset #17
+  - Fall position: (0.00, -2.10, 0.00)
+  - Time before fall: 2,64 seconds
+  - Returned to start
+
+[09:42:59] PLAYER FELL - Reset #18
+  - Fall position: (0.00, -2.11, 0.00)
+  - Time before fall: 2,72 seconds
+  - Returned to start
+
+[09:42:59] PLAYER FELL - Reset #19
+  - Fall position: (0.00, -2.15, 0.00)
+  - Time before fall: 2,80 seconds
+  - Returned to start
+
+[09:42:59] PLAYER FELL - Reset #20
+  - Fall position: (0.00, -2.29, 0.00)
+  - Time before fall: 2,88 seconds
+  - Returned to start
+
+[09:42:59] PLAYER FELL - Reset #21
+  - Fall position: (0.00, -2.24, 0.00)
+  - Time before fall: 2,96 seconds
+  - Returned to start
+
+[09:42:59] PLAYER FELL - Reset #22
+  - Fall position: (0.00, -2.40, 0.00)
+  - Time before fall: 3,04 seconds
+  - Returned to start
+
+[09:42:59] PLAYER FELL - Reset #23
+  - Fall position: (0.00, -2.44, 0.00)
+  - Time before fall: 3,12 seconds
+  - Returned to start
+
+[09:42:59] PLAYER FELL - Reset #24
+  - Fall position: (0.00, -2.51, 0.00)
+  - Time before fall: 3,20 seconds
+  - Returned to start
+
+[09:42:59] PLAYER FELL - Reset #25
+  - Fall position: (0.00, -2.53, 0.00)
+  - Time before fall: 3,28 seconds
+  - Returned to start
+
+[09:42:59] PLAYER FELL - Reset #26
+  - Fall position: (0.00, -2.65, 0.00)
+  - Time before fall: 3,36 seconds
+  - Returned to start
+
+[09:43:00] PLAYER FELL - Reset #27
+  - Fall position: (0.00, -2.69, 0.00)
+  - Time before fall: 3,44 seconds
+  - Returned to start
+
+[09:43:00] PLAYER FELL - Reset #28
+  - Fall position: (0.00, -2.77, 0.00)
+  - Time before fall: 3,52 seconds
+  - Returned to start
+
+[09:43:00] PLAYER FELL - Reset #29
+  - Fall position: (0.00, -2.74, 0.00)
+  - Time before fall: 3,60 seconds
+  - Returned to start
+
+[09:43:00] PLAYER FELL - Reset #30
+  - Fall position: (0.00, -2.95, 0.00)
+  - Time before fall: 3,68 seconds
+  - Returned to start
+
+[09:43:00] PLAYER FELL - Reset #31
+  - Fall position: (0.00, -2.91, 0.00)
+  - Time before fall: 3,76 seconds
+  - Returned to start
+
+[09:43:00] PLAYER FELL - Reset #32
+  - Fall position: (0.00, -2.94, 0.00)
+  - Time before fall: 3,84 seconds
+  - Returned to start
+
+[09:43:00] PLAYER FELL - Reset #33
+  - Fall position: (0.00, -2.37, 0.00)
+  - Time before fall: 3,90 seconds
+  - Returned to start
+
+[09:43:00] PLAYER FELL - Reset #34
+  - Fall position: (0.00, -2.32, 0.00)
+  - Time before fall: 3,96 seconds
+  - Returned to start
+
+[09:43:00] PLAYER FELL - Reset #35
+  - Fall position: (0.00, -2.33, 0.00)
+  - Time before fall: 4,02 seconds
+  - Returned to start
+
+[09:43:00] PLAYER FELL - Reset #36
+  - Fall position: (0.00, -2.34, 0.00)
+  - Time before fall: 4,08 seconds
+  - Returned to start
+
+[09:43:00] PLAYER FELL - Reset #37
+  - Fall position: (0.00, -2.44, 0.00)
+  - Time before fall: 4,14 seconds
+  - Returned to start
+
+[09:43:00] PLAYER FELL - Reset #38
+  - Fall position: (0.00, -2.56, 0.00)
+  - Time before fall: 4,20 seconds
+  - Returned to start
+
+[09:43:00] PLAYER FELL - Reset #39
+  - Fall position: (0.00, -2.46, 0.00)
+  - Time before fall: 4,26 seconds
+  - Returned to start
+
+[09:43:00] PLAYER FELL - Reset #40
+  - Fall position: (0.00, -2.52, 0.00)
+  - Time before fall: 4,32 seconds
+  - Returned to start
+
+[09:43:00] PLAYER FELL - Reset #41
+  - Fall position: (0.00, -2.62, 0.00)
+  - Time before fall: 4,38 seconds
+  - Returned to start
+
+[09:43:01] PLAYER FELL - Reset #42
+  - Fall position: (0.00, -2.53, 0.00)
+  - Time before fall: 4,44 seconds
+  - Returned to start
+
+[09:43:01] PLAYER FELL - Reset #43
+  - Fall position: (0.00, -2.73, 0.00)
+  - Time before fall: 4,50 seconds
+  - Returned to start
+
+[09:43:01] PLAYER FELL - Reset #44
+  - Fall position: (0.00, -2.69, 0.00)
+  - Time before fall: 4,56 seconds
+  - Returned to start
+
+[09:43:01] PLAYER FELL - Reset #45
+  - Fall position: (0.00, -2.63, 0.00)
+  - Time before fall: 4,62 seconds
+  - Returned to start
+
+[09:43:01] PLAYER FELL - Reset #46
+  - Fall position: (0.00, -2.75, 0.00)
+  - Time before fall: 4,68 seconds
+  - Returned to start
+
+[09:43:01] PLAYER FELL - Reset #47
+  - Fall position: (0.00, -2.80, 0.00)
+  - Time before fall: 4,74 seconds
+  - Returned to start
+
+[09:43:01] PLAYER FELL - Reset #48
+  - Fall position: (0.00, -2.79, 0.00)
+  - Time before fall: 4,80 seconds
+  - Returned to start
+
+[09:43:01] PLAYER FELL - Reset #49
+  - Fall position: (0.00, -2.88, 0.00)
+  - Time before fall: 4,86 seconds
+  - Returned to start
+
+[09:43:01] PLAYER FELL - Reset #50
+  - Fall position: (0.00, -2.85, 0.00)
+  - Time before fall: 4,92 seconds
+  - Returned to start
+
+[09:43:01] PLAYER FELL - Reset #51
+  - Fall position: (0.00, -2.96, 0.00)
+  - Time before fall: 4,98 seconds
+  - Returned to start
+
+[09:43:01] PLAYER FELL - Reset #52
+  - Fall position: (0.00, -2.95, 0.00)
+  - Time before fall: 5,04 seconds
+  - Returned to start
+
+[09:43:01] PLAYER FELL - Reset #53
+  - Fall position: (0.00, -3.04, 0.00)
+  - Time before fall: 5,10 seconds
+  - Returned to start
+
+[09:43:01] PLAYER FELL - Reset #54
+  - Fall position: (0.00, -3.03, 0.00)
+  - Time before fall: 5,16 seconds
+  - Returned to start
+
+[09:43:01] PLAYER FELL - Reset #55
+  - Fall position: (0.00, -3.07, 0.00)
+  - Time before fall: 5,22 seconds
+  - Returned to start
+
+[09:43:01] PLAYER FELL - Reset #56
+  - Fall position: (0.00, -3.07, 0.00)
+  - Time before fall: 5,28 seconds
+  - Returned to start
+
+[09:43:01] PLAYER FELL - Reset #57
+  - Fall position: (0.00, -3.13, 0.00)
+  - Time before fall: 5,34 seconds
+  - Returned to start
+
+[09:43:02] PLAYER FELL - Reset #58
+  - Fall position: (0.00, -3.25, 0.00)
+  - Time before fall: 5,40 seconds
+  - Returned to start
+
+[09:43:02] PLAYER FELL - Reset #59
+  - Fall position: (0.00, -3.22, 0.00)
+  - Time before fall: 5,46 seconds
+  - Returned to start
+
+[09:43:02] PLAYER FELL - Reset #60
+  - Fall position: (0.00, -3.12, 0.00)
+  - Time before fall: 5,52 seconds
+  - Returned to start
+
+[09:43:02] PLAYER FELL - Reset #61
+  - Fall position: (0.00, -3.37, 0.00)
+  - Time before fall: 5,58 seconds
+  - Returned to start
+
+[09:43:02] PLAYER FELL - Reset #62
+  - Fall position: (0.00, -3.35, 0.00)
+  - Time before fall: 5,64 seconds
+  - Returned to start
+
+[09:43:02] PLAYER FELL - Reset #63
+  - Fall position: (0.00, -3.28, 0.00)
+  - Time before fall: 5,70 seconds
+  - Returned to start
+
+[09:43:02] PLAYER FELL - Reset #64
+  - Fall position: (0.00, -3.42, 0.00)
+  - Time before fall: 5,76 seconds
+  - Returned to start
+
+[09:43:02] PLAYER FELL - Reset #65
+  - Fall position: (0.00, -3.35, 0.00)
+  - Time before fall: 5,82 seconds
+  - Returned to start
+
+[09:43:02] PLAYER FELL - Reset #66
+  - Fall position: (0.00, -3.47, 0.00)
+  - Time before fall: 5,88 seconds
+  - Returned to start
+
+[09:43:02] PLAYER FELL - Reset #67
+  - Fall position: (0.00, -3.54, 0.00)
+  - Time before fall: 5,94 seconds
+  - Returned to start
+
+[09:43:02] PLAYER FELL - Reset #68
+  - Fall position: (0.00, -3.47, 0.00)
+  - Time before fall: 6,00 seconds
+  - Returned to start
+
+[09:43:02] PLAYER FELL - Reset #69
+  - Fall position: (0.00, -3.54, 0.00)
+  - Time before fall: 6,06 seconds
+  - Returned to start
+
+[09:43:02] PLAYER FELL - Reset #70
+  - Fall position: (0.00, -3.66, 0.00)
+  - Time before fall: 6,12 seconds
+  - Returned to start
+
+[09:43:02] PLAYER FELL - Reset #71
+  - Fall position: (0.00, -3.57, 0.00)
+  - Time before fall: 6,18 seconds
+  - Returned to start
+
+[09:43:02] PLAYER FELL - Reset #72
+  - Fall position: (0.00, -3.73, 0.00)
+  - Time before fall: 6,24 seconds
+  - Returned to start
+
+[09:43:02] PLAYER FELL - Reset #73
+  - Fall position: (0.00, -3.74, 0.00)
+  - Time before fall: 6,30 seconds
+  - Returned to start
+
+[09:43:02] PLAYER FELL - Reset #74
+  - Fall position: (0.00, -3.65, 0.00)
+  - Time before fall: 6,36 seconds
+  - Returned to start
+
+[09:43:03] PLAYER FELL - Reset #75
+  - Fall position: (0.00, -3.84, 0.00)
+  - Time before fall: 6,42 seconds
+  - Returned to start
+
+[09:43:03] PLAYER FELL - Reset #76
+  - Fall position: (0.00, -3.82, 0.00)
+  - Time before fall: 6,48 seconds
+  - Returned to start
+
+[09:43:03] PLAYER FELL - Reset #77
+  - Fall position: (0.00, -3.87, 0.00)
+  - Time before fall: 6,54 seconds
+  - Returned to start
+
+[09:43:03] PLAYER FELL - Reset #78
+  - Fall position: (0.00, -3.84, 0.00)
+  - Time before fall: 6,60 seconds
+  - Returned to start
+
+[09:43:03] PLAYER FELL - Reset #79
+  - Fall position: (0.00, -3.85, 0.00)
+  - Time before fall: 6,66 seconds
+  - Returned to start
+
+[09:43:03] PLAYER FELL - Reset #80
+  - Fall position: (0.00, -3.98, 0.00)
+  - Time before fall: 6,72 seconds
+  - Returned to start
+
+[09:43:03] PLAYER FELL - Reset #81
+  - Fall position: (0.00, -4.07, 0.00)
+  - Time before fall: 6,78 seconds
+  - Returned to start
+
+[09:43:03] PLAYER FELL - Reset #82
+  - Fall position: (0.00, -3.98, 0.00)
+  - Time before fall: 6,84 seconds
+  - Returned to start
+
+[09:43:03] PLAYER FELL - Reset #83
+  - Fall position: (0.00, -4.05, 0.00)
+  - Time before fall: 6,90 seconds
+  - Returned to start
+
+[09:43:03] PLAYER FELL - Reset #84
+  - Fall position: (0.00, -4.05, 0.00)
+  - Time before fall: 6,96 seconds
+  - Returned to start
+
+[09:43:03] PLAYER FELL - Reset #85
+  - Fall position: (0.00, -4.18, 0.00)
+  - Time before fall: 7,02 seconds
+  - Returned to start
+
+[09:43:03] PLAYER FELL - Reset #86
+  - Fall position: (0.00, -4.18, 0.00)
+  - Time before fall: 7,08 seconds
+  - Returned to start
+
+[09:43:03] PLAYER FELL - Reset #87
+  - Fall position: (0.00, -4.11, 0.00)
+  - Time before fall: 7,14 seconds
+  - Returned to start
+
+[09:43:03] PLAYER FELL - Reset #88
+  - Fall position: (0.00, -4.29, 0.00)
+  - Time before fall: 7,20 seconds
+  - Returned to start
+
+[09:43:03] PLAYER FELL - Reset #89
+  - Fall position: (0.00, -4.27, 0.00)
+  - Time before fall: 7,26 seconds
+  - Returned to start
+
+[09:43:03] PLAYER FELL - Reset #90
+  - Fall position: (0.00, -4.22, 0.00)
+  - Time before fall: 7,32 seconds
+  - Returned to start
+
+[09:43:03] PLAYER FELL - Reset #91
+  - Fall position: (0.00, -2.98, 0.00)
+  - Time before fall: 7,36 seconds
+  - Returned to start
+
+[09:43:04] PLAYER FELL - Reset #92
+  - Fall position: (0.00, -4.32, 0.00)
+  - Time before fall: 7,42 seconds
+  - Returned to start
+
+[09:43:04] PLAYER FELL - Reset #93
+  - Fall position: (0.00, -2.86, 0.00)
+  - Time before fall: 7,46 seconds
+  - Returned to start
+
+[09:43:10] APPLICATION LOST FOCUS
+[09:44:27] GAME START - Attempt #1
+[09:44:39] APPLICATION LOST FOCUS
+[09:44:44] APPLICATION GAINED FOCUS
+[09:44:44] APPLICATION LOST FOCUS
+[09:45:45] GAME START - Attempt #1
+[09:46:00] APPLICATION LOST FOCUS
+[09:46:05] APPLICATION GAINED FOCUS
+[09:46:05] APPLICATION LOST FOCUS
+[09:46:12] APPLICATION GAINED FOCUS
+[09:46:19] APPLICATION LOST FOCUS
+[09:46:24] APPLICATION GAINED FOCUS
+[09:46:28] APPLICATION LOST FOCUS
+[09:46:33] APPLICATION GAINED FOCUS
+[09:46:35] APPLICATION LOST FOCUS
+[09:46:48] GAME START - Attempt #1
+[09:47:01] APPLICATION LOST FOCUS
+[09:47:34] APPLICATION GAINED FOCUS
+[09:47:40] APPLICATION LOST FOCUS
+[09:47:50] GAME START - Attempt #1
+[09:48:01] APPLICATION LOST FOCUS
+[09:54:56] GAME START - Attempt #1
+[09:55:09] PLAYER FELL - Reset #1
+  - Fall position: (-31.69, -2.05, 0.00)
+  - Time before fall: 12,46 seconds
+  - Returned to start
+
+[09:55:10] APPLICATION LOST FOCUS
+[09:55:29] GAME START - Attempt #1
+[09:55:44] APPLICATION LOST FOCUS
+[09:56:25] GAME START - Attempt #1
+[09:56:37] APPLICATION LOST FOCUS
