@@ -242,6 +242,7 @@ public class ObjetivosManager : MonoBehaviour
         {
             ParticipantSession.Instance.AppendLog("");
             ParticipantSession.Instance.AppendLog($"=== Shooter Game Ended ===");
+            ParticipantSession.Instance.AppendLog($"End time: {DateTime.Now:G}");
             ParticipantSession.Instance.AppendLog($"Final Score: {puntos}");
             ParticipantSession.Instance.AppendLog($"Total Spawns: {nlogs - 1}");
             ParticipantSession.Instance.AppendLog("");
