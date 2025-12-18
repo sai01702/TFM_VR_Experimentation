@@ -7,6 +7,7 @@ public class ExitAppButton : MonoBehaviour
     {
         // Cierra la aplicación en una build
         Application.Quit();
+        PlayerPrefs.DeleteAll();
 
         // Este log aparece solo en el editor para confirmar el cierre
 #if UNITY_EDITOR

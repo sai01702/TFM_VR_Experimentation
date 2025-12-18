@@ -1,0 +1,5 @@
+Participant: 2
+Session start: 11/12/2025 13:08:28
+=========================================
+
+SessionStart

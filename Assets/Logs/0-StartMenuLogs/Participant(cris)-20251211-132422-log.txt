@@ -1,0 +1,25 @@
+Participant: cris
+Session start: 11/12/2025 13:24:22
+=========================================
+
+SessionStart
+
+=== Shooter Game - Reaction Time Log ===
+Mode: VR
+Started: 11/12/2025 13:24:49
+
+Spawned object 1: ObjetivoRea3
+Manual despawn
+Spawned object 2: ObjetivoRea
+Manual despawn
+Spawned object 3: ObjetivoRea
+Manual despawn
+Spawned object 4: ObjetivoRea2
+Manual despawn
+Spawned object 5: ObjetivoRea4
+
+=== Shooter Game Ended ===
+End time: 11/12/2025 13:25:09
+Final Score: 0
+Total Spawns: 5
+
