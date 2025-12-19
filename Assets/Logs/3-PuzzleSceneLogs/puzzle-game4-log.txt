@@ -1920,3 +1920,57 @@ Detalles por sombrero:
 Juego completado el: 19/12/2025 12:50:24
 =====================================
 
+
+--- NUEVA SESION ---
+Sesión iniciada el: 19/12/2025 13:26:47
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 19/12/2025 13:26:47
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[15,24s] AGARRE - Sombrero 'MagicianHat' agarrado
+[15,24s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[17,47s] ACIERTO - Sombrero 'MagicianHat' colocado correctamente en stand 'MagicianHat'
+    Progreso: 1/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 2,23s
+
+[18,11s] SUELTA - Sombrero 'MagicianHat' soltado
+[18,97s] AGARRE - Sombrero 'MagicianHat' agarrado
+[18,97s] PISTA - Pista mostrada para sombrero 'MagicianHat'
+[19,89s] SUELTA - Sombrero 'MagicianHat' soltado
+[22,54s] AGARRE - Sombrero 'PoliceCap' agarrado
+[22,54s] PISTA - Pista mostrada para sombrero 'PoliceCap'
+[25,69s] ERROR - Sombrero 'PoliceCap' colocado incorrectamente en stand 'VikingHelmet'
+    Intentos para este sombrero: 1
+
+[25,82s] SUELTA - Sombrero 'PoliceCap' soltado
+[27,89s] AGARRE - Sombrero 'PoliceCap' agarrado
+[27,89s] PISTA - Pista mostrada para sombrero 'PoliceCap'
+[28,76s] SUELTA - Sombrero 'PoliceCap' soltado
+[31,95s] AGARRE - Sombrero 'Crown' agarrado
+[31,95s] PISTA - Pista mostrada para sombrero 'Crown'
+[33,01s] AGARRE - Sombrero 'VikingHelmet' agarrado
+[33,01s] PISTA - Pista mostrada para sombrero 'VikingHelmet'
+[37,01s] ERROR - Sombrero 'Crown' colocado incorrectamente en stand 'PoliceCap'
+    Intentos para este sombrero: 1
+
+[37,44s] SUELTA - Sombrero 'Crown' soltado
+[39,46s] AGARRE - Sombrero 'Crown' agarrado
+[39,46s] PISTA - Pista mostrada para sombrero 'Crown'
+[40,38s] SUELTA - Sombrero 'VikingHelmet' soltado
+[40,41s] ERROR - Sombrero 'VikingHelmet' colocado incorrectamente en stand 'PoliceCap'
+    Intentos para este sombrero: 1
+
+[43,13s] SUELTA - Sombrero 'Crown' soltado
+[43,21s] ERROR - Sombrero 'MagicianHat' colocado incorrectamente en stand 'CowboyHat'
+    Intentos para este sombrero: 2
+
+[43,93s] AGARRE - Sombrero 'Crown' agarrado
+[43,93s] PISTA - Pista mostrada para sombrero 'Crown'
+[44,57s] ACIERTO - Sombrero 'Crown' colocado correctamente en stand 'Crown'
+    Progreso: 2/5 sombreros correctos
+    Intentos para este sombrero: 2
+    Tiempo desde primer agarre: 12,62s
+
+[44,63s] SUELTA - Sombrero 'Crown' soltado

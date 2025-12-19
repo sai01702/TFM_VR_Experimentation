@@ -1,0 +1,5 @@
+Participant: a
+Session start: 19/12/2025 13:36:32
+=========================================
+
+SessionStart

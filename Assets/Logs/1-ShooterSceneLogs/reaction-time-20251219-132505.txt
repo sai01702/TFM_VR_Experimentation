@@ -1,0 +1,49 @@
+Reaction time Log Inmersive
+Created: 19/12/2025 13:25:05
+=====================================
+
+Spawned object 1: ObjetivoRea3
+Reaction time: 3,172 seconds
+
+Spawned object 2: ObjetivoRea2
+Reaction time: 1,631 seconds
+
+Spawned object 3: ObjetivoRea2
+Reaction time: 1,390 seconds
+
+Spawned object 4: ObjetivoRea5
+Manual despawn
+
+Spawned object 5: ObjetivoRea1
+Reaction time: 2,697 seconds
+
+Spawned object 6: ObjetivoRea1
+Manual despawn
+
+Spawned object 7: ObjetivoRea4
+Manual despawn
+
+Spawned object 8: ObjetivoRea3
+Manual despawn
+
+Spawned object 9: ObjetivoRea5
+Manual despawn
+
+Spawned object 10: ObjetivoRea2
+Manual despawn
+
+Spawned object 11: ObjetivoRea4
+Manual despawn
+
+Spawned object 12: ObjetivoRea5
+Manual despawn
+
+Spawned object 13: ObjetivoRea3
+Manual despawn
+
+Spawned object 14: ObjetivoRea2
+Manual despawn
+
+Spawned object 15: ObjetivoRea1
+Manual despawn
+

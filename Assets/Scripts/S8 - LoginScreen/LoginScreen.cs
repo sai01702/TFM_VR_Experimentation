@@ -224,38 +224,43 @@ public class LoginScreen : MonoBehaviour
                 Debug.Log("[LoginScreen] Enter key pressed - calling OnOkClicked");
             OnOkClicked();
         }
+    }
 
-        // MANUAL BUTTON CLICK DETECTION - bypasses broken EventSystem (using NEW Input System)
-        if (mouse != null && mouse.leftButton.wasPressedThisFrame && okButton != null)
+    // Use OnGUI for reliable click detection (bypasses Input System issues)
+    void OnGUI()
+    {
+        Event e = Event.current;
+        if (e.type == EventType.MouseDown && e.button == 0)
         {
-            Vector2 mousePos = mouse.position.ReadValue();
-            if (IsPointerOverButton(okButton, mousePos))
-            {
-                if (enableDebug)
-                    Debug.Log("[LoginScreen] Manual click detected on button!");
-                OnOkClicked();
-            }
-        }
-
-        // Debug: show what's under pointer when clicking
-        if (enableDebug && mouse != null && mouse.leftButton.wasPressedThisFrame)
-        {
-            Vector2 mousePos = mouse.position.ReadValue();
-            var pointer = new PointerEventData(EventSystem.current);
-            pointer.position = mousePos;
-            var results = new System.Collections.Generic.List<RaycastResult>();
-            EventSystem.current?.RaycastAll(pointer, results);
+            // GUI coordinates are flipped on Y axis
+            Vector2 mousePos = new Vector2(e.mousePosition.x, Screen.height - e.mousePosition.y);
             
-            Debug.Log($"[LoginScreen] Mouse click at {mousePos}");
-            if (results.Count == 0)
+            // Check if clicking on input field
+            if (idInput != null)
             {
-                Debug.Log("[LoginScreen] No UI elements hit by raycast!");
-            }
-            else
-            {
-                foreach (var hit in results)
+                RectTransform inputRect = idInput.GetComponent<RectTransform>();
+                if (inputRect != null && RectTransformUtility.RectangleContainsScreenPoint(inputRect, mousePos, null))
                 {
-                    Debug.Log($"[LoginScreen] Hit: {hit.gameObject.name}");
+                    if (enableDebug)
+                        Debug.Log("[LoginScreen] OnGUI click on input field - focusing");
+                    
+                    EventSystem.current?.SetSelectedGameObject(idInput.gameObject);
+                    idInput.ActivateInputField();
+                    idInput.Select();
+                    return;
+                }
+            }
+            
+            // Check if clicking on button
+            if (okButton != null)
+            {
+                RectTransform buttonRect = okButton.GetComponent<RectTransform>();
+                if (buttonRect != null && RectTransformUtility.RectangleContainsScreenPoint(buttonRect, mousePos, null))
+                {
+                    if (enableDebug)
+                        Debug.Log("[LoginScreen] OnGUI click on button - invoking");
+                    OnOkClicked();
+                    return;
                 }
             }
         }
