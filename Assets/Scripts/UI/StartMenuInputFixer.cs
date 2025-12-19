@@ -13,6 +13,9 @@ public class StartMenuInputFixer : MonoBehaviour
 {
     [SerializeField] TMP_InputField inputFieldToFocus;
     [SerializeField] bool enableDebugLogs = true;
+    [SerializeField] bool autoFocusOnStart = false; // Disabled - let LoginScreen handle this
+
+    private static bool hasFixedThisSession = false;
 
     void Awake()
     {
@@ -75,14 +78,19 @@ public class StartMenuInputFixer : MonoBehaviour
             Debug.LogWarning("[StartMenuInputFixer] No InputSystemUIInputModule found on EventSystem");
         }
 
-        // Focus the input field if specified
-        if (inputFieldToFocus != null)
+        // Focus the input field if specified (only once, and only if enabled)
+        if (autoFocusOnStart && inputFieldToFocus != null && !hasFixedThisSession)
         {
-            eventSystem.SetSelectedGameObject(inputFieldToFocus.gameObject);
-            inputFieldToFocus.ActivateInputField();
-            
-            if (enableDebugLogs)
-                Debug.Log($"[StartMenuInputFixer] Focused input field: {inputFieldToFocus.name}");
+            // Don't steal focus if something is already selected
+            if (eventSystem.currentSelectedGameObject == null)
+            {
+                eventSystem.SetSelectedGameObject(inputFieldToFocus.gameObject);
+                inputFieldToFocus.ActivateInputField();
+                hasFixedThisSession = true;
+                
+                if (enableDebugLogs)
+                    Debug.Log($"[StartMenuInputFixer] Focused input field: {inputFieldToFocus.name}");
+            }
         }
 
         if (enableDebugLogs)

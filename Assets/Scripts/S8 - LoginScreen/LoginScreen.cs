@@ -19,6 +19,12 @@ public class LoginScreen : MonoBehaviour
     [Header("Debug")]
     public bool enableDebug = true;
 
+    [Header("Auto Focus")]
+    [Tooltip("Only focus input field once at startup, don't interfere with Tab navigation")]
+    public bool autoFocusInputOnStart = true;
+    
+    private static bool hasAutoFocused = false;
+
     void Awake()
     {
         // CRITICAL: Reset Input System state on scene load
@@ -83,8 +89,11 @@ public class LoginScreen : MonoBehaviour
                 Debug.Log("[LoginScreen] Input field submit listeners added");
         }
 
-        // Auto-focus the input field after a frame delay
-        StartCoroutine(FocusInputFieldDelayed());
+        // Auto-focus the input field after a frame delay (only once per session)
+        if (autoFocusInputOnStart && !hasAutoFocused)
+        {
+            StartCoroutine(FocusInputFieldDelayed());
+        }
 
         // Fix: Disable RaycastTarget on background images that might block button clicks
         DisableBackgroundRaycasts();
@@ -98,11 +107,21 @@ public class LoginScreen : MonoBehaviour
         yield return null; // Wait one frame
         yield return null; // Wait another frame for safety
         
-        if (idInput != null)
+        // Only focus if nothing else has been selected yet
+        if (idInput != null && EventSystem.current != null)
         {
-            EventSystem.current?.SetSelectedGameObject(idInput.gameObject);
-            idInput.ActivateInputField();
-            idInput.Select();
+            // Don't steal focus if user has already tabbed to something else
+            var currentSelection = EventSystem.current.currentSelectedGameObject;
+            if (currentSelection == null || currentSelection == idInput.gameObject)
+            {
+                EventSystem.current.SetSelectedGameObject(idInput.gameObject);
+                idInput.ActivateInputField();
+                idInput.Select();
+                hasAutoFocused = true;
+                
+                if (enableDebug)
+                    Debug.Log("[LoginScreen] Auto-focused input field (one-time)");
+            }
         }
     }
 

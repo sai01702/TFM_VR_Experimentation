@@ -8,25 +8,58 @@ using UnityEngine.InputSystem;
 /// Works around Input System issues.
 /// </summary>
 [RequireComponent(typeof(Button))]
-public class SimpleButtonClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class SimpleButtonClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
 {
     private Button button;
+    private Image buttonImage;
+    private Color originalColor;
     private bool isHovering = false;
     
     [SerializeField] bool enableDebug = true;
+    [SerializeField] Color selectedHighlightColor = new Color(0.5f, 0.8f, 1f, 1f); // Light blue
 
     private bool loggedMouseStatus = false;
     private int frameCount = 0;
+    private bool isSelected = false;
 
     void Awake()
     {
         button = GetComponent<Button>();
+        buttonImage = GetComponent<Image>();
+        if (buttonImage != null)
+        {
+            originalColor = buttonImage.color;
+        }
         Debug.Log($"[SimpleButtonClick] Awake on {gameObject.name}");
     }
 
     void OnEnable()
     {
         Debug.Log($"[SimpleButtonClick] OnEnable on {gameObject.name}");
+    }
+
+    // Called when this UI element is selected (via Tab or EventSystem)
+    public void OnSelect(BaseEventData eventData)
+    {
+        isSelected = true;
+        if (buttonImage != null)
+        {
+            buttonImage.color = selectedHighlightColor;
+        }
+        if (enableDebug)
+            Debug.Log($"[SimpleButtonClick] {gameObject.name} SELECTED - showing highlight");
+    }
+
+    // Called when this UI element is deselected
+    public void OnDeselect(BaseEventData eventData)
+    {
+        isSelected = false;
+        if (buttonImage != null)
+        {
+            buttonImage.color = originalColor;
+        }
+        if (enableDebug)
+            Debug.Log($"[SimpleButtonClick] {gameObject.name} DESELECTED");
     }
 
     void Update()

@@ -207,6 +207,7 @@ GameObject:
   - component: {fileID: 238116734}
   - component: {fileID: 238116733}
   - component: {fileID: 238116737}
+  - component: {fileID: 238116738}
   m_Layer: 5
   m_Name: SaveButton
   m_TagString: Untagged
@@ -238,7 +239,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -329,6 +330,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableDebug: 1
+  selectedHighlightColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &238116738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238116732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7ba86d5df4bd14b940ededee71f021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightColor: {r: 0.4, g: 0.8, b: 1, a: 1}
+  pressedColor: {r: 0.1, g: 1, b: 0.3, a: 1}
+  outline: {fileID: 0}
 --- !u!1 &490374420
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,6 +534,7 @@ MonoBehaviour:
   errorText: {fileID: 490374421}
   nextSceneName: RoomScene
   enableDebug: 1
+  autoFocusInputOnStart: 1
 --- !u!1 &581552646
 GameObject:
   m_ObjectHideFlags: 0
@@ -908,6 +927,7 @@ GameObject:
   - component: {fileID: 1097339639}
   - component: {fileID: 1097339642}
   - component: {fileID: 1097339643}
+  - component: {fileID: 1097339644}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1035,6 +1055,22 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1097339644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097339637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c3a0dcb814a4fe4eb1ecb57bde0b32d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstSelected: {fileID: 238116732}
+  selectables: []
+  enableDebug: 1
+  workInAllModes: 1
 --- !u!1 &1205365935
 GameObject:
   m_ObjectHideFlags: 0
@@ -1382,6 +1418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputFieldToFocus: {fileID: 1713260482}
   enableDebugLogs: 1
+  autoFocusOnStart: 0
 --- !u!4 &1566395622
 Transform:
   m_ObjectHideFlags: 0
@@ -1616,6 +1653,7 @@ GameObject:
   - component: {fileID: 1713260484}
   - component: {fileID: 1713260483}
   - component: {fileID: 1713260482}
+  - component: {fileID: 1713260486}
   m_Layer: 5
   m_Name: InputField (TMP)
   m_TagString: Untagged
@@ -1779,6 +1817,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1713260486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713260481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7ba86d5df4bd14b940ededee71f021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightColor: {r: 0.4, g: 0.8, b: 1, a: 1}
+  pressedColor: {r: 0.1, g: 1, b: 0.3, a: 1}
+  outline: {fileID: 0}
 --- !u!1 &2015114402
 GameObject:
   m_ObjectHideFlags: 0
