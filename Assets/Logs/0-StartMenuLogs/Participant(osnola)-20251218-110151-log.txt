@@ -1,0 +1,8 @@
+Participant: osnola
+Session start: 18/12/2025 11:01:51
+=========================================
+
+SessionStart
+[GameOver] From scene 'PuzzleScene' - Time = 132,0s, Accuracy = 71,4%
+Session finished.
+

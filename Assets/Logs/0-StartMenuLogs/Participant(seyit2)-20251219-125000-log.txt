@@ -1,0 +1,10 @@
+Participant: seyit2
+Session start: 19/12/2025 12:50:00
+=========================================
+
+SessionStart
+SessionStart
+SessionStart
+[GameOver] From scene 'PuzzleScene' - Time = 17,3s, Accuracy = 55,6%
+Session finished.
+

@@ -173,7 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.8018868, g: 0.61341643, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -206,6 +206,7 @@ GameObject:
   - component: {fileID: 238116735}
   - component: {fileID: 238116734}
   - component: {fileID: 238116733}
+  - component: {fileID: 238116737}
   m_Layer: 5
   m_Name: SaveButton
   m_TagString: Untagged
@@ -315,6 +316,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -51.508}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &238116737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238116732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a12ece859a527d43b4f74c5a6c4f5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableDebug: 1
 --- !u!1 &490374420
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,6 +515,7 @@ MonoBehaviour:
   okButton: {fileID: 238116733}
   errorText: {fileID: 490374421}
   nextSceneName: RoomScene
+  enableDebug: 1
 --- !u!1 &581552646
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,8 +809,8 @@ Transform:
   m_GameObject: {fileID: 768091621}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -167.72, y: -96.872, z: 0}
+  m_LocalScale: {x: 1.2828, y: 1.2828, z: 1.2828}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1097339638}
@@ -892,6 +907,7 @@ GameObject:
   - component: {fileID: 1097339640}
   - component: {fileID: 1097339639}
   - component: {fileID: 1097339642}
+  - component: {fileID: 1097339643}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1002,6 +1018,23 @@ MonoBehaviour:
   participantInput: {fileID: 1713260482}
   errorText: {fileID: 490374421}
   nextSceneName: RoomScene
+--- !u!114 &1097339643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097339637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &1205365935
 GameObject:
   m_ObjectHideFlags: 0
@@ -1318,6 +1351,52 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &1566395620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1566395622}
+  - component: {fileID: 1566395621}
+  m_Layer: 0
+  m_Name: StartMenuInputFixer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1566395621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566395620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfaba35af84010f4581fdcaa424027b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputFieldToFocus: {fileID: 1713260482}
+  enableDebugLogs: 1
+--- !u!4 &1566395622
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566395620}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.2258215, y: 8.418328, z: 3.2262032}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1648010322
 GameObject:
   m_ObjectHideFlags: 0
@@ -1827,3 +1906,4 @@ SceneRoots:
   - {fileID: 768091623}
   - {fileID: 840184209}
   - {fileID: 1205365937}
+  - {fileID: 1566395622}
