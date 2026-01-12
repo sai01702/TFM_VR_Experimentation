@@ -3129,8 +3129,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u2022 Cambiar botones: Tab   \u2022 Confirmar: Espacio/Intro"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 47851a357933c4cfe8ce9e66525cf0d5, type: 2}
+  m_sharedMaterial: {fileID: -3448277611208263698, guid: 47851a357933c4cfe8ce9e66525cf0d5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -13071,8 +13071,48 @@ PrefabInstance:
       value: -42.500008
       objectReference: {fileID: 0}
     - target: {fileID: 2254883728957043271, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_text
+      value: CHOOSE A PLAY MODE
+      objectReference: {fileID: 0}
+    - target: {fileID: 2254883728957043271, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_fontSize
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 2254883728957043271, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_margin.w
+      value: 21.313293
+      objectReference: {fileID: 0}
+    - target: {fileID: 2254883728957043271, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_margin.x
+      value: 37.45342
+      objectReference: {fileID: 0}
+    - target: {fileID: 2254883728957043271, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
       propertyPath: m_margin.z
-      value: -161.25354
+      value: -113.530655
+      objectReference: {fileID: 0}
+    - target: {fileID: 2254883728957043271, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 47851a357933c4cfe8ce9e66525cf0d5, type: 2}
+    - target: {fileID: 2254883728957043271, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_fontStyle
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 2254883728957043271, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 2254883728957043271, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3448277611208263698, guid: 47851a357933c4cfe8ce9e66525cf0d5, type: 2}
+    - target: {fileID: 2254883728957043271, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2254883728957043271, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2896069835576295758, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
       propertyPath: m_Colors.m_PressedColor.b
@@ -13087,12 +13127,20 @@ PrefabInstance:
       value: 0.33333334
       objectReference: {fileID: 0}
     - target: {fileID: 3199777199525853315, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.4513987
+      objectReference: {fileID: 0}
+    - target: {fileID: 3199777199525853315, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.7966894
+      objectReference: {fileID: 0}
+    - target: {fileID: 3199777199525853315, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -104.6
       objectReference: {fileID: 0}
     - target: {fileID: 3199777199525853315, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 65.5
+      value: 54.2
       objectReference: {fileID: 0}
     - target: {fileID: 4695408159385444097, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13114,6 +13162,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -42.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5047467181719120382, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5047467181719120382, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: afa1f7c032bca4687b029d9a3f79ef23, type: 3}
     - target: {fileID: 5047467181719120382, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
       propertyPath: m_Color.b
       value: 0

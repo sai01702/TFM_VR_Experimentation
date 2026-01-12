@@ -9,6 +9,13 @@
       },
       "hash": "0a98b387a92cf9f1f47012fc46d4cf33576e5916"
     },
+    "com.nobi.roundedcorners": {
+      "version": "https://github.com/kirevdokimov/Unity-UI-Rounded-Corners.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "33135342e868201eb0d4cef821ecab90caca373e"
+    },
     "com.thrashpanda.vr.simulator": {
       "version": "file:C:\\Users\\Seyit Ahmet Inci\\Documents\\GitHub\\TFM_VR_Experimentation\\Assets\\VRSimulator\\com.thrashpanda.vr.simulator-2.1.0.tgz",
       "depth": 0,
@@ -17,16 +24,46 @@
         "com.unity.xr.management": "3.0.4"
       }
     },
+    "com.unity.2d.common": {
+      "version": "8.0.4",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.burst": "1.7.3",
+        "com.unity.2d.sprite": "1.0.0",
+        "com.unity.mathematics": "1.1.0",
+        "com.unity.modules.animation": "1.0.0",
+        "com.unity.modules.uielements": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.2d.sprite": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {}
+    },
+    "com.unity.2d.spriteshape": {
+      "version": "9.0.5",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.2d.common": "8.0.4",
+        "com.unity.mathematics": "1.1.0",
+        "com.unity.modules.physics2d": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.addressables": {
       "version": "1.21.19",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.scriptablebuildpipeline": "1.21.21",
         "com.unity.modules.assetbundle": "1.0.0",
-        "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.scriptablebuildpipeline": "1.21.21",
         "com.unity.modules.unitywebrequestassetbundle": "1.0.0"
       },
       "url": "https://packages.unity.com"
@@ -272,9 +309,9 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
+        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
-        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
       },
       "url": "https://packages.unity.com"
@@ -358,9 +395,9 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.modules.subsystems": "1.0.0",
         "com.unity.modules.vr": "1.0.0",
         "com.unity.modules.xr": "1.0.0",
+        "com.unity.modules.subsystems": "1.0.0",
         "com.unity.xr.legacyinputhelpers": "2.1.7"
       },
       "url": "https://packages.unity.com"
@@ -379,10 +416,10 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.xr.management": "4.4.0",
-        "com.unity.xr.legacyinputhelpers": "2.1.2",
         "com.unity.inputsystem": "1.6.3",
-        "com.unity.xr.core-utils": "2.1.1"
+        "com.unity.xr.core-utils": "2.1.1",
+        "com.unity.xr.management": "4.4.0",
+        "com.unity.xr.legacyinputhelpers": "2.1.2"
       },
       "url": "https://packages.unity.com"
     },
