@@ -1,0 +1,33 @@
+Participant: YIGIT
+Session start: 1/7/2026 12:31:46 PM
+=========================================
+
+SessionStart
+SessionStart
+SessionStart
+
+=== Shooter Game Ended ===
+End time: 1/7/2026 12:32:42 PM
+Final Score: 0
+Total Spawns: 0
+
+
+=== Shooter Game Ended ===
+End time: 1/7/2026 12:32:43 PM
+Final Score: 0
+Total Spawns: 0
+
+
+=== Shooter Game - Reaction Time Log ===
+Mode: Desktop
+Started: 1/7/2026 12:32:43 PM
+
+Spawned object 1: ObjetivoRea1
+Reaction time: 2.165 seconds
+Spawned object 2: ObjetivoRea
+
+=== Shooter Game Ended ===
+End time: 1/7/2026 12:32:49 PM
+Final Score: 1
+Total Spawns: 2
+

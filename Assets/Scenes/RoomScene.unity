@@ -2650,6 +2650,9 @@ MonoBehaviour:
   desktopMessage: "\u2022 Switch buttons: Tab\n\u2022 Confirm: Space"
   autoHideAfterSeconds: 0
   hideWhenAnyKeyUsed: 0
+  alwaysShowInStartMenu: 1
+  onlyShowForDesktopMode: 1
+  startMenuSceneName: 0-StartMenu
 --- !u!1 &473521404 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4345540052097852580, guid: 326a13103f95f7549bbe88807709218f, type: 3}
@@ -6089,6 +6092,9 @@ MonoBehaviour:
   desktopMessage: "\u2022 Switch buttons: Tab\n\u2022 Confirm: Space"
   autoHideAfterSeconds: 0
   hideWhenAnyKeyUsed: 0
+  alwaysShowInStartMenu: 1
+  onlyShowForDesktopMode: 1
+  startMenuSceneName: 0-StartMenu
 --- !u!1001 &1064722552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10375,6 +10381,9 @@ MonoBehaviour:
   desktopMessage: "\u2022 Switch buttons: Tab\n\u2022 Confirm: Space"
   autoHideAfterSeconds: 0
   hideWhenAnyKeyUsed: 0
+  alwaysShowInStartMenu: 1
+  onlyShowForDesktopMode: 1
+  startMenuSceneName: 0-StartMenu
 --- !u!1001 &1784155975
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10622,6 +10631,9 @@ MonoBehaviour:
   desktopMessage: "\u2022 Switch buttons: Tab\n\u2022 Confirm: Space"
   autoHideAfterSeconds: 0
   hideWhenAnyKeyUsed: 0
+  alwaysShowInStartMenu: 1
+  onlyShowForDesktopMode: 1
+  startMenuSceneName: 0-StartMenu
 --- !u!1 &1815318735
 GameObject:
   m_ObjectHideFlags: 0

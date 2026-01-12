@@ -1,0 +1,10 @@
+Participant: Cyprus1
+Session start: 1/7/2026 9:28:50 AM
+=========================================
+
+SessionStart
+SessionStart
+SessionStart
+[GameOver] From scene 'PuzzleScene' - Time = 20.4s, Accuracy = 100.0%
+Session finished.
+

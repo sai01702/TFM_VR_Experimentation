@@ -1,0 +1,10 @@
+Participant: SeyitCyprus
+Session start: 1/7/2026 9:28:07 AM
+=========================================
+
+SessionStart
+SessionStart
+SessionStart
+[GameOver] From scene 'ObstacleCourseScene' - Time = 13.2s, Success = 100.0%
+Session finished.
+
