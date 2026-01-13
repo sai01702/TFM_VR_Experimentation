@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 60897144832
-    m_Localized: "\u2022 Switch buttons: Tab\n\u2022 Confirm: Space/Enter"
+    m_Localized: "\u2022 Switch buttons: Tab   \u2022 Confirm: Space/Enter"
     m_Metadata:
       m_Items: []
   references:

@@ -27,6 +27,41 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5310be7803d48824e985889033d46ed4
+    m_Address: Assets/participantIDenter Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d82040ee431f17e419601668402d9469
+    m_Address: Assets/errorIDtext Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef280ecbc094b7d4496609ce93270899
+    m_Address: Assets/SaveButtonTExt Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 365839cbd8735a64d9fd38a0bc6c0e65
+    m_Address: Assets/enterIDtext Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fc4af5150685b0c45a13ee4273841c59
+    m_Address: Assets/chooseAplayMode Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b804c226136eb8a43a030eef2df9a12c
+    m_Address: Assets/vrMODEbutton Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d26bb443ccc9f7546a69d855dcf12ae8
+    m_Address: Assets/desktopMODEselectiontext Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: a8475e1eec3456a4e8cccb6e65fcf2ba, type: 2}
   m_SchemaSet:

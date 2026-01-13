@@ -1,0 +1,5 @@
+Participant: TEST
+Session start: 13/01/2026 14:00:58
+=========================================
+
+SessionStart
