@@ -1,6 +1,8 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using UnityEngine.SceneManagement;
 
 public class DesktopHint : MonoBehaviour
@@ -49,7 +51,18 @@ public class DesktopHint : MonoBehaviour
     void SetupLabel()
     {
         if (label == null) label = GetComponentInChildren<TMP_Text>(true);
-        if (label != null) label.text = desktopMessage;
+
+        // Check if there's a LocalizedString component - if so, don't overwrite the text
+        if (label != null)
+        {
+            LocalizedString localizedString = label.GetComponent<LocalizedString>();
+            if (localizedString == null)
+            {
+                // Only set the text if there's no LocalizedString component
+                label.text = desktopMessage;
+            }
+            // If LocalizedString exists, it will handle the text automatically
+        }
     }
 
     void Update()
