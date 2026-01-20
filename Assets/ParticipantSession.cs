@@ -27,6 +27,16 @@ public class ParticipantSession : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        string dataFolder = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+        string dailyPath = Path.Combine(Application.persistentDataPath, "Logs", dataFolder);
+
+        if (!Directory.Exists(dailyPath))
+            {
+            Directory.CreateDirectory(dailyPath);
+            Debug.Log($"[ParticipantSession] Created log directory at: {dailyPath}");
+        }
+
     }
 
     // Called once on the login scene when the player presses Save
