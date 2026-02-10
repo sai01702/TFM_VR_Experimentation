@@ -1,0 +1,32 @@
+Participant: a
+Session start: 10/02/2026 16:17:42
+=========================================
+
+SessionStart
+
+=== Shooter Game - Reaction Time Log ===
+Mode: Desktop
+Started: 10/02/2026 16:17:47
+
+Spawned object 1: ObjetivoRea1
+Reaction time: 2,559 seconds
+Spawned object 2: ObjetivoRea2
+Reaction time: 1,558 seconds
+Spawned object 3: ObjetivoRea3
+Manual despawn
+Spawned object 4: ObjetivoRea1
+Reaction time: 1,334 seconds
+Spawned object 5: ObjetivoRea1
+Reaction time: 1,754 seconds
+Spawned object 6: ObjetivoRea4
+Reaction time: 1,712 seconds
+Spawned object 7: ObjetivoRea1
+Reaction time: 1,112 seconds
+Spawned object 8: ObjetivoRea2
+Reaction time: 1,332 seconds
+
+=== Shooter Game Ended ===
+End time: 10/02/2026 16:18:18
+Final Score: 7
+Total Spawns: 8
+
