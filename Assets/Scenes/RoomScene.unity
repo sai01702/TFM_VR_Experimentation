@@ -959,9 +959,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 96173033}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.57545}
-  m_LocalScale: {x: 0.79826325, y: 0.79826325, z: 0.79826325}
+  m_LocalScale: {x: 0.7982633, y: 0.7982633, z: 0.7982633}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 385187834}
@@ -1498,7 +1498,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: IP comes here
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -1525,7 +1525,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 55.95
   m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -14400,6 +14400,10 @@ PrefabInstance:
     - target: {fileID: 3199777199525853315, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 51
+      objectReference: {fileID: 0}
+    - target: {fileID: 3661522790076040465, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
+      propertyPath: m_Name
+      value: UI_Canvas
       objectReference: {fileID: 0}
     - target: {fileID: 4695408159385444097, guid: 6c896df2a2d0c4efa9a78e9e0cb4ad64, type: 3}
       propertyPath: m_LocalPosition.x
