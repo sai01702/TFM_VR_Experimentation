@@ -10,7 +10,6 @@ public class VRNetworkManager : NetworkManager
 
     [Header("Experimenter Settings")]
     public GameObject experimenterPrefab;
-    public GameObject playerPrefab;
 
     [Header("Startup Mode")]
     [Tooltip("If true, this instance will automatically start as Host on Start(). For the Experimenter build, uncheck this so it runs as a pure client controlled by ExperimenterClient.")]
