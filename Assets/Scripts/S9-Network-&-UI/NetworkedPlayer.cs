@@ -1,5 +1,6 @@
 using Mirror;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NetworkedPlayer : NetworkBehaviour
 {
@@ -17,15 +18,45 @@ public class NetworkedPlayer : NetworkBehaviour
     [SyncVar] private Vector3 syncCameraPos;
     [SyncVar] private Quaternion syncCameraRot;
 
+    // Cache last sent values to avoid spamming commands every frame
+    private string _lastParticipantID;
+    private string _lastSceneName;
+    private bool _lastIsVRMode;
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+
+        // For remote clients (e.g., the experimenter), make sure we have a transform
+        // to apply the synced camera pose onto, even if no rig exists here.
+        if (!isLocalPlayer && cameraTransform == null)
+        {
+            cameraTransform = transform;
+        }
+    }
+
     private void Update()
     {
         if (isLocalPlayer)
         {
-            // Send local transforms to server
-            CmdUpdateTransforms(
-                cameraTransform.position,
-                cameraTransform.rotation
-            );
+            // Host side: rig may be spawned later by SceneRigInstaller.
+            // If we don't have a camera yet, try to grab the active main camera.
+            if (cameraTransform == null)
+            {
+                TryAssignCameraFromCurrentRig();
+            }
+
+            if (cameraTransform != null)
+            {
+                // Send local transforms to server
+                CmdUpdateTransforms(
+                    cameraTransform.position,
+                    cameraTransform.rotation
+                );
+            }
+
+            // Keep participant / scene / mode info in sync for the experimenter UI
+            TrySyncSceneInfo();
         }
         else
         {
@@ -46,6 +77,44 @@ public class NetworkedPlayer : NetworkBehaviour
         }
     }
 
+    void TryAssignCameraFromCurrentRig()
+    {
+        var mainCam = Camera.main;
+        if (mainCam != null)
+        {
+            cameraTransform = mainCam.transform;
+        }
+    }
+
+    void TrySyncSceneInfo()
+    {
+        // Participant ID (from ParticipantSession, if present)
+        string participant = ParticipantSession.Instance != null
+            ? ParticipantSession.Instance.ParticipantId
+            : participantID;
+
+        // Current scene name
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        // Mode flag (Desktop vs VR)
+        bool vrModeFlag = GameSettings.Instance != null &&
+                          GameSettings.Instance.CurrentMode == GameMode.VR;
+
+        // Only send to server if something changed
+        if (participant == _lastParticipantID &&
+            sceneName == _lastSceneName &&
+            vrModeFlag == _lastIsVRMode)
+        {
+            return;
+        }
+
+        _lastParticipantID = participant;
+        _lastSceneName = sceneName;
+        _lastIsVRMode = vrModeFlag;
+
+        CmdUpdateSceneInfo(sceneName, participant, vrModeFlag);
+    }
+
     [Command]
     void CmdUpdateTransforms(Vector3 camPos, Quaternion camRot)
     {
@@ -54,9 +123,10 @@ public class NetworkedPlayer : NetworkBehaviour
     }
 
     [Command]
-    public void CmdUpdateSceneInfo(string sceneID, string participantName)
+    public void CmdUpdateSceneInfo(string sceneID, string participantName, bool vrModeFlag)
     {
         currentScene = sceneID;
         participantID = participantName;
+        isVRMode = vrModeFlag;
     }
 }

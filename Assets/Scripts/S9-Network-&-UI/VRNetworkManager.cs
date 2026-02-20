@@ -12,6 +12,10 @@ public class VRNetworkManager : NetworkManager
     public GameObject experimenterPrefab;
     public GameObject playerPrefab;
 
+    [Header("Startup Mode")]
+    [Tooltip("If true, this instance will automatically start as Host on Start(). For the Experimenter build, uncheck this so it runs as a pure client controlled by ExperimenterClient.")]
+    public bool startAsHostOnStart = true;
+
     [Header("Events")]
     public UnityEvent onServerStarted;
 
@@ -39,6 +43,12 @@ public class VRNetworkManager : NetworkManager
     public override void Start()
     {
         base.Start();
+
+        if (!startAsHostOnStart)
+        {
+            // In the Experimenter build we run as a client only.
+            return;
+        }
 
         // Get IP address first
         localIPAddress = GetLocalIPAddress();
@@ -128,4 +138,31 @@ public class VRNetworkManager : NetworkManager
     {
         return $"Server: {(serverReady ? "Ready" : "Starting...")}\nIP: {localIPAddress}\nPort: {GetComponent<TelepathyTransport>()?.port ?? 7777}";
     }
+
+    public override void OnClientConnect()
+    {
+        base.OnClientConnect();
+        Debug.Log("[VRNetworkManager] Client connected to server");
+
+        // Notify experimenter client
+        var experimenterClient = FindObjectOfType<ExperimenterClient>();
+        if (experimenterClient != null)
+        {
+            experimenterClient.OnConnected();
+        }
+    }
+
+    public override void OnClientDisconnect()
+    {
+        base.OnClientDisconnect();
+        Debug.Log("[VRNetworkManager] Client disconnected from server");
+
+        // Notify experimenter client
+        var experimenterClient = FindObjectOfType<ExperimenterClient>();
+        if (experimenterClient != null)
+        {
+            experimenterClient.OnDisconnected();
+        }
+    }
+
 }

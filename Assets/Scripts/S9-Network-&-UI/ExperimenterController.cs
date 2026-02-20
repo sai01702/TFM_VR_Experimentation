@@ -6,13 +6,10 @@ public class ExperimenterController : NetworkBehaviour
 {
     [Header("Camera Settings")]
     public Camera experimenterCamera;
-    public float moveSpeed = 10f;
-    public float lookSpeed = 2f;
-    public float sprintMultiplier = 2f;
-
+    // Observer now only mirrors the participant's view, so
+    // free-fly movement is disabled and we always follow.
     [Header("Follow Settings")]
-    public bool isFollowingPlayer = false;
-    public Vector3 followOffset = new Vector3(0, 2, -3);
+    public bool isFollowingPlayer = true;
 
     [Header("UI")]
     public GameObject experimenterUI;
@@ -28,14 +25,24 @@ public class ExperimenterController : NetworkBehaviour
         if (!isLocalPlayer)
         {
             // Disable camera for non-local experimenters
-            experimenterCamera.enabled = false;
-            experimenterUI.SetActive(false);
+            if (experimenterCamera != null)
+                experimenterCamera.enabled = false;
+            if (experimenterUI != null)
+                experimenterUI.SetActive(false);
             return;
         }
 
         // Setup UI
-        experimenterUI.SetActive(true);
-        followToggle.onValueChanged.AddListener(OnFollowToggleChanged);
+        if (experimenterUI != null)
+            experimenterUI.SetActive(true);
+
+        // Force follow mode and disable any manual toggle
+        isFollowingPlayer = true;
+        if (followToggle != null)
+        {
+            followToggle.isOn = true;
+            followToggle.interactable = false;
+        }
 
         // Find player to observe
         FindTargetPlayer();
@@ -45,44 +52,18 @@ public class ExperimenterController : NetworkBehaviour
     {
         if (!isLocalPlayer) return;
 
+        if (targetPlayer == null)
+        {
+            // Try to acquire target if it wasn't found at Start()
+            FindTargetPlayer();
+        }
+
         UpdateUI();
 
+        // Always follow the participant's camera (screen-share style)
         if (isFollowingPlayer && targetPlayer != null)
         {
             FollowPlayer();
-        }
-        else
-        {
-            FreeFlyMovement();
-        }
-    }
-
-    void FreeFlyMovement()
-    {
-        // WASD movement
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-        float upDown = 0f;
-
-        if (Input.GetKey(KeyCode.E)) upDown = 1f;
-        if (Input.GetKey(KeyCode.Q)) upDown = -1f;
-
-        float speed = moveSpeed;
-        if (Input.GetKey(KeyCode.LeftShift)) speed *= sprintMultiplier;
-
-        Vector3 move = transform.right * h + transform.forward * v + Vector3.up * upDown;
-        transform.position += move * speed * Time.deltaTime;
-
-        // Mouse look
-        if (Input.GetMouseButton(1)) // Right-click to look
-        {
-            float mouseX = Input.GetAxis("Mouse X") * lookSpeed;
-            float mouseY = Input.GetAxis("Mouse Y") * lookSpeed;
-
-            rotationX -= mouseY;
-            rotationX = Mathf.Clamp(rotationX, -90f, 90f);
-
-            transform.localRotation = Quaternion.Euler(rotationX, transform.localEulerAngles.y + mouseX, 0f);
         }
     }
 
@@ -90,13 +71,18 @@ public class ExperimenterController : NetworkBehaviour
     {
         if (targetPlayer == null || targetPlayer.cameraTransform == null) return;
 
-        // Follow behind player camera
-        Vector3 targetPos = targetPlayer.cameraTransform.position +
-                           targetPlayer.cameraTransform.TransformDirection(followOffset);
-        transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * 5f);
-
-        // Look at player
-        transform.LookAt(targetPlayer.cameraTransform);
+        // Mirror the participant's camera view (screen-share style)
+        if (experimenterCamera != null)
+        {
+            experimenterCamera.transform.position = targetPlayer.cameraTransform.position;
+            experimenterCamera.transform.rotation = targetPlayer.cameraTransform.rotation;
+        }
+        else
+        {
+            // Fallback: move this GameObject like the participant's camera
+            transform.position = targetPlayer.cameraTransform.position;
+            transform.rotation = targetPlayer.cameraTransform.rotation;
+        }
     }
 
     void FindTargetPlayer()
@@ -125,6 +111,9 @@ public class ExperimenterController : NetworkBehaviour
 
     void OnFollowToggleChanged(bool value)
     {
-        isFollowingPlayer = value;
+        // Follow mode is always enforced; ignore external changes.
+        isFollowingPlayer = true;
+        if (followToggle != null && !followToggle.isOn)
+            followToggle.isOn = true;
     }
 }
