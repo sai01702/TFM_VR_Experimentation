@@ -73,12 +73,14 @@ public class VRNetworkManager : NetworkManager
 
         if (conn.connectionId == 0) // Host player (first connection)
         {
-            playerObj = Instantiate(playerPrefab);
+            playerObj = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
             Debug.Log("Player (Host) connected");
         }
         else // Experimenter client (second connection)
         {
-            playerObj = Instantiate(experimenterPrefab);
+            // Spawn at origin — ExperimenterController.FollowPlayer() will move the
+            // camera to the participant's position as soon as SyncVars arrive.
+            playerObj = Instantiate(experimenterPrefab, Vector3.zero, Quaternion.identity);
             Debug.Log($"Experimenter client connected from {conn.address}");
         }
 

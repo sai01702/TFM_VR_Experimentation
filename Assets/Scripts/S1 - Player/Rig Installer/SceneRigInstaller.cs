@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class SceneRigInstaller : MonoBehaviour
@@ -11,6 +12,17 @@ public class SceneRigInstaller : MonoBehaviour
 
     void Start()
     {
+        // If we are a pure Mirror client (not the host), this scene was loaded
+        // for observation — do NOT spawn a player rig.
+        // NetworkClient.active = connected to a server
+        // NetworkServer.active = we ARE the server (host)
+        // Pure client = experimenter machine, host = participant machine.
+        if (NetworkClient.active && !NetworkServer.active)
+        {
+            Debug.Log("[SceneRigInstaller] Pure client detected – skipping rig install (experimenter mode).");
+            return;
+        }
+
         // Only auto-install if the player already has a saved mode
         if (GameSettings.Instance.HasSavedMode())
         {
@@ -56,6 +68,19 @@ public class SceneRigInstaller : MonoBehaviour
         if (mainCam != null && rigCam != null && mainCam != rigCam)
         {
             Destroy(mainCam.gameObject);
+        }
+
+        // ----- Tell the local NetworkedPlayer about the new rig camera -----
+        // (The rig spawns after Mirror connects, so NetworkedPlayer may have
+        //  missed it in TryAssignCameraFromCurrentRig. Push it explicitly.)
+        if (rigCam != null)
+        {
+            var np = FindObjectOfType<NetworkedPlayer>();
+            if (np != null && np.isLocalPlayer)
+            {
+                np.AssignCamera(rigCam.transform);
+                Debug.Log("[SceneRigInstaller] Assigned rig camera to NetworkedPlayer.");
+            }
         }
     }
 }

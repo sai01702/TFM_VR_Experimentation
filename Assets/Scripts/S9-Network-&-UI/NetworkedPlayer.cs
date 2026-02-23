@@ -98,6 +98,17 @@ public class NetworkedPlayer : NetworkBehaviour
             cameraTransform = mainCam.transform;
     }
 
+    /// <summary>
+    /// Called by SceneRigInstaller after the rig is spawned to immediately
+    /// bind the rig camera — avoids a 1-frame (or more) gap where syncCameraPos
+    /// would be sent as (0,0,0) before TryAssignCameraFromCurrentRig catches up.
+    /// </summary>
+    public void AssignCamera(Transform cam)
+    {
+        cameraTransform = cam;
+        Debug.Log($"[NetworkedPlayer] Camera assigned explicitly: {cam.name}");
+    }
+
     void TrySyncSceneInfo()
     {
         // Participant ID (from ParticipantSession, if present)

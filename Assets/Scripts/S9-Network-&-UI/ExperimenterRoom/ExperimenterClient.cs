@@ -1,6 +1,7 @@
 using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class ExperimenterClient : MonoBehaviour
@@ -28,6 +29,13 @@ public class ExperimenterClient : MonoBehaviour
 
     private VRNetworkManager networkManager;
     private bool isConnected = false;
+
+    void Awake()
+    {
+        // Keep this object alive across any potential scene transitions so
+        // that the scene-loading coroutine is never interrupted.
+        DontDestroyOnLoad(gameObject);
+    }
 
     void Start()
     {
@@ -117,9 +125,32 @@ public class ExperimenterClient : MonoBehaviour
     {
         isConnected = true;
         UpdateStatus("Connected!", Color.green);
-
-        // Switch UI
         ShowObserverPanel();
+
+        // Immediately load the participant's scene additively so the observer
+        // camera has actual geometry to render.
+        // RoomScene is always the participant's scene in the current build.
+        const string participantScene = "RoomScene";
+
+        bool alreadyLoaded = false;
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            if (SceneManager.GetSceneAt(i).name == participantScene)
+            {
+                alreadyLoaded = true;
+                break;
+            }
+        }
+
+        if (!alreadyLoaded)
+        {
+            Debug.Log($"[Experimenter] Loading {participantScene} additively for observation.");
+            SceneManager.LoadSceneAsync(participantScene, LoadSceneMode.Additive);
+        }
+        else
+        {
+            Debug.Log($"[Experimenter] {participantScene} already loaded.");
+        }
 
         Debug.Log("[Experimenter] Successfully connected as observer");
     }
@@ -194,3 +225,4 @@ public class ExperimenterClient : MonoBehaviour
         Debug.Log($"[Experimenter] {message}");
     }
 }
+

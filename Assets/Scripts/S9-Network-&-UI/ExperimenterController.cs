@@ -24,15 +24,32 @@ public class ExperimenterController : NetworkBehaviour
         if (!isLocalPlayer)
         {
             if (experimenterCamera != null)
+            {
                 experimenterCamera.enabled = false;
+                // Disable AudioListener too — disabling the Camera component alone
+                // does NOT disable the AudioListener, causing "2 audio listeners" spam.
+                var al = experimenterCamera.GetComponent<AudioListener>();
+                if (al != null) al.enabled = false;
+            }
             if (experimenterUI != null)
                 experimenterUI.SetActive(false);
             return;
         }
 
-        // Auto-grab the scene's main camera if not wired up in the Inspector
+        // Auto-grab the scene's main camera if not wired up in the Inspector.
+        // Fallback: search own children (the ExperiemnterCamera child object).
         if (experimenterCamera == null)
             experimenterCamera = Camera.main;
+        if (experimenterCamera == null)
+            experimenterCamera = GetComponentInChildren<Camera>();
+
+        if (experimenterCamera == null)
+        {
+            Debug.LogError("[ExperimenterController] No camera found! Tag ExperiemnterCamera as MainCamera or wire up the Camera field in the Inspector.");
+            return;
+        }
+
+        Debug.Log($"[ExperimenterController] Using camera: {experimenterCamera.name}");
 
         if (experimenterUI != null)
             experimenterUI.SetActive(true);
