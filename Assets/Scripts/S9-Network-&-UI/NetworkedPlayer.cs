@@ -79,11 +79,24 @@ public class NetworkedPlayer : NetworkBehaviour
 
     void TryAssignCameraFromCurrentRig()
     {
+        // Prefer a camera that is NOT owned by the experimenter prefab.
+        // ExperimenterObserver/ExperimenterController cameras must not be
+        // treated as the player camera, or NetworkedPlayer will lerp them
+        // toward syncCameraPos (world origin) and snap the view to the ground.
+        foreach (var cam in Camera.allCameras)
+        {
+            // Skip cameras that belong to an experimenter object
+            if (cam.GetComponentInParent<ExperimenterController>() != null)
+                continue;
+
+            cameraTransform = cam.transform;
+            return;
+        }
+
+        // Final fallback – should rarely be reached
         var mainCam = Camera.main;
         if (mainCam != null)
-        {
             cameraTransform = mainCam.transform;
-        }
     }
 
     void TrySyncSceneInfo()

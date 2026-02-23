@@ -49,11 +49,13 @@ public class SceneRigInstaller : MonoBehaviour
             pi.SwitchCurrentControlScheme(scheme);
         }
 
-        // 🔥 Destroy the temporary lobby camera (if one exists)
-        var lobbyCam = Camera.main;
-        if (lobbyCam != null && !currentRig.GetComponentInChildren<Camera>())
+        // ----- Remove the old/lobby camera now that the rig has its own -----
+        var mainCam = Camera.main;
+        var rigCam = currentRig.GetComponentInChildren<Camera>();
+
+        if (mainCam != null && rigCam != null && mainCam != rigCam)
         {
-            Destroy(lobbyCam.gameObject);
+            Destroy(mainCam.gameObject);
         }
     }
 }

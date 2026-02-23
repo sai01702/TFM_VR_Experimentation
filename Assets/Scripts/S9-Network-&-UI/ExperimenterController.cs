@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class ExperimenterController : NetworkBehaviour
 {
     [Header("Camera Settings")]
+    [Tooltip("Leave empty to auto-use Camera.main in the ExperimenterView scene.")]
     public Camera experimenterCamera;
-    // Observer now only mirrors the participant's view, so
-    // free-fly movement is disabled and we always follow.
+
     [Header("Follow Settings")]
     public bool isFollowingPlayer = true;
 
@@ -18,13 +18,11 @@ public class ExperimenterController : NetworkBehaviour
     public Toggle followToggle;
 
     private NetworkedPlayer targetPlayer;
-    private float rotationX = 0f;
 
     void Start()
     {
         if (!isLocalPlayer)
         {
-            // Disable camera for non-local experimenters
             if (experimenterCamera != null)
                 experimenterCamera.enabled = false;
             if (experimenterUI != null)
@@ -32,11 +30,13 @@ public class ExperimenterController : NetworkBehaviour
             return;
         }
 
-        // Setup UI
+        // Auto-grab the scene's main camera if not wired up in the Inspector
+        if (experimenterCamera == null)
+            experimenterCamera = Camera.main;
+
         if (experimenterUI != null)
             experimenterUI.SetActive(true);
 
-        // Force follow mode and disable any manual toggle
         isFollowingPlayer = true;
         if (followToggle != null)
         {
@@ -44,7 +44,6 @@ public class ExperimenterController : NetworkBehaviour
             followToggle.interactable = false;
         }
 
-        // Find player to observe
         FindTargetPlayer();
     }
 
@@ -53,65 +52,55 @@ public class ExperimenterController : NetworkBehaviour
         if (!isLocalPlayer) return;
 
         if (targetPlayer == null)
-        {
-            // Try to acquire target if it wasn't found at Start()
             FindTargetPlayer();
-        }
 
         UpdateUI();
 
-        // Always follow the participant's camera (screen-share style)
         if (isFollowingPlayer && targetPlayer != null)
-        {
             FollowPlayer();
-        }
     }
 
     void FollowPlayer()
     {
         if (targetPlayer == null || targetPlayer.cameraTransform == null) return;
 
-        // Mirror the participant's camera view (screen-share style)
-        if (experimenterCamera != null)
+        Camera cam = experimenterCamera != null ? experimenterCamera : Camera.main;
+        if (cam != null)
         {
-            experimenterCamera.transform.position = targetPlayer.cameraTransform.position;
-            experimenterCamera.transform.rotation = targetPlayer.cameraTransform.rotation;
-        }
-        else
-        {
-            // Fallback: move this GameObject like the participant's camera
-            transform.position = targetPlayer.cameraTransform.position;
-            transform.rotation = targetPlayer.cameraTransform.rotation;
+            cam.transform.position = targetPlayer.cameraTransform.position;
+            cam.transform.rotation = targetPlayer.cameraTransform.rotation;
         }
     }
 
     void FindTargetPlayer()
     {
-        // Find the host player (connectionId 0)
+        // On the experimenter CLIENT the participant's NetworkedPlayer is a
+        // REMOTE (non-local) object. Pick the first NetworkedPlayer that is
+        // NOT the experimenter itself (no ExperimenterController sibling).
         var players = FindObjectsOfType<NetworkedPlayer>();
         foreach (var player in players)
         {
-            if (player.isLocalPlayer && player.netId != this.netId)
-            {
-                targetPlayer = player;
-                Debug.Log("Found target player to observe");
-                break;
-            }
+            if (player.GetComponent<ExperimenterController>() != null)
+                continue;   // skip the experimenter's own networked object
+
+            targetPlayer = player;
+            Debug.Log($"[ExperimenterController] Observing participant netId={player.netId}");
+            return;
         }
     }
 
     void UpdateUI()
     {
-        if (targetPlayer != null)
-        {
+        if (targetPlayer == null) return;
+
+        if (participantIDText != null)
             participantIDText.text = $"Participant: {targetPlayer.participantID}";
+        if (currentSceneText != null)
             currentSceneText.text = $"Scene: {targetPlayer.currentScene}";
-        }
     }
 
     void OnFollowToggleChanged(bool value)
     {
-        // Follow mode is always enforced; ignore external changes.
         isFollowingPlayer = true;
         if (followToggle != null && !followToggle.isOn)
             followToggle.isOn = true;

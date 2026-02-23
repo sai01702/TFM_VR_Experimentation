@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class QRCodePanelController : MonoBehaviour
 {
@@ -52,8 +53,11 @@ public class QRCodePanelController : MonoBehaviour
 
     void HandleKeyboardInput()
     {
+        var kb = Keyboard.current;
+        if (kb == null) return;
+
         // Press Tab to select button
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (kb.tabKey.wasPressedThisFrame)
         {
             if (EventSystem.current != null && closeButton != null)
             {
@@ -63,9 +67,9 @@ public class QRCodePanelController : MonoBehaviour
         }
 
         // Press Enter/Return/Space to activate selected button
-        if (Input.GetKeyDown(KeyCode.Return) ||
-            Input.GetKeyDown(KeyCode.KeypadEnter) ||
-            Input.GetKeyDown(KeyCode.Space))
+        if (kb.enterKey.wasPressedThisFrame  ||
+            kb.numpadEnterKey.wasPressedThisFrame ||
+            kb.spaceKey.wasPressedThisFrame)
         {
             if (EventSystem.current != null &&
                 EventSystem.current.currentSelectedGameObject == closeButton.gameObject)
@@ -75,7 +79,7 @@ public class QRCodePanelController : MonoBehaviour
         }
 
         // ESC key also closes panel
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (kb.escapeKey.wasPressedThisFrame)
         {
             ClosePanel();
         }

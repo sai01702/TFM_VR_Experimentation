@@ -6143,8 +6143,8 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
-  experimenterPrefab: {fileID: 8230027827192959402, guid: 576eaf89f3cf0ed4a80cc6832f91c61c, type: 3}
-  playerPrefab: {fileID: 0}
+  experimenterPrefab: {fileID: 1856378449921081043, guid: 7751f14d344150a4584eaf01b2e43743, type: 3}
+  startAsHostOnStart: 1
   onServerStarted:
     m_PersistentCalls:
       m_Calls: []
