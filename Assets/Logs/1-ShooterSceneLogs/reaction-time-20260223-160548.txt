@@ -1,0 +1,115 @@
+Reaction time Log Inmersive
+Created: 2/23/2026 4:05:48 PM
+=====================================
+
+Spawned object 1: ObjetivoRea2
+Reaction time: 2.231 seconds
+
+Spawned object 2: ObjetivoRea5
+Reaction time: 1.430 seconds
+
+Spawned object 3: ObjetivoRea4
+Manual despawn
+
+Spawned object 4: ObjetivoRea
+Reaction time: 0.347 seconds
+
+Spawned object 5: ObjetivoRea4
+Manual despawn
+
+Spawned object 6: ObjetivoRea2
+Manual despawn
+
+Spawned object 7: ObjetivoRea4
+Manual despawn
+
+Spawned object 8: ObjetivoRea1
+Manual despawn
+
+Spawned object 9: ObjetivoRea3
+Manual despawn
+
+Spawned object 10: ObjetivoRea5
+Reaction time: 1.083 seconds
+
+Spawned object 11: ObjetivoRea2
+Manual despawn
+
+Spawned object 12: ObjetivoRea4
+Manual despawn
+
+Spawned object 13: ObjetivoRea1
+Manual despawn
+
+Spawned object 14: ObjetivoRea2
+Manual despawn
+
+Spawned object 15: ObjetivoRea2
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
+Manual despawn
+
