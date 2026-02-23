@@ -62,13 +62,21 @@ public class ExperimenterController : NetworkBehaviour
 
     void FollowPlayer()
     {
-        if (targetPlayer == null || targetPlayer.cameraTransform == null) return;
+        if (targetPlayer == null) return;
+
+        // Read directly from the Mirror SyncVars — cameraTransform is null on the
+        // experimenter client since there's no local rig for the participant here.
+        Vector3 targetPos = targetPlayer.SyncedCameraPos;
+        Quaternion targetRot = targetPlayer.SyncedCameraRot;
+
+        // Don't follow if we haven't received real data yet (still at origin)
+        if (targetPos == Vector3.zero) return;
 
         Camera cam = experimenterCamera != null ? experimenterCamera : Camera.main;
         if (cam != null)
         {
-            cam.transform.position = targetPlayer.cameraTransform.position;
-            cam.transform.rotation = targetPlayer.cameraTransform.rotation;
+            cam.transform.position = targetPos;
+            cam.transform.rotation = targetRot;
         }
     }
 

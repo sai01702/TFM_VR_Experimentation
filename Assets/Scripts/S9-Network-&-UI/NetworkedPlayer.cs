@@ -18,6 +18,10 @@ public class NetworkedPlayer : NetworkBehaviour
     [SyncVar] private Vector3 syncCameraPos;
     [SyncVar] private Quaternion syncCameraRot;
 
+    // Read-only accessors for the experimenter controller on the client
+    public Vector3 SyncedCameraPos => syncCameraPos;
+    public Quaternion SyncedCameraRot => syncCameraRot;
+
     // Cache last sent values to avoid spamming commands every frame
     private string _lastParticipantID;
     private string _lastSceneName;
@@ -26,13 +30,8 @@ public class NetworkedPlayer : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
-
-        // For remote clients (e.g., the experimenter), make sure we have a transform
-        // to apply the synced camera pose onto, even if no rig exists here.
-        if (!isLocalPlayer && cameraTransform == null)
-        {
-            cameraTransform = transform;
-        }
+        // cameraTransform stays null on remote clients.
+        // ExperimenterController reads SyncedCameraPos/Rot directly instead.
     }
 
     private void Update()
