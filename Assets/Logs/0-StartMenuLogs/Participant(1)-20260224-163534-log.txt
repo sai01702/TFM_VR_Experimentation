@@ -1,0 +1,8 @@
+Participant: 1
+Session start: 24/02/2026 16:35:34
+=========================================
+
+SessionStart
+[Network] Relay Join Code: 7PWG7F
+[Network] Started hosting - Mode: Internet (Relay), Connection: 7PWG7F
+[Network] Started hosting session

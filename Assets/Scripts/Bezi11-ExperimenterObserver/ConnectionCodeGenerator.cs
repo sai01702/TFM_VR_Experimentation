@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System.Net;
 using System.Net.Sockets;
+using System.Collections;
 
 namespace Bezi11.ExperimenterObserver
 {
@@ -19,11 +20,41 @@ namespace Bezi11.ExperimenterObserver
 
         void Start()
         {
+            Debug.Log("[ConnectionCodeGenerator] Start() called");
+            
             if (connectionPanel != null)
             {
                 connectionPanel.SetActive(false);
+                Debug.Log("[ConnectionCodeGenerator] Set panel inactive");
+            }
+            else
+            {
+                Debug.LogError("[ConnectionCodeGenerator] connectionPanel is NULL in Start()!");
             }
 
+            StartCoroutine(WaitForNetworkManager());
+        }
+
+        private IEnumerator WaitForNetworkManager()
+        {
+            Debug.Log("[ConnectionCodeGenerator] Waiting for NetworkManager.Singleton...");
+            
+            float timeout = 10f;
+            float elapsed = 0f;
+            
+            while (NetworkManager.Singleton == null && elapsed < timeout)
+            {
+                yield return new WaitForSeconds(0.1f);
+                elapsed += 0.1f;
+            }
+            
+            if (NetworkManager.Singleton == null)
+            {
+                Debug.LogError("[ConnectionCodeGenerator] NetworkManager.Singleton is still NULL after 10 seconds!");
+                yield break;
+            }
+            
+            Debug.Log("[ConnectionCodeGenerator] NetworkManager.Singleton found!");
             RegisterNetworkCallbacks();
         }
 

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5021624277924425229}
   - component: {fileID: 611520773583678252}
   - component: {fileID: 1506929904181849493}
+  - component: {fileID: 3653108132340405179}
   m_Layer: 0
   m_Name: XR Origin - Puzzle Game
   m_TagString: Untagged
@@ -93,6 +94,23 @@ MonoBehaviour:
   m_LocomotionProvider: {fileID: 0}
   m_MinHeight: 1
   m_MaxHeight: 2
+--- !u!114 &3653108132340405179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574291251251584840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bbdbe8b1e4555a4aaffa183ee8ec8b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetFrameRate: 30
+  renderTextureWidth: 1280
+  renderTextureHeight: 720
+  jpegQuality: 75
+  onlyStreamWhenObserverConnected: 1
 --- !u!1 &4460119522237648852
 GameObject:
   m_ObjectHideFlags: 0

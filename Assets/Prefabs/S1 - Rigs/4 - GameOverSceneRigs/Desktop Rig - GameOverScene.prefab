@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 5944712860973532378}
   - component: {fileID: 1409343858059553150}
   - component: {fileID: 6589274506679457211}
+  - component: {fileID: -1016088100927616915}
   m_Layer: 0
   m_Name: Desktop Rig - GameOverScene
   m_TagString: Player
@@ -286,3 +287,20 @@ MonoBehaviour:
   lookActionName: Look
   lockCursorWhenHidden: 1
   cameraLookScript: {fileID: 0}
+--- !u!114 &-1016088100927616915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8955973245134529063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bbdbe8b1e4555a4aaffa183ee8ec8b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetFrameRate: 30
+  renderTextureWidth: 1280
+  renderTextureHeight: 720
+  jpegQuality: 75
+  onlyStreamWhenObserverConnected: 1

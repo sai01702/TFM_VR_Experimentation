@@ -13,9 +13,21 @@ namespace Bezi11.ExperimenterObserver
 
         private static bool networkManagerCreated;
         private static bool relayManagerCreated;
+        private static NetworkBootstrap instance;
 
         void Awake()
         {
+            if (instance != null && instance != this)
+            {
+                Debug.Log("[NetworkBootstrap] Instance already exists, destroying duplicate");
+                Destroy(gameObject);
+                return;
+            }
+
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            Debug.Log("[NetworkBootstrap] NetworkBootstrap persisted across scenes");
+
             if (!networkManagerCreated && networkManagerPrefab != null)
             {
                 GameObject nmInstance = Instantiate(networkManagerPrefab);

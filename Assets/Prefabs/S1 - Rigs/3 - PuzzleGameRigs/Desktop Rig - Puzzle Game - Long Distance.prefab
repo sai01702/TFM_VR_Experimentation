@@ -463,6 +463,8 @@ GameObject:
   - component: {fileID: 1666705000427212330}
   - component: {fileID: 5436434412167748787}
   - component: {fileID: 4710467114309291794}
+  - component: {fileID: 2936734712845018729}
+  - component: {fileID: 5247072278977925401}
   m_Layer: 0
   m_Name: Desktop Rig - Puzzle Game - Long Distance
   m_TagString: Player
@@ -617,3 +619,43 @@ MonoBehaviour:
   standMaxDistance: 50
   crosshairRenderer: {fileID: 4644127766692845238}
   crosshairTargetColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+--- !u!114 &2936734712845018729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8955973245134529063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1261394189
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!114 &5247072278977925401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8955973245134529063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bbdbe8b1e4555a4aaffa183ee8ec8b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetFrameRate: 30
+  renderTextureWidth: 1280
+  renderTextureHeight: 720
+  jpegQuality: 75
+  onlyStreamWhenObserverConnected: 1
