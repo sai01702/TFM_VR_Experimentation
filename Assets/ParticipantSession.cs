@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using UnityEngine;
 
@@ -44,6 +44,11 @@ public class ParticipantSession : MonoBehaviour
     {
         ParticipantId = string.IsNullOrWhiteSpace(id) ? "Unknown" : id.Trim();
         InitLogFileIfNeeded();
+        
+        if (Bezi11.ExperimenterObserver.NetworkSessionManager.Instance != null)
+        {
+            Bezi11.ExperimenterObserver.NetworkSessionManager.Instance.UpdateSessionData();
+        }
     }
 
     void InitLogFileIfNeeded()
