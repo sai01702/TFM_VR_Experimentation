@@ -1217,6 +1217,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 768091623}
+  - component: {fileID: 768091624}
   m_Layer: 0
   m_Name: SessionRoot
   m_TagString: Untagged
@@ -1233,13 +1234,27 @@ Transform:
   m_GameObject: {fileID: 768091621}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -167.72, y: -96.872, z: 0}
+  m_LocalPosition: {x: -254.5, y: -96.872, z: 0}
   m_LocalScale: {x: 1.2828, y: 1.2828, z: 1.2828}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1097339638}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &768091624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768091621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9588f25816e6345a5ed60ab9498a65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyOnAnySceneChange: 1
+  scenesToDestroyOn: []
 --- !u!1 &840184206
 GameObject:
   m_ObjectHideFlags: 0
@@ -1437,7 +1452,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -186, y: 109}
+  m_AnchoredPosition: {x: -454.87, y: 169.89}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 1, y: 0}
 --- !u!1 &1029501183
@@ -2764,7 +2779,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 72, y: -6.8}
+  m_AnchoredPosition: {x: 72, y: -6.799999}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2012490120

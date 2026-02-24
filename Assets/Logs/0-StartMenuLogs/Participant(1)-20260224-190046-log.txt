@@ -1,0 +1,10 @@
+Participant: 1
+Session start: 24/02/2026 19:00:46
+=========================================
+
+SessionStart
+[Network] Relay Join Code: 7M7M9L
+[Network] Started hosting - Mode: LAN (Direct), Connection: 138.100.14.92:7777
+[Network] Started hosting session
+[Network] Relay Join Code: RT8HJC
+[Network] Started hosting - Mode: Internet (Relay), Connection: RT8HJC

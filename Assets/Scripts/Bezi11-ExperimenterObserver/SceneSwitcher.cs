@@ -23,6 +23,15 @@ namespace Bezi11.ExperimenterObserver
         public void SwitchToExperimenterScene()
         {
             Debug.Log($"[SceneSwitcher] Loading scene: {targetSceneName}");
+            
+            // Explicitly destroy SessionRoot before loading new scene
+            var sessionRoot = GameObject.Find("SessionRoot");
+            if (sessionRoot != null)
+            {
+                Debug.Log("[SceneSwitcher] Destroying SessionRoot before scene load");
+                Destroy(sessionRoot);
+            }
+            
             SceneManager.LoadScene(targetSceneName);
         }
 

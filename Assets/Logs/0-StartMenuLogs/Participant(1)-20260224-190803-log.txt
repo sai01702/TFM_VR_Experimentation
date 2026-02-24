@@ -1,0 +1,11 @@
+Participant: 1
+Session start: 24/02/2026 19:08:03
+=========================================
+
+SessionStart
+[Network] Relay Join Code: LKR8G9
+[Network] Started hosting - Mode: LAN (Direct), Connection: 138.100.14.92:7777
+[Network] Started hosting session
+[Network] Relay Join Code: BJLGGF
+[Network] Started hosting - Mode: Internet (Relay), Connection: BJLGGF
+[Network] Started hosting - Mode: LAN (Direct), Connection: 138.100.14.92:7777
