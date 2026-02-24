@@ -14528,6 +14528,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3326651763212919667, guid: 90c30662269d821419c3f5a5e2ffd540, type: 3}
+      propertyPath: connectionModeToggle
+      value: 
+      objectReference: {fileID: 457799212}
     - target: {fileID: 5152892524486083531, guid: 90c30662269d821419c3f5a5e2ffd540, type: 3}
       propertyPath: m_SizeDelta.y
       value: 230

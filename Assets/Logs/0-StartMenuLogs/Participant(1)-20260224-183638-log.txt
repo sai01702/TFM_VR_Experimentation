@@ -1,0 +1,8 @@
+Participant: 1
+Session start: 24/02/2026 18:36:38
+=========================================
+
+SessionStart
+[Network] Relay Join Code: 68FRTN
+[Network] Started hosting - Mode: LAN (Direct), Connection: 138.100.14.92:7777
+[Network] Started hosting session

@@ -1,0 +1,8 @@
+Participant: 1
+Session start: 24/02/2026 16:55:05
+=========================================
+
+SessionStart
+[Network] Relay Join Code: 9MBPLQ
+[Network] Started hosting - Mode: LAN (Direct), Connection: 138.100.14.92:7777
+[Network] Started hosting session

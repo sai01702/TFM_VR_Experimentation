@@ -48,7 +48,8 @@ namespace Bezi11.ExperimenterObserver
             }
             else
             {
-                Debug.LogWarning("[ConnectionCodeGenerator] connectionModeToggle is NULL - toggle not available");
+                Debug.LogError("[ConnectionCodeGenerator] connectionModeToggle is NULL! Toggle will not work!");
+                Debug.LogError("[ConnectionCodeGenerator] Please assign the toggle reference in the Inspector!");
             }
 
             StartCoroutine(WaitForNetworkManager());
@@ -147,6 +148,18 @@ namespace Bezi11.ExperimenterObserver
 
         private IEnumerator RestartWithRelay()
         {
+            // Show "Creating code..." message
+            if (connectionInfoText != null)
+            {
+                connectionInfoText.text = "Creating code...";
+                Debug.Log("[ConnectionCodeGenerator] Showing 'Creating code...' message");
+            }
+            
+            if (connectionModeText != null)
+            {
+                connectionModeText.text = relayModeLabel;
+            }
+
             var relayTask = RelayConnectionManager.Instance.StartHostWithRelay();
             
             while (!relayTask.IsCompleted)
@@ -158,15 +171,52 @@ namespace Bezi11.ExperimenterObserver
             
             if (!string.IsNullOrEmpty(joinCode))
             {
+                Debug.Log($"[ConnectionCodeGenerator] Relay join code received: {joinCode}");
+                yield return new WaitForSeconds(0.1f); // Small delay to ensure transport is configured
+                
                 bool started = NetworkManager.Singleton.StartHost();
+                Debug.Log($"[ConnectionCodeGenerator] StartHost() returned: {started}");
+                
                 if (started)
                 {
+                    // Manually call OnServerStarted since we're restarting
+                    yield return new WaitForSeconds(0.1f);
                     OnServerStarted();
+                }
+                else
+                {
+                    Debug.LogError("[ConnectionCodeGenerator] Failed to start host with relay!");
+                    
+                    // Show error in UI
+                    if (connectionInfoText != null)
+                    {
+                        connectionInfoText.text = "Failed to start relay";
+                    }
                 }
             }
             else
             {
-                Debug.LogError("[ConnectionCodeGenerator] Failed to get relay join code");
+                Debug.LogError("[ConnectionCodeGenerator] Failed to get relay join code!");
+                
+                // Fall back to LAN mode
+                Debug.Log("[ConnectionCodeGenerator] Falling back to LAN mode...");
+                useRelayMode = false;
+                if (connectionModeToggle != null)
+                {
+                    connectionModeToggle.isOn = false;
+                }
+                
+                if (RelayConnectionManager.Instance != null)
+                {
+                    RelayConnectionManager.Instance.SetConnectionMode(false);
+                }
+                
+                bool started = NetworkManager.Singleton.StartHost();
+                if (started)
+                {
+                    yield return new WaitForSeconds(0.1f);
+                    OnServerStarted();
+                }
             }
         }
 

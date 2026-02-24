@@ -1,0 +1,14 @@
+Participant: 1
+Session start: 24/02/2026 18:48:57
+=========================================
+
+SessionStart
+[Network] Relay Join Code: 7HBTWG
+[Network] Started hosting - Mode: LAN (Direct), Connection: 138.100.14.92:7777
+[Network] Started hosting session
+[Network] Relay Join Code: FWRPQP
+[Network] Started hosting - Mode: Internet (Relay), Connection: FWRPQP
+[Network] Started hosting - Mode: LAN (Direct), Connection: 138.100.14.92:7777
+[Network] Relay Join Code: DMDP6K
+[Network] Started hosting - Mode: Internet (Relay), Connection: DMDP6K
+[Network] Started hosting - Mode: LAN (Direct), Connection: 138.100.14.92:7777
