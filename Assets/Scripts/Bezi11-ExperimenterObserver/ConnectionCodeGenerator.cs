@@ -1,6 +1,7 @@
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using System.Net;
 using System.Net.Sockets;
@@ -14,9 +15,15 @@ namespace Bezi11.ExperimenterObserver
         [SerializeField] private TextMeshProUGUI connectionInfoText;
         [SerializeField] private TextMeshProUGUI connectionModeText;
         [SerializeField] private GameObject connectionPanel;
+        [SerializeField] private Toggle connectionModeToggle;
+
+        [Header("Mode Labels")]
+        [SerializeField] private string lanModeLabel = "LAN (Direct)";
+        [SerializeField] private string relayModeLabel = "Internet (Relay)";
 
         private const int DefaultPort = 7777;
         private bool isHosting;
+        private bool useRelayMode;
 
         void Start()
         {
@@ -30,6 +37,18 @@ namespace Bezi11.ExperimenterObserver
             else
             {
                 Debug.LogError("[ConnectionCodeGenerator] connectionPanel is NULL in Start()!");
+            }
+
+            if (connectionModeToggle != null)
+            {
+                connectionModeToggle.isOn = false;
+                useRelayMode = false;
+                connectionModeToggle.onValueChanged.AddListener(OnConnectionModeToggled);
+                Debug.Log("[ConnectionCodeGenerator] Toggle registered, starting in LAN mode");
+            }
+            else
+            {
+                Debug.LogWarning("[ConnectionCodeGenerator] connectionModeToggle is NULL - toggle not available");
             }
 
             StartCoroutine(WaitForNetworkManager());
@@ -71,6 +90,84 @@ namespace Bezi11.ExperimenterObserver
         void OnDestroy()
         {
             UnregisterNetworkCallbacks();
+            
+            if (connectionModeToggle != null)
+            {
+                connectionModeToggle.onValueChanged.RemoveListener(OnConnectionModeToggled);
+            }
+        }
+
+        private void OnConnectionModeToggled(bool isRelay)
+        {
+            Debug.Log($"[ConnectionCodeGenerator] Mode toggled to: {(isRelay ? "Relay" : "LAN")}");
+            useRelayMode = isRelay;
+
+            if (isHosting)
+            {
+                Debug.Log("[ConnectionCodeGenerator] Already hosting, restarting to apply new mode...");
+                StartCoroutine(RestartHostingWithNewMode());
+            }
+        }
+
+        private IEnumerator RestartHostingWithNewMode()
+        {
+            if (NetworkManager.Singleton == null)
+            {
+                Debug.LogError("[ConnectionCodeGenerator] NetworkManager.Singleton is NULL during mode switch!");
+                yield break;
+            }
+
+            Debug.Log("[ConnectionCodeGenerator] Shutting down current host...");
+            NetworkManager.Singleton.Shutdown();
+            isHosting = false;
+
+            yield return new WaitForSeconds(0.5f);
+
+            Debug.Log("[ConnectionCodeGenerator] Restarting host with new mode...");
+            
+            if (useRelayMode && RelayConnectionManager.Instance != null)
+            {
+                RelayConnectionManager.Instance.SetConnectionMode(true);
+                StartCoroutine(RestartWithRelay());
+            }
+            else
+            {
+                if (RelayConnectionManager.Instance != null)
+                {
+                    RelayConnectionManager.Instance.SetConnectionMode(false);
+                }
+                
+                bool started = NetworkManager.Singleton.StartHost();
+                if (started)
+                {
+                    OnServerStarted();
+                }
+            }
+        }
+
+        private IEnumerator RestartWithRelay()
+        {
+            var relayTask = RelayConnectionManager.Instance.StartHostWithRelay();
+            
+            while (!relayTask.IsCompleted)
+            {
+                yield return null;
+            }
+            
+            string joinCode = relayTask.Result;
+            
+            if (!string.IsNullOrEmpty(joinCode))
+            {
+                bool started = NetworkManager.Singleton.StartHost();
+                if (started)
+                {
+                    OnServerStarted();
+                }
+            }
+            else
+            {
+                Debug.LogError("[ConnectionCodeGenerator] Failed to get relay join code");
+            }
         }
 
         private void RegisterNetworkCallbacks()
@@ -106,7 +203,7 @@ namespace Bezi11.ExperimenterObserver
             Debug.Log("[ConnectionCodeGenerator] OnServerStarted called!");
             isHosting = true;
 
-            bool usingRelay = RelayConnectionManager.Instance != null && RelayConnectionManager.Instance.IsUsingRelay;
+            bool usingRelay = useRelayMode && RelayConnectionManager.Instance != null && RelayConnectionManager.Instance.IsUsingRelay;
             string connectionInfo;
             string mode;
 
@@ -121,7 +218,7 @@ namespace Bezi11.ExperimenterObserver
                 }
 
                 connectionInfo = joinCode ?? "Relay Error";
-                mode = "Internet (Relay)";
+                mode = relayModeLabel;
             }
             else
             {
@@ -129,7 +226,7 @@ namespace Bezi11.ExperimenterObserver
                 string localIP = GetLocalIPAddress();
                 int port = GetNetworkPort();
                 connectionInfo = $"{localIP}:{port}";
-                mode = "LAN (Direct)";
+                mode = lanModeLabel;
             }
 
             Debug.Log($"[ConnectionCodeGenerator] Connection Info: {connectionInfo}");

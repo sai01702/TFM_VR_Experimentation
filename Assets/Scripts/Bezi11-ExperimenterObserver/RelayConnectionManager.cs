@@ -25,6 +25,12 @@ namespace Bezi11.ExperimenterObserver
 
         private const int MaxConnections = 5;
 
+        public void SetConnectionMode(bool useRelay)
+        {
+            useRelayForInternetConnection = useRelay;
+            Debug.Log($"[RelayConnectionManager] Connection mode set to: {(useRelay ? "Relay" : "LAN")}");
+        }
+
         void Awake()
         {
             if (Instance != null && Instance != this)
@@ -164,12 +170,6 @@ namespace Bezi11.ExperimenterObserver
             await Task.CompletedTask;
             return false;
 #endif
-        }
-
-        public void SetConnectionMode(bool useRelay)
-        {
-            useRelayForInternetConnection = useRelay;
-            Debug.Log($"[RelayConnectionManager] Connection mode set to: {(useRelay ? "Relay (Internet)" : "Direct (LAN)")}");
         }
     }
 }
