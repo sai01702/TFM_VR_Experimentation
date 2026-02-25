@@ -1,0 +1,12 @@
+Participant: 3
+Session start: 25/02/2026 14:56:18
+=========================================
+
+SessionStart
+[Network] Relay Join Code: KNJM6Q
+[Network] Started hosting - Mode: LAN (Direct), Connection: 10.244.68.11:7777
+[Network] Started hosting session
+[Network] Client 0 disconnected
+[Network] Server stopped
+[Network] Relay Join Code: B7DBBK
+[Network] Started hosting - Mode: Internet (Relay), Connection: B7DBBK
