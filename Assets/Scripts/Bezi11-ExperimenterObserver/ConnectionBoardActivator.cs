@@ -196,24 +196,15 @@ namespace Bezi11.ExperimenterObserver
             Unity.Netcode.NetworkManager.ConnectionApprovalRequest request, 
             Unity.Netcode.NetworkManager.ConnectionApprovalResponse response)
         {
-            // ALWAYS approve - we want observers to connect!
+            // ALWAYS APPROVE - We always allow observers to stream!
             response.Approved = true;
-            response.CreatePlayerObject = false; // No player object needed
+            response.CreatePlayerObject = false;
             response.PlayerPrefabHash = null;
             response.Position = null;
             response.Rotation = null;
             response.Pending = false;
             
-            // Check if this is an observer (they send special connection data)
-            bool isObserver = false;
-            if (request.Payload != null && request.Payload.Length > 0)
-            {
-                string payload = System.Text.Encoding.UTF8.GetString(request.Payload);
-                isObserver = payload == "OBSERVER";
-            }
-            
-            string clientType = isObserver ? "OBSERVER" : "Regular client";
-            Debug.Log($"[ConnectionBoardActivator] ✅ {clientType} connection APPROVED! They will get auto-assigned ClientId.");
+            Debug.Log($"[ConnectionBoardActivator] ✅ Experimenter client connection AUTO-APPROVED!");
         }
 
         private void SpawnNetworkSessionManager()

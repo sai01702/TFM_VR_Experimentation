@@ -18,6 +18,9 @@ namespace Bezi11.ExperimenterObserver
 
         private const int DefaultPort = 7777;
         private bool isConnecting = false;
+        private bool autoReconnect = true;
+        private string lastRelayCode = "";
+        private bool wasUsingRelay = false;
 
         void Start()
         {
@@ -140,6 +143,14 @@ namespace Bezi11.ExperimenterObserver
             UpdateStatusText("Connecting...");
             connectButton.interactable = false;
             isConnecting = true;
+            autoReconnect = true; // Enable auto-reconnect
+            
+            // Store connection info for reconnection
+            wasUsingRelay = useRelay;
+            if (useRelay)
+            {
+                lastRelayCode = connectionAddress;
+            }
 
             if (useRelay)
             {
@@ -272,6 +283,11 @@ namespace Bezi11.ExperimenterObserver
 
         private void OnDisconnectClicked()
         {
+            Debug.Log("[ObserverConnectionUI] Disconnect clicked by user");
+            
+            // Disable auto-reconnect when user manually disconnects
+            autoReconnect = false;
+            
             if (NetworkManager.Singleton != null)
             {
                 NetworkManager.Singleton.Shutdown();
@@ -319,27 +335,120 @@ namespace Bezi11.ExperimenterObserver
             {
                 string reason = NetworkManager.Singleton.DisconnectReason;
                 
-                Debug.LogError($"[ObserverConnectionUI] ❌❌❌ DISCONNECTED! ClientId: {clientId}");
-                Debug.LogError($"[ObserverConnectionUI] Reason: {(string.IsNullOrEmpty(reason) ? "NO REASON PROVIDED" : reason)}");
-                Debug.LogError($"[ObserverConnectionUI] Check HOST console for rejection reason!");
+                Debug.LogWarning($"[ObserverConnectionUI] ⚠️ Disconnected! ClientId: {clientId}");
+                Debug.LogWarning($"[ObserverConnectionUI] Reason: {(string.IsNullOrEmpty(reason) ? "Connection interrupted" : reason)}");
                 
-                if (!string.IsNullOrEmpty(reason))
+                // Connection interruptions are NORMAL - auto-reconnect!
+                if (autoReconnect)
                 {
-                    UpdateStatusText($"Disconnected: {reason}");
+                    Debug.Log("[ObserverConnectionUI] Auto-reconnecting in 2 seconds...");
+                    UpdateStatusText("Connection interrupted - Reconnecting...");
+                    StartCoroutine(AttemptReconnect());
                 }
                 else
                 {
-                    UpdateStatusText("Disconnected - Check host logs");
-                }
-                
-                connectButton.interactable = true;
-                disconnectButton.interactable = false;
+                    UpdateStatusText(string.IsNullOrEmpty(reason) ? "Disconnected" : $"Disconnected: {reason}");
+                    connectButton.interactable = true;
+                    disconnectButton.interactable = false;
 
-                if (observerPanel != null)
-                {
-                    observerPanel.SetActive(false);
+                    if (observerPanel != null)
+                    {
+                        observerPanel.SetActive(false);
+                    }
                 }
             }
+        }
+        
+        private System.Collections.IEnumerator AttemptReconnect()
+        {
+            const int maxAttempts = 15; // 15 attempts over ~30 seconds
+            int attempt = 0;
+            
+            while (autoReconnect && attempt < maxAttempts)
+            {
+                attempt++;
+                
+                Debug.Log($"[ObserverConnectionUI] Reconnect attempt {attempt}/{maxAttempts}...");
+                UpdateStatusText($"Reconnecting... (Attempt {attempt}/{maxAttempts})");
+                
+                // Wait 2 seconds between attempts
+                yield return new WaitForSeconds(2f);
+                
+                // Shutdown previous connection
+                if (NetworkManager.Singleton != null)
+                {
+                    NetworkManager.Singleton.Shutdown();
+                    yield return new WaitForSeconds(0.5f);
+                }
+                
+                // Try to reconnect
+                bool success = false;
+                
+                if (wasUsingRelay && !string.IsNullOrEmpty(lastRelayCode))
+                {
+                    Debug.Log($"[ObserverConnectionUI] Attempting relay reconnection with code: {lastRelayCode}");
+                    
+                    if (RelayConnectionManager.Instance != null)
+                    {
+                        bool relayJoined = false;
+                        var joinTask = RelayConnectionManager.Instance.JoinWithRelay(lastRelayCode);
+                        
+                        // Wait for relay join
+                        while (!joinTask.IsCompleted)
+                        {
+                            yield return null;
+                        }
+                        
+                        relayJoined = joinTask.Result;
+                        
+                        if (relayJoined)
+                        {
+                            yield return new WaitForSeconds(0.5f);
+                            
+                            var config = NetworkManager.Singleton.NetworkConfig;
+                            config.EnableSceneManagement = false;
+                            config.ConnectionData = System.Text.Encoding.UTF8.GetBytes("OBSERVER");
+                            
+                            success = NetworkManager.Singleton.StartClient();
+                            
+                            if (success)
+                            {
+                                Debug.Log("[ObserverConnectionUI] ✅ Reconnection started, waiting for connection...");
+                                
+                                // Wait up to 5 seconds to see if we connect
+                                float waitTime = 0f;
+                                while (waitTime < 5f && !NetworkManager.Singleton.IsClient)
+                                {
+                                    yield return new WaitForSeconds(0.2f);
+                                    waitTime += 0.2f;
+                                }
+                                
+                                if (NetworkManager.Singleton.IsClient)
+                                {
+                                    Debug.Log("[ObserverConnectionUI] ✅✅✅ RECONNECTED SUCCESSFULLY!");
+                                    UpdateStatusText("Reconnected!");
+                                    
+                                    if (observerPanel != null)
+                                    {
+                                        observerPanel.SetActive(true);
+                                    }
+                                    
+                                    yield break; // Success! Exit the loop
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                Debug.LogWarning($"[ObserverConnectionUI] Attempt {attempt} failed, trying again...");
+            }
+            
+            // All attempts failed
+            Debug.LogError("[ObserverConnectionUI] ❌ All reconnection attempts failed after 30 seconds");
+            UpdateStatusText("Reconnection failed - Click Connect to retry");
+            connectButton.interactable = true;
+            disconnectButton.interactable = false;
+            autoReconnect = false;
         }
 
         private bool ParseConnectionAddress(string address, out string ipAddress, out int port)
