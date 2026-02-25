@@ -1,4 +1,5 @@
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 using TMPro;
 
@@ -85,10 +86,14 @@ namespace Bezi11.ExperimenterObserver
                 return;
             }
 
-            // Start hosting with Relay if configured
-            if (RelayConnectionManager.Instance != null && RelayConnectionManager.Instance.IsUsingRelay)
+            Debug.Log($"[ConnectionBoardActivator] ✅ Player activated! Starting hosting NOW...");
+
+            // Check if using Relay or LAN
+            bool usingRelay = RelayConnectionManager.Instance != null && RelayConnectionManager.Instance.IsUsingRelay;
+            
+            if (usingRelay)
             {
-                Debug.Log("[ConnectionBoardActivator] Starting relay hosting...");
+                Debug.Log("[ConnectionBoardActivator] Using RELAY mode");
                 string joinCode = await RelayConnectionManager.Instance.StartHostWithRelay();
                 if (string.IsNullOrEmpty(joinCode))
                 {
@@ -100,6 +105,21 @@ namespace Bezi11.ExperimenterObserver
                     return;
                 }
                 Debug.Log($"[ConnectionBoardActivator] Relay code: {joinCode}");
+            }
+            else
+            {
+                Debug.Log("[ConnectionBoardActivator] Using LAN mode - Direct IP connection on port 7777");
+                
+                // For LAN, configure transport for local network
+                var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+                if (transport != null)
+                {
+                    // Set to listen on all interfaces (0.0.0.0) on port 7777
+                    transport.ConnectionData.Address = "0.0.0.0";
+                    transport.ConnectionData.Port = 7777;
+                    transport.ConnectionData.ServerListenAddress = "0.0.0.0";
+                    Debug.Log("[ConnectionBoardActivator] ✅ Transport configured for LAN: 0.0.0.0:7777");
+                }
             }
 
             // Start hosting

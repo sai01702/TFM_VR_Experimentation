@@ -178,18 +178,32 @@ namespace Bezi11.ExperimenterObserver
             }
             else
             {
+                // LAN MODE - Direct IP connection
                 if (!ParseConnectionAddress(connectionAddress, out string ipAddress, out int port))
                 {
-                    UpdateStatusText("Invalid format");
+                    UpdateStatusText("Invalid format. Use IP:Port (e.g., 192.168.1.100:7777)");
                     connectButton.interactable = true;
                     return;
                 }
 
+                Debug.Log($"[ObserverConnectionUI] LAN mode - Connecting to {ipAddress}:{port}");
+                
                 var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
                 if (transport != null)
                 {
                     transport.SetConnectionData(ipAddress, (ushort)port);
+                    Debug.Log($"[ObserverConnectionUI] ✅ Transport configured for LAN: {ipAddress}:{port}");
                 }
+                else
+                {
+                    Debug.LogError("[ObserverConnectionUI] UnityTransport not found!");
+                    UpdateStatusText("Error: Transport not found");
+                    connectButton.interactable = true;
+                    return;
+                }
+                
+                // Small delay to ensure transport is ready
+                await System.Threading.Tasks.Task.Delay(200);
             }
 
             // CRITICAL: Disable scene management - observer stays in ExperimenterClientScene
