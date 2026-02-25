@@ -67,7 +67,13 @@ namespace Bezi11.ExperimenterObserver
 
         private async void StartHosting()
         {
-            if (NetworkManager.Singleton == null) return;
+            if (NetworkManager.Singleton == null)
+            {
+                Debug.LogError("[NetworkBootstrap] NetworkManager.Singleton is null!");
+                return;
+            }
+
+            Debug.Log($"[NetworkBootstrap] Starting hosting... IsServer: {NetworkManager.Singleton.IsServer}, IsClient: {NetworkManager.Singleton.IsClient}");
 
             if (RelayConnectionManager.Instance != null && RelayConnectionManager.Instance.IsUsingRelay)
             {
@@ -85,7 +91,10 @@ namespace Bezi11.ExperimenterObserver
 
             if (started)
             {
-                Debug.Log("[NetworkBootstrap] Started hosting in RoomScene");
+                Debug.Log($"[NetworkBootstrap] ✅ StartHost() succeeded! IsServer: {NetworkManager.Singleton.IsServer}, ConnectedClients: {NetworkManager.Singleton.ConnectedClientsList.Count}");
+
+                // Wait a frame to ensure NetworkManager is fully initialized
+                await System.Threading.Tasks.Task.Delay(100);
 
                 // CRITICAL: Spawn NetworkSessionManager after hosting starts
                 SpawnNetworkSessionManager();
@@ -94,10 +103,12 @@ namespace Bezi11.ExperimenterObserver
                 {
                     ParticipantSession.Instance.AppendLog("[Network] Started hosting session");
                 }
+                
+                Debug.Log("[NetworkBootstrap] Hosting setup complete - ready for observer connections");
             }
             else
             {
-                Debug.LogError("[NetworkBootstrap] Failed to start hosting");
+                Debug.LogError("[NetworkBootstrap] ❌ StartHost() failed!");
             }
         }
 

@@ -6279,6 +6279,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 499240, guid: ef77650fcc7dfd64a8d614922d90c382, type: 3}
   m_PrefabInstance: {fileID: 962656305}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &963846520
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 963846521}
+  - component: {fileID: 963846522}
+  m_Layer: 0
+  m_Name: NetworkDiagnostics_Host
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &963846521
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963846520}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1283.5891, y: 587.5871, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &963846522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963846520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4d4e0ce286bd9d4fb9582899b0c7777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logInterval: 2
 --- !u!1001 &971813155
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8715,6 +8760,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   networkManagerPrefab: {fileID: 963506830005855813, guid: aed235066a0f950439216a1ff870a2b0, type: 3}
   relayManagerPrefab: {fileID: 8721185487427850067, guid: 4a4e998ac35221e4e945c01077475c9c, type: 3}
+  networkSessionManagerPrefab: {fileID: 0}
   roomSceneName: RoomScene
 --- !u!4 &1405156960
 Transform:
@@ -15021,3 +15067,4 @@ SceneRoots:
   - {fileID: 2820061043776683356}
   - {fileID: 1405156960}
   - {fileID: 801547732}
+  - {fileID: 963846521}

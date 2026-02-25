@@ -49,17 +49,40 @@ namespace Bezi11.ExperimenterObserver
 
         private IEnumerator WaitForNetworkManagerAndStart()
         {
+            Debug.Log("[PlayerCameraStreamer] Waiting for NetworkManager to become server...");
+            
             // Wait until NetworkManager exists and is server/host
+            float waitTime = 0f;
             while (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsServer)
             {
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.2f);
+                waitTime += 0.2f;
+                
+                if (waitTime >= 10f)
+                {
+                    Debug.LogError("[PlayerCameraStreamer] Timeout waiting for NetworkManager.IsServer after 10 seconds");
+                    yield break;
+                }
             }
 
-            Debug.Log("[PlayerCameraStreamer] NetworkManager ready as server, initializing streaming");
+            Debug.Log($"[PlayerCameraStreamer] NetworkManager ready as server after {waitTime:F1}s, initializing streaming");
             InitializeStreaming();
             
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+            
+            // Log current connection state
+            Debug.Log($"[PlayerCameraStreamer] Currently {NetworkManager.Singleton.ConnectedClientsList.Count} client(s) connected");
+            
+            // If clients are already connected (shouldn't happen, but just in case)
+            foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+            {
+                if (client.ClientId != NetworkManager.ServerClientId)
+                {
+                    Debug.Log($"[PlayerCameraStreamer] Found existing observer client: {client.ClientId}");
+                    isStreaming = true;
+                }
+            }
         }
 
         void OnDestroy()
