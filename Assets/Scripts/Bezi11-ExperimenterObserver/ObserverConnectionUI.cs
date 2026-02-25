@@ -148,28 +148,25 @@ namespace Bezi11.ExperimenterObserver
                     return;
                 }
 
-                Debug.Log($"[ObserverConnectionUI] Attempting to join relay with code: {connectionAddress}");
+                Debug.Log($"[ObserverConnectionUI] Joining relay with code: {connectionAddress}");
                 bool success = await RelayConnectionManager.Instance.JoinWithRelay(connectionAddress);
                 
                 if (!success)
                 {
                     Debug.LogError("[ObserverConnectionUI] Failed to join relay");
-                    UpdateStatusText("Failed to join relay. Check join code.");
+                    UpdateStatusText("Failed to join relay. Check code.");
                     connectButton.interactable = true;
                     return;
                 }
                 
-                Debug.Log("[ObserverConnectionUI] Successfully joined relay, transport configured");
-                
-                // CRITICAL: Wait longer for relay connection to be ready
-                UpdateStatusText("Relay joined, waiting for host...");
-                await System.Threading.Tasks.Task.Delay(1000);
+                Debug.Log("[ObserverConnectionUI] Relay joined, transport configured");
+                await System.Threading.Tasks.Task.Delay(500);
             }
             else
             {
                 if (!ParseConnectionAddress(connectionAddress, out string ipAddress, out int port))
                 {
-                    UpdateStatusText("Invalid format. Use IP:Port (e.g., 192.168.1.100:7777)");
+                    UpdateStatusText("Invalid format. Use IP:Port");
                     connectButton.interactable = true;
                     return;
                 }
@@ -178,62 +175,26 @@ namespace Bezi11.ExperimenterObserver
                 if (transport != null)
                 {
                     transport.SetConnectionData(ipAddress, (ushort)port);
-                    Debug.Log($"[ObserverConnectionUI] Transport configured for {ipAddress}:{port}");
                 }
             }
 
-            // CRITICAL: Disable scene management for observer client
-            // Observer STAYS in ExperimenterClientScene and does NOT load host's scenes
+            // Disable scene management
             var config = NetworkManager.Singleton.NetworkConfig;
             config.EnableSceneManagement = false;
             
-            Debug.Log("[ObserverConnectionUI] Starting as OBSERVER client (scene sync DISABLED - staying in ExperimenterClientScene)");
-            
-            UpdateStatusText("Connecting to host...");
+            Debug.Log("[ObserverConnectionUI] Starting client...");
             bool started = NetworkManager.Singleton.StartClient();
             
             if (!started)
             {
-                Debug.LogError("[ObserverConnectionUI] Failed to start client");
-                UpdateStatusText("Failed to start network client");
+                Debug.LogError("[ObserverConnectionUI] StartClient FAILED");
+                UpdateStatusText("Failed to start client");
                 connectButton.interactable = true;
             }
             else
             {
-                Debug.Log("[ObserverConnectionUI] Client started successfully, waiting for connection...");
-                
-                // CRITICAL: Wait for actual connection with timeout
-                float waitTime = 0f;
-                float timeout = 15f;
-                
-                while (waitTime < timeout && !NetworkManager.Singleton.IsConnectedClient)
-                {
-                    await System.Threading.Tasks.Task.Delay(200);
-                    waitTime += 0.2f;
-                    
-                    if (waitTime > 5f && waitTime < 5.5f)
-                    {
-                        UpdateStatusText($"Still connecting... ({(int)waitTime}s)");
-                    }
-                }
-                
-                if (NetworkManager.Singleton.IsConnectedClient)
-                {
-                    Debug.Log("[ObserverConnectionUI] ✅ Connection verified!");
-                    UpdateStatusText("Connected!");
-                }
-                else
-                {
-                    Debug.LogError($"[ObserverConnectionUI] ❌ Connection timeout after {waitTime}s");
-                    UpdateStatusText("Connection timeout - host not ready?");
-                    connectButton.interactable = true;
-                    
-                    // Clean up
-                    if (NetworkManager.Singleton != null)
-                    {
-                        NetworkManager.Singleton.Shutdown();
-                    }
-                }
+                Debug.Log("[ObserverConnectionUI] StartClient succeeded, waiting for connection...");
+                UpdateStatusText("Connecting to host...");
             }
         }
 

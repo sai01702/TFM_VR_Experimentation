@@ -1,0 +1,10 @@
+Participant: 2
+Session start: 25/02/2026 15:37:04
+=========================================
+
+SessionStart
+[Network] Relay Join Code: FJJFFP
+[Network] Started hosting session
+[Network] Started hosting - Mode: LAN (Direct), Connection: 10.2.0.2:7777
+[Network] Client 0 disconnected
+[Network] Server stopped

@@ -1,0 +1,13 @@
+Participant: 2
+Session start: 25/02/2026 15:37:21
+=========================================
+
+SessionStart
+[Network] Relay Join Code: Q7NCPW
+[Network] Started hosting session
+[Network] Started hosting - Mode: LAN (Direct), Connection: 10.2.0.2:7777
+[Network] Client 0 disconnected
+[Network] Server stopped
+[Network] Relay Join Code: WCCB8Q
+[Network] Started hosting - Mode: Internet (Relay), Connection: WCCB8Q
+[Network] Started hosting - Mode: Internet (Relay), Connection: WCCB8Q
