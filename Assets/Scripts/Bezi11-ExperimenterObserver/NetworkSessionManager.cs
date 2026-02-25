@@ -27,6 +27,9 @@ namespace Bezi11.ExperimenterObserver
         public string CurrentScene => currentScene.Value.ToString();
         public string GameMode => gameMode.Value.ToString();
 
+        private float nextUpdateTime;
+        private const float UpdateInterval = 2f;
+
         void Awake()
         {
             if (Instance != null && Instance != this)
@@ -37,15 +40,33 @@ namespace Bezi11.ExperimenterObserver
 
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            Debug.Log("[NetworkSessionManager] Awake - Instance set");
         }
 
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
 
+            Debug.Log($"[NetworkSessionManager] OnNetworkSpawn - IsServer: {IsServer}, IsClient: {IsClient}");
+
             if (IsServer)
             {
                 UpdateSessionData();
+                Debug.Log("[NetworkSessionManager] Server: Updated session data immediately");
+            }
+            else if (IsClient)
+            {
+                Debug.Log($"[NetworkSessionManager] Client received NetworkSessionManager - Participant: {ParticipantId}, Scene: {CurrentScene}, Mode: {GameMode}");
+            }
+        }
+
+        void Update()
+        {
+            // Periodic update on server to ensure data stays fresh
+            if (IsServer && Time.time >= nextUpdateTime)
+            {
+                UpdateSessionData();
+                nextUpdateTime = Time.time + UpdateInterval;
             }
         }
 
