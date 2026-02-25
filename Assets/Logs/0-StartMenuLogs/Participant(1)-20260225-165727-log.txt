@@ -1,0 +1,11 @@
+Participant: 1
+Session start: 25/02/2026 16:57:27
+=========================================
+
+SessionStart
+[Network] Relay Join Code: FBPBPF
+[Network] Observer hosting started via connection board
+[Network] Started hosting - Mode: Internet (Relay), Connection: FBPBPF
+[Network] Started hosting - Mode: Internet (Relay), Connection: FBPBPF
+[Network] Client 0 disconnected
+[Network] Server stopped

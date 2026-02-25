@@ -900,7 +900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NetworkConfig:
     ProtocolVersion: 0
-    NetworkTransport: {fileID: 0}
+    NetworkTransport: {fileID: 166770781}
     PlayerPrefab: {fileID: 0}
     Prefabs:
       NetworkPrefabsLists:

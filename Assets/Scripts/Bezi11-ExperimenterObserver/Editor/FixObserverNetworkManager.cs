@@ -33,6 +33,19 @@ namespace Bezi11.ExperimenterObserver.Editor
             
             Debug.Log("[FixObserverNetworkManager] Found NetworkManager, applying fixes...");
             
+            // CRITICAL: Set the transport reference
+            var transport = nm.GetComponent<UnityTransport>();
+            if (transport != null)
+            {
+                nm.NetworkConfig.NetworkTransport = transport;
+                Debug.Log("[FixObserverNetworkManager] ✅ Transport reference set!");
+            }
+            else
+            {
+                Debug.LogError("[FixObserverNetworkManager] ❌ UnityTransport component not found!");
+                return;
+            }
+            
             // CRITICAL FIXES
             nm.NetworkConfig.ClientConnectionBufferTimeout = 60;
             nm.NetworkConfig.LoadSceneTimeOut = 300;
@@ -55,8 +68,7 @@ namespace Bezi11.ExperimenterObserver.Editor
                 Debug.LogError("[FixObserverNetworkManager] Could not find Bezi11NetworkPrefabs.asset!");
             }
             
-            // Fix UnityTransport timeouts
-            var transport = nm.GetComponent<UnityTransport>();
+            // Fix UnityTransport timeouts (reuse transport variable from above)
             if (transport != null)
             {
                 SerializedObject so = new SerializedObject(transport);
