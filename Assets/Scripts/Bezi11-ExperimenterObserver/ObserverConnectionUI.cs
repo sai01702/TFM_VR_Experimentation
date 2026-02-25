@@ -48,6 +48,11 @@ namespace Bezi11.ExperimenterObserver
             {
                 NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
                 NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+                
+                // Add connection timeout monitoring
+                NetworkManager.Singleton.OnTransportFailure += OnTransportFailure;
+                
+                Debug.Log("[ObserverConnectionUI] Registered network callbacks");
             }
         }
 
@@ -67,11 +72,25 @@ namespace Bezi11.ExperimenterObserver
             {
                 NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
                 NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
+                NetworkManager.Singleton.OnTransportFailure -= OnTransportFailure;
             }
 
             if (useRelayToggle != null)
             {
                 useRelayToggle.onValueChanged.RemoveListener(OnRelayToggleChanged);
+            }
+        }
+
+        private void OnTransportFailure()
+        {
+            Debug.LogError("[ObserverConnectionUI] Transport failure detected");
+            UpdateStatusText("Connection failed - Transport error");
+            connectButton.interactable = true;
+            disconnectButton.interactable = false;
+            
+            if (observerPanel != null)
+            {
+                observerPanel.SetActive(false);
             }
         }
 
@@ -129,13 +148,20 @@ namespace Bezi11.ExperimenterObserver
                     return;
                 }
 
+                Debug.Log($"[ObserverConnectionUI] Attempting to join relay with code: {connectionAddress}");
                 bool success = await RelayConnectionManager.Instance.JoinWithRelay(connectionAddress);
+                
                 if (!success)
                 {
+                    Debug.LogError("[ObserverConnectionUI] Failed to join relay");
                     UpdateStatusText("Failed to join relay. Check join code.");
                     connectButton.interactable = true;
                     return;
                 }
+                
+                Debug.Log("[ObserverConnectionUI] Successfully joined relay, transport configured");
+                // Small delay to ensure transport is fully configured
+                await System.Threading.Tasks.Task.Delay(500);
             }
             else
             {
@@ -150,6 +176,7 @@ namespace Bezi11.ExperimenterObserver
                 if (transport != null)
                 {
                     transport.SetConnectionData(ipAddress, (ushort)port);
+                    Debug.Log($"[ObserverConnectionUI] Transport configured for {ipAddress}:{port}");
                 }
             }
 
@@ -159,7 +186,19 @@ namespace Bezi11.ExperimenterObserver
             config.EnableSceneManagement = false;
             
             Debug.Log("[ObserverConnectionUI] Starting as OBSERVER client (scene sync DISABLED - staying in ExperimenterClientScene)");
-            NetworkManager.Singleton.StartClient();
+            
+            bool started = NetworkManager.Singleton.StartClient();
+            
+            if (!started)
+            {
+                Debug.LogError("[ObserverConnectionUI] Failed to start client");
+                UpdateStatusText("Failed to start network client");
+                connectButton.interactable = true;
+            }
+            else
+            {
+                Debug.Log("[ObserverConnectionUI] Client started successfully, waiting for connection...");
+            }
         }
 
         private void OnDisconnectClicked()
@@ -199,7 +238,18 @@ namespace Bezi11.ExperimenterObserver
         {
             if (clientId == NetworkManager.Singleton.LocalClientId)
             {
-                UpdateStatusText("Connection lost");
+                string reason = NetworkManager.Singleton.DisconnectReason;
+                if (!string.IsNullOrEmpty(reason))
+                {
+                    Debug.LogWarning($"[ObserverConnectionUI] Disconnected from host. Reason: {reason}");
+                    UpdateStatusText($"Disconnected: {reason}");
+                }
+                else
+                {
+                    Debug.LogWarning("[ObserverConnectionUI] Disconnected from host (no reason provided)");
+                    UpdateStatusText("Connection lost");
+                }
+                
                 connectButton.interactable = true;
                 disconnectButton.interactable = false;
 
@@ -207,8 +257,6 @@ namespace Bezi11.ExperimenterObserver
                 {
                     observerPanel.SetActive(false);
                 }
-
-                Debug.Log("[ObserverConnectionUI] Disconnected from host");
             }
         }
 

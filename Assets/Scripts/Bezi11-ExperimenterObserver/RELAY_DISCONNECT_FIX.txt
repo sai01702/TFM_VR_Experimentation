@@ -1,0 +1,367 @@
+================================================================================
+RELAY DISCONNECT FIX - Observer Joins Then Immediately Disconnects
+================================================================================
+
+✅ ISSUE IDENTIFIED: Observer successfully joins Relay but gets disconnected
+
+================================================================================
+WHAT'S HAPPENING
+================================================================================
+
+Symptoms:
+✓ Relay join succeeds (KFDDFM join code works)
+✓ Observer starts as client
+✓ Scene sync correctly disabled
+✗ Connection established but immediately lost
+✗ Host disconnects the observer
+
+This means:
+- Relay connection is working
+- Observer configuration is correct
+- BUT something causes the host to reject/disconnect the observer
+
+================================================================================
+MOST LIKELY CAUSES
+================================================================================
+
+Cause 1: Host Not Using Relay (MOST COMMON)
+--------------------------------------------
+**Problem:**
+- Observer joins Relay allocation with code KFDDFM
+- BUT Host is using LAN mode (not Relay)
+- They're in completely different networks
+
+**How to Verify:**
+- Check host console for: "[RelayConnectionManager] Started relay hosting with code: KFDDFM"
+- If missing, host is NOT using Relay
+
+**Fix:**
+1. On HOST side (Player PC):
+   - In RoomScene, find ConnectionCodeCanvas
+   - Look for ConnectionModeToggle (if exists)
+   - OR check RelayConnectionManager.IsUsingRelay
+   - Make sure host actually starts WITH Relay
+
+2. On OBSERVER side:
+   - Only use Relay if host is using Relay
+   - If host shows IP:Port (e.g., 192.168.1.100:7777), use LAN mode
+   - If host shows JOIN CODE (e.g., KFDDFM), use Relay mode
+
+Cause 2: Host Started Before Relay Was Ready
+---------------------------------------------
+**Problem:**
+- NetworkBootstrap calls StartHost() too early
+- Relay allocation not fully initialized
+- Host accepts connection but Relay session isn't ready
+
+**Fix:**
+Check NetworkBootstrap.cs - line 66-80:
+- Must await RelayConnectionManager.StartHostWithRelay()
+- Must get join code back
+- Only then call NetworkManager.StartHost()
+
+This is already implemented correctly in latest version.
+
+Cause 3: Different Relay Regions
+---------------------------------
+**Problem:**
+- Host creates Relay in Region A
+- Observer joins Relay in Region B
+- Both succeed but can't actually connect
+
+**Fix:**
+- Both must use same region
+- Check RelayConnectionManager region setting
+- Default is usually fine, but verify both use same
+
+Cause 4: Relay Session Expired
+-------------------------------
+**Problem:**
+- Host created Relay session
+- Waited too long (> 10 minutes)
+- Session expired
+- Observer joins but allocation is dead
+
+**Fix:**
+- Generate fresh join code on host
+- Observer must use recent code (< 5 minutes old)
+
+Cause 5: Network Configuration Mismatch
+----------------------------------------
+**Problem:**
+- Host has different NetworkConfig than observer
+- Tick rates, timeouts, etc. don't match
+- Connection rejected after handshake
+
+**Fix:**
+- Both NetworkManagers should have matching config
+- Check NetworkConfig.TickRate (default: 30)
+- Check Connection timeout settings
+
+================================================================================
+WHAT I FIXED IN CODE
+================================================================================
+
+Update 1: Added Transport Delay After Relay Join
+-------------------------------------------------
+After successful Relay join, added 500ms delay before StartClient()
+This ensures transport is fully configured.
+
+Before:
+```csharp
+bool success = await RelayConnectionManager.Instance.JoinWithRelay(code);
+NetworkManager.Singleton.StartClient(); // Too fast!
+```
+
+After:
+```csharp
+bool success = await RelayConnectionManager.Instance.JoinWithRelay(code);
+await Task.Delay(500); // Wait for transport
+bool started = NetworkManager.Singleton.StartClient();
+```
+
+Update 2: Added Transport Failure Callback
+-------------------------------------------
+Now listens for OnTransportFailure event.
+Shows clearer error messages.
+
+Update 3: Added Disconnect Reason Logging
+------------------------------------------
+Shows WHY disconnect happened:
+```csharp
+string reason = NetworkManager.Singleton.DisconnectReason;
+Debug.LogWarning($"Disconnected. Reason: {reason}");
+```
+
+Update 4: Added StartClient() Success Check
+--------------------------------------------
+Verifies StartClient() actually succeeded:
+```csharp
+bool started = NetworkManager.Singleton.StartClient();
+if (!started) {
+    Debug.LogError("Failed to start client");
+}
+```
+
+================================================================================
+HOW TO TEST & DIAGNOSE
+================================================================================
+
+Test 1: Verify Host Is Using Relay
+-----------------------------------
+1. Run RoomScene (host)
+2. Check console for:
+   "[RelayConnectionManager] Started relay hosting with code: XXXXXX"
+3. If you see IP:Port instead, host is in LAN mode (not Relay)
+
+Test 2: Verify Observer Joins Same Session
+-------------------------------------------
+1. Get join code from host console
+2. On observer, enable Relay toggle
+3. Enter EXACT join code (case-sensitive)
+4. Click Connect
+
+Test 3: Check Console Messages
+-------------------------------
+**OBSERVER Console Should Show:**
+```
+[ObserverConnectionUI] Attempting to join relay with code: KFDDFM
+[RelayConnectionManager] Joining relay with code: KFDDFM
+[RelayConnectionManager] Successfully joined relay allocation
+[ObserverConnectionUI] Successfully joined relay, transport configured
+[ObserverConnectionUI] Starting as OBSERVER client (scene sync DISABLED)
+[ObserverConnectionUI] Client started successfully, waiting for connection...
+[NetworkManager] Client connected! ✓
+```
+
+**HOST Console Should Show:**
+```
+[NetworkBootstrap] Starting hosting in RoomScene
+[RelayConnectionManager] Started relay hosting with code: KFDDFM
+[NetworkManager] Started hosting
+[NetworkManager] Client connected: ClientId=1 ✓
+[ObserverConnectionCounter] Observer connected. Total observers: 1
+```
+
+**If Observer Gets Disconnected:**
+Check for disconnect reason in observer console:
+```
+[ObserverConnectionUI] Disconnected from host. Reason: <REASON>
+```
+
+Common reasons:
+- "Timeout" = Network issue, couldn't reach host
+- "Shutdown" = Host intentionally closed
+- Empty = Unknown, check host console
+
+Test 4: Verify Both Using Same Mode
+------------------------------------
+**LAN Mode:**
+- Host shows: IP:Port (e.g., 192.168.1.100:7777)
+- Observer unchecks Relay toggle
+- Observer enters: IP:Port
+
+**Relay Mode:**
+- Host shows: JOIN CODE (e.g., KFDDFM)
+- Observer checks Relay toggle
+- Observer enters: JOIN CODE
+
+**DON'T MIX MODES!**
+If host uses Relay, observer MUST use Relay.
+If host uses LAN, observer MUST use LAN.
+
+================================================================================
+STEP-BY-STEP FIX INSTRUCTIONS
+================================================================================
+
+Step 1: Verify Host Configuration
+----------------------------------
+On Host (Player PC):
+
+1. Open RoomScene
+2. Find ConnectionCodeCanvas
+3. Look for toggle or mode selector
+4. Verify which mode host is using
+
+If using RELAY:
+- Should see join code like "KFDDFM"
+- Console should show relay hosting message
+
+If using LAN:
+- Should see IP:Port like "192.168.1.100:7777"
+- Console should NOT show relay messages
+
+Step 2: Match Observer Configuration
+-------------------------------------
+On Observer (Experimenter PC):
+
+1. Open ExperimenterClientScene
+2. Find Relay toggle (if exists)
+3. Match host's mode:
+   - Host using Relay → Check toggle, enter join code
+   - Host using LAN → Uncheck toggle, enter IP:Port
+
+Step 3: Test Connection
+------------------------
+1. HOST: Enter Play Mode first, wait for connection info
+2. OBSERVER: Enter Play Mode, enter connection info
+3. OBSERVER: Click Connect
+4. Wait 5-10 seconds
+5. Check both consoles for connection messages
+
+Step 4: If Still Fails
+-----------------------
+1. Check BOTH consoles for error messages
+2. Note the disconnect reason shown
+3. Try generating fresh join code on host
+4. Try restarting both instances
+5. Verify Unity Services authenticated on both PCs
+
+================================================================================
+CONFIGURATION CHECKLIST
+================================================================================
+
+Host Side (RoomScene):
+- [ ] RelayConnectionManager exists
+- [ ] ConnectionCodeGenerator configured
+- [ ] Relay mode enabled (if using Relay)
+- [ ] Join code displayed (if using Relay)
+- [ ] Console shows relay hosting message
+
+Observer Side (ExperimenterClientScene):
+- [ ] NetworkManager exists
+- [ ] ObserverConnectionUI configured
+- [ ] Relay toggle matches host mode
+- [ ] Connection input has correct value
+- [ ] Unity Services signed in
+
+Both Sides:
+- [ ] Unity Services authenticated
+- [ ] Same Unity project/version
+- [ ] Same Netcode package version
+- [ ] Firewall allows Unity traffic
+
+================================================================================
+EXPECTED CONSOLE OUTPUT (SUCCESS)
+================================================================================
+
+HOST (using Relay):
+```
+[UnityAuth] Signed in anonymously
+[RelayConnectionManager] Started relay hosting with code: KFDDFM
+[NetworkBootstrap] Started hosting in RoomScene
+[NetworkManager] Client connected: ClientId=1
+[ObserverConnectionCounter] Observer connected. Total observers: 1
+[PlayerCameraStreamer] Observer client connected: 1 - Starting stream
+```
+
+OBSERVER (using Relay):
+```
+[UnityAuth] Signed in anonymously
+[ObserverConnectionUI] Attempting to join relay with code: KFDDFM
+[RelayConnectionManager] Successfully joined relay allocation
+[ObserverConnectionUI] Successfully joined relay, transport configured
+[ObserverConnectionUI] Starting as OBSERVER client (scene sync DISABLED)
+[NetworkManager] Client connected!
+[ObserverConnectionUI] Connected!
+[ObserverCameraDisplay] Registered for camera frame messages
+[ObserverCameraDisplay] Started receiving camera stream
+```
+
+If you see these messages → SUCCESS! ✅
+
+================================================================================
+QUICK TROUBLESHOOTING
+================================================================================
+
+Problem: "Failed to join relay"
+Solution: Check join code is correct, Unity Services signed in
+
+Problem: Joins but immediately disconnects
+Solution: Verify host is ALSO using Relay (not LAN)
+
+Problem: "Transport failure"
+Solution: Network issue, check firewall, try again
+
+Problem: "Timeout"
+Solution: Host not responding, verify host is running
+
+Problem: "Connection lost"
+Solution: Host shut down or crashed, restart host
+
+================================================================================
+RELAY vs LAN DECISION GUIDE
+================================================================================
+
+Use LAN Mode When:
+✓ Both PCs on same WiFi/Ethernet
+✓ Can ping each other
+✓ Testing in same room/building
+✓ Don't need internet connectivity
+
+Use Relay Mode When:
+✓ Different networks (internet connection)
+✓ Can't configure router/firewall
+✓ Remote observation needed
+✓ NAT traversal required
+
+**Don't use Relay for local testing - LAN is simpler and faster!**
+
+================================================================================
+SUMMARY
+================================================================================
+
+The disconnect happens because:
+1. Observer joins Relay successfully
+2. But host might not be using Relay
+3. Or there's a config mismatch
+
+The fix:
+1. Verify BOTH use same mode (Relay or LAN)
+2. Use fresh join code
+3. Wait for transport to configure (500ms delay added)
+4. Check console messages for actual reason
+
+Try the updated code and match the modes - it should work!
+
+================================================================================
