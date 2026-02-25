@@ -109,6 +109,9 @@ namespace Bezi11.ExperimenterObserver
             {
                 Debug.Log("[ConnectionBoardActivator] ✅ Hosting started!");
                 
+                // Register disconnect callback to see why observers disconnect
+                NetworkManager.Singleton.OnClientDisconnectCallback += OnObserverDisconnected;
+                
                 // Wait a moment for initialization
                 await System.Threading.Tasks.Task.Delay(500);
                 
@@ -155,6 +158,16 @@ namespace Bezi11.ExperimenterObserver
                 {
                     statusText.text = "Failed to start hosting";
                 }
+            }
+        }
+        
+        private void OnObserverDisconnected(ulong clientId)
+        {
+            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer && clientId != NetworkManager.ServerClientId)
+            {
+                Debug.LogError($"[ConnectionBoardActivator] ❌ Observer disconnected! ClientId: {clientId}");
+                Debug.LogError($"[ConnectionBoardActivator] Server is still running: {NetworkManager.Singleton.IsServer}");
+                Debug.LogError($"[ConnectionBoardActivator] Remaining clients: {NetworkManager.Singleton.ConnectedClientsList.Count}");
             }
         }
 

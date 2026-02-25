@@ -75,17 +75,29 @@ namespace Bezi11.ExperimenterObserver
             // CRITICAL: Check for ALREADY CONNECTED clients (observer might have joined before rig spawned!)
             Debug.Log($"[PlayerCameraStreamer] Checking for existing connections... Total clients: {NetworkManager.Singleton.ConnectedClientsList.Count}");
             
+            // Check if there are any connected clients besides the server itself
+            // Note: In some configurations, the observer might have LocalClientId == ServerClientId
+            // So we also check if ConnectedClientsList has more than 1 client (server + observer)
+            int observerCount = 0;
+            
             foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
             {
-                Debug.Log($"[PlayerCameraStreamer] Found existing client: {client.ClientId} (ServerClientId: {NetworkManager.ServerClientId})");
+                Debug.Log($"[PlayerCameraStreamer] Found client: {client.ClientId} (ServerClientId: {NetworkManager.ServerClientId})");
                 
                 // If this is not the server itself, it's an observer
                 if (client.ClientId != NetworkManager.ServerClientId)
                 {
                     Debug.Log($"[PlayerCameraStreamer] ✅ FOUND EXISTING OBSERVER: {client.ClientId} - Starting stream NOW!");
                     isStreaming = true;
-                    break;
+                    observerCount++;
                 }
+            }
+            
+            // FALLBACK: If we have more than 1 connected client total, someone must be observing
+            if (observerCount == 0 && NetworkManager.Singleton.ConnectedClientsList.Count > 1)
+            {
+                Debug.Log($"[PlayerCameraStreamer] ✅ Multiple clients detected ({NetworkManager.Singleton.ConnectedClientsList.Count}), starting stream!");
+                isStreaming = true;
             }
             
             if (!isStreaming)
@@ -165,10 +177,11 @@ namespace Bezi11.ExperimenterObserver
             if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsServer) return;
             if (playerCamera == null) return;
 
-            // CRITICAL: Check if we should be streaming (in case we missed the connection event)
+            // CRITICAL: Check if we should be streaming
+            // Check both: explicit observer detection AND client count > 1 (fallback)
             if (!isStreaming && NetworkManager.Singleton.ConnectedClientsList.Count > 1)
             {
-                Debug.Log("[PlayerCameraStreamer] ⚠️ Detected observer but not streaming - starting now!");
+                Debug.Log($"[PlayerCameraStreamer] ⚠️ Detected {NetworkManager.Singleton.ConnectedClientsList.Count} clients but not streaming - starting now!");
                 isStreaming = true;
             }
 
