@@ -116,7 +116,7 @@ namespace Bezi11.ExperimenterObserver
         {
             if (networkSessionManagerPrefab == null)
             {
-                Debug.LogError("[NetworkBootstrap] NetworkSessionManager prefab not assigned!");
+                Debug.LogError("[NetworkBootstrap] ❌ NetworkSessionManager prefab not assigned!");
                 return;
             }
 
@@ -126,18 +126,43 @@ namespace Bezi11.ExperimenterObserver
                 return;
             }
 
+            if (!NetworkManager.Singleton.IsServer)
+            {
+                Debug.LogError("[NetworkBootstrap] ❌ Cannot spawn NetworkSessionManager - not server!");
+                return;
+            }
+
+            Debug.Log("[NetworkBootstrap] Spawning NetworkSessionManager...");
+
             // Instantiate and spawn the NetworkSessionManager
             spawnedSessionManager = Instantiate(networkSessionManagerPrefab);
             
             NetworkObject networkObject = spawnedSessionManager.GetComponent<NetworkObject>();
             if (networkObject != null)
             {
-                networkObject.Spawn();
-                Debug.Log("[NetworkBootstrap] NetworkSessionManager spawned successfully");
+                try
+                {
+                    networkObject.Spawn();
+                    Debug.Log($"[NetworkBootstrap] ✅ NetworkSessionManager spawned! NetworkObjectId: {networkObject.NetworkObjectId}");
+                    
+                    // Update session data immediately
+                    var sessionMgr = spawnedSessionManager.GetComponent<NetworkSessionManager>();
+                    if (sessionMgr != null)
+                    {
+                        sessionMgr.UpdateSessionData();
+                        Debug.Log("[NetworkBootstrap] NetworkSessionManager.UpdateSessionData() called");
+                    }
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError($"[NetworkBootstrap] ❌ Failed to spawn NetworkSessionManager: {e.Message}");
+                    Destroy(spawnedSessionManager);
+                    spawnedSessionManager = null;
+                }
             }
             else
             {
-                Debug.LogError("[NetworkBootstrap] NetworkSessionManager prefab missing NetworkObject component!");
+                Debug.LogError("[NetworkBootstrap] ❌ NetworkSessionManager prefab missing NetworkObject component!");
                 Destroy(spawnedSessionManager);
                 spawnedSessionManager = null;
             }
