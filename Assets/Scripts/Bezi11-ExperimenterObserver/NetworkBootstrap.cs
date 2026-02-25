@@ -9,11 +9,13 @@ namespace Bezi11.ExperimenterObserver
         [Header("Configuration")]
         [SerializeField] private GameObject networkManagerPrefab;
         [SerializeField] private GameObject relayManagerPrefab;
+        [SerializeField] private GameObject networkSessionManagerPrefab;
         [SerializeField] private string roomSceneName = "RoomScene";
 
         private static bool networkManagerCreated;
         private static bool relayManagerCreated;
         private static NetworkBootstrap instance;
+        private GameObject spawnedSessionManager;
 
         void Awake()
         {
@@ -69,12 +71,14 @@ namespace Bezi11.ExperimenterObserver
 
             if (RelayConnectionManager.Instance != null && RelayConnectionManager.Instance.IsUsingRelay)
             {
+                Debug.Log("[NetworkBootstrap] Starting relay hosting...");
                 string joinCode = await RelayConnectionManager.Instance.StartHostWithRelay();
                 if (string.IsNullOrEmpty(joinCode))
                 {
                     Debug.LogError("[NetworkBootstrap] Failed to start relay hosting");
                     return;
                 }
+                Debug.Log($"[NetworkBootstrap] Relay hosting started with code: {joinCode}");
             }
 
             bool started = NetworkManager.Singleton.StartHost();
@@ -83,6 +87,9 @@ namespace Bezi11.ExperimenterObserver
             {
                 Debug.Log("[NetworkBootstrap] Started hosting in RoomScene");
 
+                // CRITICAL: Spawn NetworkSessionManager after hosting starts
+                SpawnNetworkSessionManager();
+
                 if (ParticipantSession.Instance != null)
                 {
                     ParticipantSession.Instance.AppendLog("[Network] Started hosting session");
@@ -90,7 +97,38 @@ namespace Bezi11.ExperimenterObserver
             }
             else
             {
-                Debug.LogWarning("[NetworkBootstrap] Failed to start hosting");
+                Debug.LogError("[NetworkBootstrap] Failed to start hosting");
+            }
+        }
+
+        private void SpawnNetworkSessionManager()
+        {
+            if (networkSessionManagerPrefab == null)
+            {
+                Debug.LogError("[NetworkBootstrap] NetworkSessionManager prefab not assigned!");
+                return;
+            }
+
+            if (spawnedSessionManager != null)
+            {
+                Debug.LogWarning("[NetworkBootstrap] NetworkSessionManager already spawned");
+                return;
+            }
+
+            // Instantiate and spawn the NetworkSessionManager
+            spawnedSessionManager = Instantiate(networkSessionManagerPrefab);
+            
+            NetworkObject networkObject = spawnedSessionManager.GetComponent<NetworkObject>();
+            if (networkObject != null)
+            {
+                networkObject.Spawn();
+                Debug.Log("[NetworkBootstrap] NetworkSessionManager spawned successfully");
+            }
+            else
+            {
+                Debug.LogError("[NetworkBootstrap] NetworkSessionManager prefab missing NetworkObject component!");
+                Destroy(spawnedSessionManager);
+                spawnedSessionManager = null;
             }
         }
     }

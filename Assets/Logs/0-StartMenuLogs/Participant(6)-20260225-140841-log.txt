@@ -1,0 +1,8 @@
+Participant: 6
+Session start: 25/02/2026 14:08:41
+=========================================
+
+SessionStart
+[Network] Relay Join Code: GWHTHR
+[Network] Started hosting - Mode: LAN (Direct), Connection: 10.244.68.11:7777
+[Network] Started hosting session

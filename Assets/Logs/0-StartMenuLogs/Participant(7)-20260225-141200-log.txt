@@ -1,0 +1,10 @@
+Participant: 7
+Session start: 25/02/2026 14:12:00
+=========================================
+
+SessionStart
+[Network] Relay Join Code: LQKLCH
+[Network] Started hosting - Mode: LAN (Direct), Connection: 10.244.68.11:7777
+[Network] Started hosting session
+[Network] Relay Join Code: CTHQ7W
+[Network] Started hosting - Mode: Internet (Relay), Connection: CTHQ7W
