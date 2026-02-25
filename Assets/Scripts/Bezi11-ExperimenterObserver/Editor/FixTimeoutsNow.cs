@@ -7,8 +7,8 @@ namespace Bezi11.ExperimenterObserver.Editor
 {
     public static class FixTimeoutsNow
     {
-        [MenuItem("Tools/Bezi11/FIX TIMEOUTS NOW")]
-        public static void FixAllTimeouts()
+        [MenuItem("Tools/Bezi11/FIX DISCONNECT ISSUE NOW")]
+        public static void FixDisconnectIssue()
         {
             string prefabPath = "Assets/Prefabs/Bezi11-ExperimenterObserver/NetworkManager.prefab";
             GameObject prefabAsset = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
@@ -27,23 +27,31 @@ namespace Bezi11.ExperimenterObserver.Editor
 
             if (nm != null)
             {
+                // CRITICAL SETTINGS
                 nm.NetworkConfig.ClientConnectionBufferTimeout = 60;
                 nm.NetworkConfig.LoadSceneTimeOut = 300;
                 nm.NetworkConfig.SpawnTimeout = 30;
                 nm.NetworkConfig.ForceSamePrefabs = false;
                 nm.NetworkConfig.ConnectionApproval = false;
-                Debug.Log("✅ NetworkManager timeouts increased!");
+                nm.NetworkConfig.EnableSceneManagement = true;
+                nm.NetworkConfig.EnableNetworkLogs = true;
+                
+                Debug.Log("✅ NetworkManager config fixed!");
+                Debug.Log($"  - ClientConnectionBufferTimeout: {nm.NetworkConfig.ClientConnectionBufferTimeout}");
+                Debug.Log($"  - SpawnTimeout: {nm.NetworkConfig.SpawnTimeout}");
+                Debug.Log($"  - ForceSamePrefabs: {nm.NetworkConfig.ForceSamePrefabs}");
+                Debug.Log($"  - ConnectionApproval: {nm.NetworkConfig.ConnectionApproval}");
             }
 
             if (transport != null)
             {
                 SerializedObject so = new SerializedObject(transport);
-                so.FindProperty("m_ConnectTimeoutMS").intValue = 10000;
-                so.FindProperty("m_MaxConnectAttempts").intValue = 200;
-                so.FindProperty("m_DisconnectTimeoutMS").intValue = 60000;
-                so.FindProperty("m_HeartbeatTimeoutMS").intValue = 2000;
+                so.FindProperty("m_ConnectTimeoutMS").intValue = 30000;
+                so.FindProperty("m_MaxConnectAttempts").intValue = 300;
+                so.FindProperty("m_DisconnectTimeoutMS").intValue = 90000;
+                so.FindProperty("m_HeartbeatTimeoutMS").intValue = 3000;
                 so.ApplyModifiedProperties();
-                Debug.Log("✅ UnityTransport timeouts increased!");
+                Debug.Log("✅ Transport timeouts increased!");
             }
 
             PrefabUtility.SaveAsPrefabAsset(prefabContents, assetPath);
@@ -54,11 +62,8 @@ namespace Bezi11.ExperimenterObserver.Editor
             AssetDatabase.Refresh();
 
             Debug.Log("========================================");
-            Debug.Log("✅✅✅ TIMEOUTS FIXED!");
-            Debug.Log("Connection timeout: 10 seconds");
-            Debug.Log("Max attempts: 200");
-            Debug.Log("Disconnect timeout: 60 seconds");
-            Debug.Log("NOW TEST AGAIN!");
+            Debug.Log("✅✅✅ DISCONNECT ISSUE FIX APPLIED!");
+            Debug.Log("Now ensure BOTH Host and Observer use this NetworkManager prefab!");
             Debug.Log("========================================");
         }
     }

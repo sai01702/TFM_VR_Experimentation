@@ -307,15 +307,18 @@ namespace Bezi11.ExperimenterObserver
             if (clientId == NetworkManager.Singleton.LocalClientId)
             {
                 string reason = NetworkManager.Singleton.DisconnectReason;
+                
+                Debug.LogError($"[ObserverConnectionUI] ❌❌❌ DISCONNECTED! ClientId: {clientId}");
+                Debug.LogError($"[ObserverConnectionUI] Reason: {(string.IsNullOrEmpty(reason) ? "NO REASON PROVIDED" : reason)}");
+                Debug.LogError($"[ObserverConnectionUI] Check HOST console for rejection reason!");
+                
                 if (!string.IsNullOrEmpty(reason))
                 {
-                    Debug.LogWarning($"[ObserverConnectionUI] Disconnected from host. Reason: {reason}");
                     UpdateStatusText($"Disconnected: {reason}");
                 }
                 else
                 {
-                    Debug.LogWarning("[ObserverConnectionUI] Disconnected from host (no reason provided)");
-                    UpdateStatusText("Connection lost");
+                    UpdateStatusText("Disconnected - Check host logs");
                 }
                 
                 connectButton.interactable = true;
