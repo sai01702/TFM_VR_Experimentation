@@ -1,0 +1,8 @@
+Reaction time Log Inmersive
+Created: 17/02/2026 20:17:36
+=====================================
+
+Spawned object 1: ObjetivoRea2
+Reaction time: 1,289 seconds
+
+Spawned object 2: ObjetivoRea5

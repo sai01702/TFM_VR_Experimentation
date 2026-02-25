@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using TMPro;
+using VRLogger;
 
 public class FuncionamientoPistola : MonoBehaviour
 {
@@ -30,9 +31,14 @@ public class FuncionamientoPistola : MonoBehaviour
             disparado = false;
         }
     }
+
     public void Shoot()
     {
         Debug.Log("Shoot");
+        
+        // VR Logger Integration
+        LoggerService.LogEvent("interaction_event", "shot_fired");
+
         var bullet = PoolManager.Instance.GetBullet();
         bullet.transform.position = bulletSpawnPoint.position;
         bullet.transform.rotation = bulletSpawnPoint.rotation;

@@ -1,0 +1,21 @@
+Participant: 4
+Session start: 19/02/2026 11:47:19
+=========================================
+
+SessionStart
+SessionStart
+SessionStart
+
+=== Shooter Game - Reaction Time Log ===
+Mode: VR
+Started: 19/02/2026 11:47:45
+
+Spawned object 1: ObjetivoRea5
+Manual despawn
+Spawned object 2: ObjetivoRea4
+
+=== Shooter Game Ended ===
+End time: 19/02/2026 11:47:52
+Final Score: 0
+Total Spawns: 2
+

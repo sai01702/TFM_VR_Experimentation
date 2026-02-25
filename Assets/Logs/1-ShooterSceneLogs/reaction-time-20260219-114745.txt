@@ -1,0 +1,8 @@
+Reaction time Log Inmersive
+Created: 19/02/2026 11:47:45
+=====================================
+
+Spawned object 1: ObjetivoRea5
+Manual despawn
+
+Spawned object 2: ObjetivoRea4

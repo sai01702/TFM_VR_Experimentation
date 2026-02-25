@@ -1,0 +1,49 @@
+Participant: 5
+Session start: 20/02/2026 11:37:22
+=========================================
+
+SessionStart
+
+=== Shooter Game - Reaction Time Log ===
+Mode: VR
+Started: 20/02/2026 11:38:00
+
+Spawned object 1: ObjetivoRea3
+Reaction time: 1,810 seconds
+Spawned object 2: ObjetivoRea1
+Reaction time: 1,624 seconds
+Spawned object 3: ObjetivoRea5
+Reaction time: 1,395 seconds
+Spawned object 4: ObjetivoRea3
+Reaction time: 3,866 seconds
+Spawned object 5: ObjetivoRea5
+Reaction time: 1,697 seconds
+Spawned object 6: ObjetivoRea1
+Reaction time: 1,947 seconds
+Spawned object 7: ObjetivoRea5
+Reaction time: 1,958 seconds
+Spawned object 8: ObjetivoRea2
+Reaction time: 0,869 seconds
+Spawned object 9: ObjetivoRea
+Manual despawn
+Spawned object 10: ObjetivoRea5
+Reaction time: 2,670 seconds
+Spawned object 11: ObjetivoRea
+Reaction time: 1,081 seconds
+Spawned object 12: ObjetivoRea1
+Reaction time: 2,612 seconds
+Spawned object 13: ObjetivoRea
+Reaction time: 1,965 seconds
+Spawned object 14: ObjetivoRea3
+Reaction time: 1,665 seconds
+Spawned object 15: ObjetivoRea1
+Reaction time: 1,775 seconds
+
+=== Shooter Game Ended ===
+End time: 20/02/2026 11:39:01
+Final Score: 14
+Total Spawns: 15
+
+[GameOver] From scene 'ShooterScene' - Score = 14
+Session finished.
+

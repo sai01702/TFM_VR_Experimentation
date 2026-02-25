@@ -1024,3 +1024,8 @@ Player: Player
   - Success rate: 100.0%
 =====================================
 
+[13:16:45] GAME START - Attempt #1
+[13:18:02] APPLICATION LOST FOCUS
+[13:22:20] GAME START - Attempt #1
+[13:22:35] APPLICATION GAINED FOCUS
+[13:22:35] APPLICATION LOST FOCUS

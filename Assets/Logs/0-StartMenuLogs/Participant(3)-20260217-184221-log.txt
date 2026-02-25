@@ -1,0 +1,5 @@
+Participant: 3
+Session start: 17/02/2026 18:42:21
+=========================================
+
+SessionStart

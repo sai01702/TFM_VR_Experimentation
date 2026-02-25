@@ -1,0 +1,154 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e082280d358159479dc5e830e607636, type: 3}
+  m_Name: NewExperimentProfile
+  m_EditorClassIdentifier: 
+  SessionName: Dia_1
+  GroupName: Grupo_A
+  IndependentVariable: 
+  TurnDurationSeconds: 60
+  ParticipantCount: 4
+  ParticipantOrder:
+  - U001
+  - U002
+  - U003
+  - U004
+  ManualParticipantName: 
+  ExperimentId: shooting_basic
+  FormulaProfile: default
+  Description: Basic shooting experiment
+  UseGazeTracker: 1
+  UseEyeTracker: 0
+  UseMovementTracker: 1
+  UseHandTracker: 0
+  UseFootTracker: 0
+  UseRaycastLogger: 1
+  UseCollisionLogger: 1
+  EnableGMControls: 1
+  FlowMode: 0
+  EndCondition: 0
+  Metrics:
+    HitRatio:
+      Enabled: 1
+      Weight: 0.35
+      Min: 0
+      Max: 1
+      Invert: 0
+    SuccessRate:
+      Enabled: 1
+      Weight: 0.3
+      Min: 0
+      Max: 1
+      Invert: 0
+    LearningCurveMean:
+      Enabled: 1
+      Weight: 0.15
+      Min: 0
+      Max: 1
+      Invert: 0
+    Progression:
+      Enabled: 1
+      Weight: 0.1
+      Min: 0
+      Max: 10
+      Invert: 0
+    SuccessAfterRestart:
+      Enabled: 1
+      Weight: 0.1
+      Min: 0
+      Max: 1
+      Invert: 0
+    AvgReactionTimeMs:
+      Enabled: 1
+      Weight: 0.4
+      Min: 100
+      Max: 2000
+      Invert: 1
+    AvgTaskDurationMs:
+      Enabled: 1
+      Weight: 0.3
+      Min: 1000
+      Max: 30000
+      Invert: 1
+    TimePerSuccessS:
+      Enabled: 1
+      Weight: 0.2
+      Min: 0
+      Max: 60
+      Invert: 1
+    NavigationErrors:
+      Enabled: 1
+      Weight: 0.1
+      Min: 0
+      Max: 10
+      Invert: 1
+    LearningStability:
+      Enabled: 1
+      Weight: 0.3
+      Min: 0
+      Max: 1
+      Invert: 0
+    ErrorReductionRate:
+      Enabled: 1
+      Weight: 0.25
+      Min: 0
+      Max: 1
+      Invert: 0
+    VoluntaryPlayTimeS:
+      Enabled: 1
+      Weight: 0.25
+      Min: 0
+      Max: 60
+      Invert: 0
+    AidUsage:
+      Enabled: 1
+      Weight: 0.1
+      Min: 0
+      Max: 5
+      Invert: 1
+    InterfaceErrors:
+      Enabled: 1
+      Weight: 0.1
+      Min: 0
+      Max: 5
+      Invert: 1
+    ActivityLevelPerMin:
+      Enabled: 1
+      Weight: 0.25
+      Min: 0
+      Max: 100
+      Invert: 0
+    FirstSuccessTimeS:
+      Enabled: 1
+      Weight: 0.25
+      Min: 0
+      Max: 30
+      Invert: 1
+    InactivityTimeS:
+      Enabled: 1
+      Weight: 0.2
+      Min: 0
+      Max: 60
+      Invert: 1
+    SoundLocalizationTimeS:
+      Enabled: 1
+      Weight: 0.15
+      Min: 0
+      Max: 10
+      Invert: 1
+    AudioPerformanceGain:
+      Enabled: 1
+      Weight: 0.15
+      Min: -1
+      Max: 1
+      Invert: 0
+  CustomEventRoles: []

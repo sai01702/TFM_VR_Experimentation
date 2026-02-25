@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VRLogger;
 
 public class ObjetivosManager : MonoBehaviour
 {
@@ -48,6 +49,10 @@ public class ObjetivosManager : MonoBehaviour
 
         InitLogFile();   // <- prepare local log file
         InitSessionLog(); // <- also log to ParticipantSession
+        
+        // VR Logger Integration
+        LoggerService.LogEvent("session_start", "level_start");
+
         Spawn();
         tiempo = Time.time + tiempoRespawn;
     }
@@ -104,6 +109,9 @@ public class ObjetivosManager : MonoBehaviour
             nlogs++;
         }
 
+        // VR Logger Integration
+        LoggerService.LogEvent("task_start", "spawn_object");
+
         smthSpawned = true;
         desdeF = false;
         Debug.Log("Objeto activado: " + obj.name);
@@ -120,9 +128,25 @@ public class ObjetivosManager : MonoBehaviour
 
         if (fuera)
         {
-            SafeAppendLog($"Reaction time: {momentodeDespawn - momentodeSpawn:F3} seconds");
+            float reactionTime = momentodeDespawn - momentodeSpawn;
+            SafeAppendLog($"Reaction time: {reactionTime:F3} seconds");
             SafeAppendLog("");   // blank line
             desdeF = true;
+
+            // VR Logger Integration - SUCCESS
+            // We log 'task_end' with name 'task_end' (mapped to role task_end) and value 'success' (required by parser)
+            LoggerService.LogEvent("task_end", "task_end", "success");
+
+            // We log reaction time here. 'reaction_time' maps to 'performance_measure' which feeds AvgReactionTimeMs
+            // We pass the raw time (seconds) - Metrics calculation might need Ms? ExperimentProfile says Ms. 
+            // Let's send Ms to be safe or standard Seconds if the system converts it. 
+            // Looking at Metrics: AvgReactionTimeMs. Usually unity time is seconds. Let's send seconds and context ms?
+            // Actually, let's look at how other metrics are used. Usually floats. 
+            // I will log as "reaction_time" with value in seconds. If metric expects Ms, I might need to multiply.
+            // Wait, AvgReactionTimeMs Min 100 Max 2000. That looks like Milliseconds.
+            LoggerService.LogEvent("performance_measure", "reaction_time", reactionTime * 1000f); 
+            
+            // Also Context for potential score?
         }
         else
         {
@@ -130,6 +154,11 @@ public class ObjetivosManager : MonoBehaviour
             {
                 SafeAppendLog("Manual despawn");
                 SafeAppendLog("");
+
+                // VR Logger Integration - TIMEOUT / FAILURE
+                // 'task_timeout' maps to 'task_abandoned' or 'action_fail'. 
+                // Plan said: task_timeout -> task_abandoned
+                LoggerService.LogEvent("task_abandoned", "task_timeout");
             }
         }
 
@@ -247,5 +276,13 @@ public class ObjetivosManager : MonoBehaviour
             ParticipantSession.Instance.AppendLog($"Total Spawns: {nlogs - 1}");
             ParticipantSession.Instance.AppendLog("");
         }
+
+        // VR Logger Integration
+        var context = new Dictionary<string, object>
+        {
+            { "final_score", puntos },
+            { "total_spawns", nlogs - 1 }
+        };
+        LoggerService.LogEvent("session_end", "level_end", 0, context);
     }
 }

@@ -1,0 +1,11 @@
+Participant: 4
+Session start: 18/02/2026 19:37:23
+=========================================
+
+SessionStart
+
+=== Shooter Game - Reaction Time Log ===
+Mode: VR
+Started: 18/02/2026 19:38:12
+
+Spawned object 1: ObjetivoRea1
