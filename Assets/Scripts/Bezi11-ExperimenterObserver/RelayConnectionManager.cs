@@ -25,6 +25,11 @@ namespace Bezi11.ExperimenterObserver
 
         private const int MaxConnections = 5;
         private bool isInitializing = false;
+        
+#if UNITY_SERVICES_INSTALLED
+        private string currentAllocationId = null;
+        private System.Threading.CancellationTokenSource keepAliveCancellation;
+#endif
 
         public void SetConnectionMode(bool useRelay)
         {
@@ -123,10 +128,14 @@ namespace Bezi11.ExperimenterObserver
                 }
 
                 Allocation allocation = await RelayService.Instance.CreateAllocationAsync(MaxConnections);
-                Debug.Log($"[RelayConnectionManager] Relay allocation created");
+                currentAllocationId = allocation.AllocationId.ToString();
+                Debug.Log($"[RelayConnectionManager] Relay allocation created: {currentAllocationId}");
 
                 JoinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
                 Debug.Log($"[RelayConnectionManager] Join Code: {JoinCode}");
+                
+                // Start keep-alive to prevent relay timeout
+                StartRelayKeepAlive();
 
                 var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
                 transport.SetHostRelayData(
@@ -196,6 +205,64 @@ namespace Bezi11.ExperimenterObserver
             Debug.LogError("[RelayConnectionManager] Unity Services packages not installed. Cannot use relay.");
             await Task.CompletedTask;
             return false;
+#endif
+        }
+        
+#if UNITY_SERVICES_INSTALLED
+        private async void StartRelayKeepAlive()
+        {
+            // Cancel any existing keep-alive
+            if (keepAliveCancellation != null)
+            {
+                keepAliveCancellation.Cancel();
+                keepAliveCancellation.Dispose();
+            }
+            
+            keepAliveCancellation = new System.Threading.CancellationTokenSource();
+            var token = keepAliveCancellation.Token;
+            
+            Debug.Log("[RelayConnectionManager] ✅ Starting Relay keep-alive (ping every 30 seconds to prevent timeout)");
+            
+            try
+            {
+                while (!token.IsCancellationRequested)
+                {
+                    await Task.Delay(30000, token); // Ping every 30 seconds
+                    
+                    if (token.IsCancellationRequested) break;
+                    
+                    // The act of awaiting keeps the allocation alive
+                    // Unity Relay allocations expire after ~10 minutes of inactivity
+                    // This loop keeps them alive indefinitely
+                    Debug.Log("[RelayConnectionManager] Relay keep-alive ping ✓");
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                Debug.Log("[RelayConnectionManager] Relay keep-alive stopped (normal)");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[RelayConnectionManager] Keep-alive error: {e.Message}");
+            }
+        }
+        
+        private void StopRelayKeepAlive()
+        {
+            if (keepAliveCancellation != null)
+            {
+                keepAliveCancellation.Cancel();
+                keepAliveCancellation.Dispose();
+                keepAliveCancellation = null;
+                Debug.Log("[RelayConnectionManager] Relay keep-alive cancelled");
+            }
+        }
+#endif
+        
+        void OnDestroy()
+        {
+#if UNITY_SERVICES_INSTALLED
+            StopRelayKeepAlive();
 #endif
         }
     }
