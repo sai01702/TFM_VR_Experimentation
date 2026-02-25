@@ -4,7 +4,11 @@ using System.Collections;
 
 namespace Bezi11.ExperimenterObserver
 {
-    public class PlayerCameraStreamer : NetworkBehaviour
+    /// <summary>
+    /// Captures the player's camera view and streams it to connected observer clients.
+    /// Uses NetworkManager's CustomMessagingManager instead of RPCs to avoid NetworkObject requirements.
+    /// </summary>
+    public class PlayerCameraStreamer : MonoBehaviour
     {
         [Header("Streaming Settings")]
         [SerializeField] private int targetFrameRate = 30;
@@ -20,6 +24,7 @@ namespace Bezi11.ExperimenterObserver
         private Texture2D captureTexture;
         private float nextCaptureTime;
         private bool isStreaming;
+        private const string CAMERA_FRAME_MESSAGE = "CameraFrame";
 
         void Start()
         {
@@ -37,43 +42,42 @@ namespace Bezi11.ExperimenterObserver
             }
 
             Debug.Log($"[PlayerCameraStreamer] Initialized with camera: {playerCamera.name}");
+            
+            // Wait for NetworkManager to be ready
+            StartCoroutine(WaitForNetworkManagerAndStart());
         }
 
-        public override void OnNetworkSpawn()
+        private IEnumerator WaitForNetworkManagerAndStart()
         {
-            base.OnNetworkSpawn();
-
-            if (IsServer)
+            // Wait until NetworkManager exists and is server/host
+            while (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsServer)
             {
-                InitializeStreaming();
-                NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-                NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
-            }
-        }
-
-        public override void OnNetworkDespawn()
-        {
-            base.OnNetworkDespawn();
-
-            if (IsServer)
-            {
-                NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
-                NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
+                yield return new WaitForSeconds(0.5f);
             }
 
-            CleanupStreaming();
+            Debug.Log("[PlayerCameraStreamer] NetworkManager ready as server, initializing streaming");
+            InitializeStreaming();
+            
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
         }
 
         void OnDestroy()
         {
             CleanupStreaming();
+            
+            if (NetworkManager.Singleton != null)
+            {
+                NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
+                NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
+            }
         }
 
         private void OnClientConnected(ulong clientId)
         {
             if (clientId == NetworkManager.ServerClientId) return;
 
-            Debug.Log($"[PlayerCameraStreamer] Observer client connected: {clientId}");
+            Debug.Log($"[PlayerCameraStreamer] Observer client connected: {clientId} - Starting stream");
             isStreaming = true;
         }
 
@@ -83,9 +87,11 @@ namespace Bezi11.ExperimenterObserver
 
             Debug.Log($"[PlayerCameraStreamer] Observer client disconnected: {clientId}");
 
+            // Stop streaming if no more observers
             if (NetworkManager.Singleton.ConnectedClientsList.Count <= 1)
             {
                 isStreaming = false;
+                Debug.Log("[PlayerCameraStreamer] No more observers - Stopping stream");
             }
         }
 
@@ -103,7 +109,7 @@ namespace Bezi11.ExperimenterObserver
             }
 
             isStreaming = !onlyStreamWhenObserverConnected;
-            Debug.Log("[PlayerCameraStreamer] Streaming initialized");
+            Debug.Log($"[PlayerCameraStreamer] Streaming initialized. Initial streaming state: {isStreaming}");
         }
 
         private void CleanupStreaming()
@@ -124,7 +130,8 @@ namespace Bezi11.ExperimenterObserver
 
         void Update()
         {
-            if (!IsServer || !isStreaming || playerCamera == null) return;
+            if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsServer) return;
+            if (!isStreaming || playerCamera == null) return;
 
             if (Time.time >= nextCaptureTime)
             {
@@ -150,18 +157,31 @@ namespace Bezi11.ExperimenterObserver
 
             byte[] imageData = captureTexture.EncodeToJPG(jpegQuality);
 
-            SendFrameToObserversClientRpc(imageData);
+            // Send to all connected clients (observers) using custom message
+            SendFrameToObservers(imageData);
         }
 
-        [ClientRpc]
-        private void SendFrameToObserversClientRpc(byte[] imageData)
+        private void SendFrameToObservers(byte[] imageData)
         {
-            if (IsServer) return;
+            if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsServer) return;
 
-            ObserverCameraDisplay display = FindObjectOfType<ObserverCameraDisplay>();
-            if (display != null)
+            using (var writer = new FastBufferWriter(imageData.Length + 128, Unity.Collections.Allocator.Temp))
             {
-                display.ReceiveFrame(imageData);
+                writer.WriteValueSafe(imageData.Length);
+                writer.WriteBytesSafe(imageData);
+
+                // Send to all connected clients except server
+                foreach (var clientId in NetworkManager.Singleton.ConnectedClientsIds)
+                {
+                    if (clientId != NetworkManager.ServerClientId)
+                    {
+                        NetworkManager.Singleton.CustomMessagingManager.SendNamedMessage(
+                            CAMERA_FRAME_MESSAGE,
+                            clientId,
+                            writer
+                        );
+                    }
+                }
             }
         }
     }
