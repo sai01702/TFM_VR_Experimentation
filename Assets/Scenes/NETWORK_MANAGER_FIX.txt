@@ -1,0 +1,284 @@
+================================================================================
+EXPERIMENTER CLIENT SCENE - NETWORK MANAGER FIX
+================================================================================
+
+✅ FIXED: "NetworkManager not found" error
+
+================================================================================
+WHAT WAS THE PROBLEM?
+================================================================================
+
+The ExperimenterClientScene was missing a NetworkManager GameObject!
+
+The observer scripts (ObserverConnectionUI, ObserverSessionUI, ObserverCameraDisplay)
+rely on NetworkManager.Singleton to connect to the host, but the scene didn't
+have a NetworkManager at all.
+
+================================================================================
+WHAT WAS ADDED
+================================================================================
+
+Created NetworkManager GameObject in ExperimenterClientScene with:
+
+NetworkManager GameObject
+├── NetworkManager (Component)
+│   ├── RunInBackground: true
+│   └── LogLevel: Normal
+└── UnityTransport (Component)
+    ├── Protocol Type: UnityTransport (LAN)
+    ├── Default Address: 127.0.0.1:7777
+    ├── Max Connect Attempts: 60
+    └── Connection Timeout: 1000ms
+
+================================================================================
+SCENE STRUCTURE (COMPLETE)
+================================================================================
+
+ExperimenterClientScene
+├── NetworkManager ✅ NEW!
+│   ├── NetworkManager component
+│   └── UnityTransport component
+│
+├── Canvas
+│   ├── ConnectionPanel
+│   │   ├── ConnectionInputField
+│   │   ├── ConnectButton
+│   │   ├── DisconnectButton
+│   │   └── StatusText
+│   ├── SessionPanel
+│   │   └── (Participant, Scene, Mode info)
+│   └── ObserverPanel
+│       └── StreamDisplay
+│
+└── ObserverManager
+    ├── ObserverConnectionUI
+    ├── ObserverSessionUI
+    └── ObserverCameraDisplay
+
+================================================================================
+HOW CONNECTION NOW WORKS
+================================================================================
+
+1. ExperimenterClientScene loads
+2. NetworkManager.Singleton is now available ✅
+3. ObserverConnectionUI.Start() finds NetworkManager ✅
+4. User enters IP:Port in input field
+5. User clicks "Connect"
+6. ObserverConnectionUI calls:
+   - UnityTransport.SetConnectionData(ip, port)
+   - NetworkManager.StartClient()
+7. Connection succeeds ✅
+8. Observer receives camera stream and session data ✅
+
+================================================================================
+TESTING STEPS (TWO PCS)
+================================================================================
+
+PC 1 (Player/Host):
+------------------
+1. Open Unity project
+2. Load RoomScene
+3. Enter Play Mode
+4. Look at top-right corner
+5. Note the IP:Port (e.g., "192.168.1.100:7777")
+6. Keep this running!
+
+PC 2 (Experimenter/Observer):
+------------------------------
+1. Open Unity project (same project, different PC)
+2. Load ExperimenterClientScene
+3. Enter Play Mode
+4. You should see:
+   - Bottom panel with input field
+   - "Enter connection address" status
+   - NO "NetworkManager not found" error ✅
+5. In input field, type the IP:Port from PC1
+   Example: "192.168.1.100:7777"
+6. Click "Connect" button
+7. Status changes to "Connecting..."
+8. After 1-2 seconds, status shows "Connected!"
+9. SessionPanel appears at top with participant info
+10. ObserverPanel appears in center with camera stream
+11. SUCCESS! 🎉
+
+================================================================================
+TESTING STEPS (SAME PC)
+================================================================================
+
+Instance 1 (Player/Host):
+-------------------------
+1. Open Unity
+2. Load RoomScene
+3. Enter Play Mode
+4. Note IP shows "127.0.0.1:7777" or your local IP
+
+Instance 2 (Experimenter/Observer):
+-----------------------------------
+1. Open another Unity instance (or build the game)
+2. Load ExperimenterClientScene
+3. Enter Play Mode
+4. Input field should default to "127.0.0.1:7777"
+5. Click "Connect"
+6. Should connect immediately!
+
+================================================================================
+NETWORK CONFIGURATION
+================================================================================
+
+The NetworkManager is configured for LAN connection by default:
+
+UnityTransport Settings:
+- Protocol: UnityTransport (not Relay)
+- Address: 127.0.0.1 (localhost)
+- Port: 7777
+- Server Listen Address: (empty - auto)
+- Max Connect Attempts: 60
+- Connect Timeout: 1000ms
+- Disconnect Timeout: 30000ms
+- Heartbeat: 500ms
+
+This means:
+✓ Works on same PC (localhost)
+✓ Works on LAN (local network)
+✓ Works with direct IP connection
+✗ Doesn't work over internet without port forwarding
+✓ Can switch to Unity Relay if needed
+
+================================================================================
+SWITCHING TO RELAY (IF NEEDED)
+================================================================================
+
+If you want to use Unity Relay for internet connection:
+
+1. In ObserverConnectionUI script, there's a useRelayToggle field
+2. You can add a Toggle UI element for this
+3. When toggled ON:
+   - Connection uses Unity Relay instead of direct IP
+   - User enters Join Code instead of IP:Port
+   - Works over internet without port forwarding
+
+For now, LAN mode is enabled (simpler setup).
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+Issue: Still getting "NetworkManager not found"
+Solution:
+- Open ExperimenterClientScene in Unity
+- Check Hierarchy for "NetworkManager" GameObject
+- If missing, manually create it:
+  1. GameObject > Create Empty
+  2. Name it "NetworkManager"
+  3. Add Component > NetworkManager
+  4. Add Component > Unity Transport
+
+Issue: "Connect" button does nothing
+Solution:
+- Check Console for error messages
+- Verify NetworkManager has UnityTransport component
+- Check ObserverConnectionUI has all references assigned
+
+Issue: "Connecting..." but never connects
+Solution:
+- Verify host is actually running and hosting
+- Check firewall settings (allow Unity on port 7777)
+- Try "127.0.0.1:7777" for same-PC test
+- Check both PCs are on same network (for LAN)
+
+Issue: Connected but no video stream
+Solution:
+- Verify PlayerCameraStreamer is on player rig in host scene
+- Check player has a Camera component
+- Look for errors in host Console
+
+Issue: Connected but session info shows "N/A"
+Solution:
+- Verify NetworkSessionManager is spawned on host
+- Check host has set participant ID
+- Verify ObserverSessionUI references are correct
+
+================================================================================
+CONSOLE MESSAGES YOU SHOULD SEE
+================================================================================
+
+On Connection Success (Observer PC):
+
+[ObserverConnectionUI] Connecting to: 192.168.1.100:7777
+[NetworkManager] Starting client...
+[UnityTransport] Connecting to server at 192.168.1.100:7777
+[NetworkManager] Client connected!
+[ObserverConnectionUI] Connected successfully!
+
+On Host PC:
+
+[NetworkManager] Client connected: ClientId=1
+[PlayerCameraStreamer] Streaming to client 1
+[NetworkSessionManager] Session data synced
+
+If you see these, everything is working! ✅
+
+================================================================================
+WHAT TO DO IF IT STILL DOESN'T WORK
+================================================================================
+
+1. Check BOTH scenes have NetworkManager:
+   - RoomScene: Should have NetworkManager (host)
+   - ExperimenterClientScene: Should have NetworkManager (client) ✅
+
+2. Verify NetworkManager is at scene root (not nested)
+
+3. Check Inspector on NetworkManager GameObject:
+   - NetworkManager component should be present
+   - UnityTransport component should be present
+   - Both should show up in Inspector without errors
+
+4. Try building the observer as standalone:
+   - File > Build Settings
+   - Add ExperimenterClientScene
+   - Build and Run
+   - Test connection from built version to Unity Editor
+
+5. Check network:
+   - Firewall: Allow Unity.exe or built game
+   - Same network: Both PCs on same WiFi/Ethernet
+   - Port 7777: Should be open (UDP and TCP)
+
+================================================================================
+VERIFICATION CHECKLIST
+================================================================================
+
+Before Testing:
+☐ ExperimenterClientScene has NetworkManager GameObject
+☐ NetworkManager has NetworkManager component
+☐ NetworkManager has UnityTransport component
+☐ ObserverManager exists in scene
+☐ ObserverManager has ObserverConnectionUI component
+☐ All UI references in ObserverConnectionUI are assigned
+☐ Canvas/ConnectionPanel exists and is active
+☐ Canvas/ObserverPanel exists (can be inactive)
+
+During Testing:
+☐ Host scene shows IP:Port in top-right
+☐ Observer scene loads without "NetworkManager not found" error
+☐ Input field is editable
+☐ Connect button is clickable
+☐ Status text updates when connecting
+☐ No errors in Console when clicking Connect
+☐ Connection succeeds within 5 seconds
+☐ SessionPanel and ObserverPanel appear
+☐ Camera stream starts playing
+☐ Participant info displays correctly
+
+If all checked: SUCCESS! ✅
+
+================================================================================
+READY TO TEST!
+================================================================================
+
+The NetworkManager has been added to ExperimenterClientScene.
+The "NetworkManager not found" error should be completely fixed.
+
+Try connecting now and it should work! 🎮🔗
+
+================================================================================

@@ -1,0 +1,8 @@
+Participant: 1
+Session start: 25/02/2026 12:35:01
+=========================================
+
+SessionStart
+[Network] Relay Join Code: HN7PF7
+[Network] Started hosting - Mode: LAN (Direct), Connection: 138.100.14.92:7777
+[Network] Started hosting session
