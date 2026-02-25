@@ -181,11 +181,19 @@ namespace Bezi11.ExperimenterObserver
                 }
             }
 
-            // Disable scene management - observer stays in ExperimenterClientScene
+            // CRITICAL: Disable scene management - observer stays in ExperimenterClientScene
             var config = NetworkManager.Singleton.NetworkConfig;
             config.EnableSceneManagement = false;
             
-            Debug.Log("[ObserverConnectionUI] Starting client NOW...");
+            // CRITICAL: Ensure we're starting as CLIENT not HOST
+            if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
+            {
+                Debug.LogError("[ObserverConnectionUI] ❌ NetworkManager is already server/host! Shutting down first...");
+                NetworkManager.Singleton.Shutdown();
+                await System.Threading.Tasks.Task.Delay(500);
+            }
+            
+            Debug.Log("[ObserverConnectionUI] Starting as CLIENT (not host)...");
             bool started = NetworkManager.Singleton.StartClient();
             
             if (!started)

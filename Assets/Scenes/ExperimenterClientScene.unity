@@ -847,21 +847,21 @@ MonoBehaviour:
     PlayerPrefab: {fileID: 0}
     Prefabs:
       NetworkPrefabsLists:
-      - {fileID: 11400000, guid: a601896cd9777f1488f3df6001bfa750, type: 2}
+      - {fileID: 11400000, guid: ce680a9d89562694ca620c201c17007d, type: 2}
     TickRate: 30
-    ClientConnectionBufferTimeout: 10
+    ClientConnectionBufferTimeout: 60
     ConnectionApproval: 0
     ConnectionData: 
     EnableTimeResync: 0
     TimeResyncInterval: 30
     EnsureNetworkVariableLengthSafety: 0
     EnableSceneManagement: 1
-    ForceSamePrefabs: 1
+    ForceSamePrefabs: 0
     RecycleNetworkIds: 1
     NetworkIdRecycleDelay: 120
     RpcHashSize: 0
-    LoadSceneTimeOut: 120
-    SpawnTimeout: 10
+    LoadSceneTimeOut: 300
+    SpawnTimeout: 30
     EnableNetworkLogs: 1
     OldPrefabList: []
   RunInBackground: 1
@@ -881,10 +881,10 @@ MonoBehaviour:
   m_ProtocolType: 0
   m_MaxPacketQueueSize: 128
   m_MaxPayloadSize: 6144
-  m_HeartbeatTimeoutMS: 500
-  m_ConnectTimeoutMS: 1000
-  m_MaxConnectAttempts: 60
-  m_DisconnectTimeoutMS: 30000
+  m_HeartbeatTimeoutMS: 3000
+  m_ConnectTimeoutMS: 30000
+  m_MaxConnectAttempts: 300
+  m_DisconnectTimeoutMS: 90000
   ConnectionData:
     Address: 127.0.0.1
     Port: 7777
