@@ -1,0 +1,18 @@
+Participant: 3
+Session start: 25/02/2026 12:57:39
+=========================================
+
+SessionStart
+[Network] Relay Join Code: LW7M9K
+[Network] Started hosting - Mode: LAN (Direct), Connection: 10.2.0.2:7777
+[Network] Started hosting session
+[Network] Relay Join Code: K99WQK
+[Network] Started hosting - Mode: Internet (Relay), Connection: K99WQK
+
+=== Shooter Game - Reaction Time Log ===
+Mode: Desktop
+Started: 25/02/2026 12:58:55
+
+Spawned object 1: ObjetivoRea1
+Reaction time: 1,944 seconds
+Spawned object 2: ObjetivoRea5

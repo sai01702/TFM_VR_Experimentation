@@ -1,0 +1,8 @@
+Participant: 1
+Session start: 25/02/2026 12:46:31
+=========================================
+
+SessionStart
+[Network] Relay Join Code: DRTHDK
+[Network] Started hosting - Mode: LAN (Direct), Connection: 138.100.14.92:7777
+[Network] Started hosting session

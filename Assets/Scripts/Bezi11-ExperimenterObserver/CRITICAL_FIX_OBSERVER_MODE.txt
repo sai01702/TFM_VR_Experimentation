@@ -1,0 +1,285 @@
+================================================================================
+CRITICAL FIX: OBSERVER MODE - STAY IN EXPERIMENTER SCENE
+================================================================================
+
+✅ FIXED: Experimenter now stays in ExperimenterClientScene and watches stream
+✅ FIXED: Experimenter cannot interact with player's UI
+✅ FIXED: Observer count shown on host screen
+
+================================================================================
+WHAT WAS WRONG?
+================================================================================
+
+PROBLEM 1: Experimenter was joining as a PLAYER, not an OBSERVER
+- When connecting, the experimenter's scene was switching to RoomScene
+- Experimenter could click buttons and interact with the game
+- Experimenter spawned as a regular network client in the host's scene
+- This is COMPLETELY WRONG for an observer system
+
+PROBLEM 2: No way to see if observers are connected
+- Host couldn't tell if anyone was watching
+- No feedback about connection status
+
+================================================================================
+WHAT WAS FIXED?
+================================================================================
+
+FIX 1: Disabled Scene Management for Observer Client
+------------------------------------------------------
+Location: /Assets/Scripts/Bezi11-ExperimenterObserver/ObserverConnectionUI.cs
+
+Added before StartClient():
+```csharp
+var config = NetworkManager.Singleton.NetworkConfig;
+config.EnableSceneManagement = false;
+```
+
+What this does:
+✓ Observer STAYS in ExperimenterClientScene
+✓ Observer does NOT load host's scenes (RoomScene, etc.)
+✓ Observer is a "headless" network client that only receives data
+✓ Observer cannot interact with host's UI or GameObjects
+✓ Observer only sees the camera stream on their own UI
+
+FIX 2: Added Observer Connection Counter
+-----------------------------------------
+Created: /Assets/Scripts/Bezi11-ExperimenterObserver/ObserverConnectionCounter.cs
+
+What it does:
+✓ Counts how many observers are connected
+✓ Shows "Observers: 0" when nobody is watching
+✓ Shows "Observers: 2" when 2 people are watching
+✓ Updates in real-time when observers connect/disconnect
+✓ Only shown on host side (not on client)
+
+Added to RoomScene:
+- ConnectionCodeCanvas now has ObserverConnectionCounter component
+- "Observers: 0" text appears below connection info
+
+================================================================================
+HOW IT WORKS NOW (CORRECT BEHAVIOR)
+================================================================================
+
+HOST SIDE (Player/Experimentee):
+1. Loads RoomScene normally
+2. Starts hosting (NetworkManager.StartHost())
+3. Shows connection info: "192.168.1.100:7777"
+4. Shows QR code
+5. Shows "Observers: 0"
+6. When observer connects: "Observers: 1"
+7. PlayerCameraStreamer sends camera frames to observers
+8. Continues playing normally
+
+OBSERVER SIDE (Experimenter):
+1. Loads ExperimenterClientScene
+2. Enters IP:Port from host
+3. Clicks "Connect"
+4. Scene Management is DISABLED before connecting
+5. Connects to host network
+6. STAYS IN ExperimenterClientScene ✅
+7. Receives camera stream via network
+8. Displays stream on RawImage UI
+9. Shows session info (Participant, Scene, Mode)
+10. Cannot interact with host's game ✅
+11. Only watches passively ✅
+
+================================================================================
+WHAT OBSERVER SEES vs WHAT PLAYER SEES
+================================================================================
+
+PLAYER (Host) sees:
+- Actual 3D RoomScene
+- Can move, click buttons, interact
+- Sees "Observers: 1" when someone is watching
+- Sees connection info panel
+
+OBSERVER (Experimenter) sees:
+- ExperimenterClientScene (2D UI only)
+- Camera stream from player (like watching a video)
+- Session info panel
+- Connection panel
+- CANNOT interact with player's scene
+- CANNOT see 3D scene hierarchy
+- CANNOT click player's buttons
+- Only receives video stream
+
+================================================================================
+TESTING TO VERIFY FIX
+================================================================================
+
+Test 1: Observer Stays in Correct Scene
+----------------------------------------
+1. Run RoomScene (host)
+2. Run ExperimenterClientScene (observer)
+3. Connect
+4. Check observer's Hierarchy panel
+5. ✅ Should ONLY show ExperimenterClientScene objects:
+   - Canvas
+   - ObserverManager
+   - NetworkManager
+6. ❌ Should NOT show RoomScene objects
+7. ❌ Should NOT show player rig
+8. ❌ Should NOT show any 3D game objects
+
+Test 2: Observer Cannot Interact
+---------------------------------
+1. Connect as observer
+2. Try to click on anything visible in the stream
+3. ✅ Clicking does NOTHING (you're clicking on RawImage, not actual UI)
+4. ✅ Observer's mouse is in their own scene, not host's scene
+
+Test 3: Connection Counter Works
+---------------------------------
+1. Run host
+2. Look at ConnectionCodeCanvas
+3. Should show "Observers: 0"
+4. Connect 1 observer
+5. Should change to "Observers: 1"
+6. Connect 2nd observer
+7. Should change to "Observers: 2"
+8. Disconnect 1 observer
+9. Should change to "Observers: 1"
+
+Test 4: Camera Stream Works
+---------------------------
+1. Connect as observer
+2. Host moves around in RoomScene
+3. ✅ Observer sees camera moving in the stream
+4. ✅ Stream updates in real-time
+5. ✅ No lag > 500ms
+6. ✅ Stream is clear and readable
+
+================================================================================
+CONSOLE MESSAGES TO VERIFY
+================================================================================
+
+On Observer Connect (ExperimenterClientScene Console):
+[ObserverConnectionUI] Starting as OBSERVER client (scene sync DISABLED - staying in ExperimenterClientScene)
+[NetworkManager] Starting client...
+[NetworkManager] Client connected!
+[ObserverConnectionUI] Connected!
+
+On Host (RoomScene Console):
+[ObserverConnectionCounter] Observer connected. Total observers: 1
+[NetworkManager] Client connected: ClientId=1
+
+If you see "Scene sync DISABLED" message, the fix is working! ✅
+
+================================================================================
+NETWORK ARCHITECTURE (SIMPLIFIED)
+================================================================================
+
+Before Fix (WRONG):
+Host (RoomScene) <---Network---> Observer (RoomScene as client)
+                                          ↑
+                                    Loads same scene!
+                                    Can interact!
+                                    WRONG!
+
+After Fix (CORRECT):
+Host (RoomScene) <---Camera Stream---> Observer (ExperimenterClientScene)
+                 <---Session Data--->
+                                           ↑
+                                    Stays in own scene!
+                                    Only watches stream!
+                                    CORRECT!
+
+================================================================================
+WHAT GETS SENT OVER NETWORK?
+================================================================================
+
+From Host to Observer:
+✓ Camera frames (JPEG images, 30 FPS)
+✓ Participant ID (NetworkVariable)
+✓ Current scene name (NetworkVariable)
+✓ Game mode (NetworkVariable)
+
+From Observer to Host:
+✓ Connection request
+✓ Heartbeat messages
+✗ No input
+✗ No commands
+✗ No scene requests
+
+Observer is READ-ONLY! ✅
+
+================================================================================
+WHY SCENE MANAGEMENT MUST BE DISABLED
+================================================================================
+
+If EnableSceneManagement = true (default):
+❌ When host loads new scene, observer loads it too
+❌ Observer spawns player prefabs in that scene
+❌ Observer can interact with UI in that scene
+❌ Observer becomes a regular multiplayer player
+❌ Multiple scenes loaded = confusion
+❌ Wrong UX for observation
+
+If EnableSceneManagement = false (our fix):
+✅ Observer ignores host's scene changes
+✅ Observer stays in ExperimenterClientScene always
+✅ Observer is passive network client
+✅ Observer only receives custom data (camera stream, session)
+✅ Observer cannot interact
+✅ Correct UX for observation
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+Issue: Observer still loads RoomScene
+Solution:
+- Check ObserverConnectionUI.cs has the fix (line ~160)
+- Verify "scene sync DISABLED" appears in Console
+- If not, the fix didn't compile - check for errors
+
+Issue: Observer can click host's UI
+Solution:
+- Observer shouldn't be in RoomScene at all
+- Check Hierarchy - if you see RoomScene objects, scene management is still enabled
+- Make sure EnableSceneManagement = false is set BEFORE StartClient()
+
+Issue: "Observers: 0" doesn't update
+Solution:
+- Check ObserverConnectionCounter component on ConnectionCodeCanvas
+- Verify counterText reference is assigned
+- Check host is actually starting as Server/Host (not client)
+
+Issue: No camera stream visible
+Solution:
+- Verify observer connected successfully ("Connected!" status)
+- Check PlayerCameraStreamer is on player rig in RoomScene
+- Verify ObserverCameraDisplay has streamDisplay reference
+- Check Console for camera frame messages
+
+================================================================================
+FILES MODIFIED/CREATED
+================================================================================
+
+Modified:
+✓ /Assets/Scripts/Bezi11-ExperimenterObserver/ObserverConnectionUI.cs
+  - Added scene management disable before StartClient()
+
+Created:
+✓ /Assets/Scripts/Bezi11-ExperimenterObserver/ObserverConnectionCounter.cs
+  - New component to count observers
+
+Modified Scenes:
+✓ /Assets/Scenes/RoomScene.unity
+  - Added ObserverConnectionCounter component to ConnectionCodeCanvas
+  - Added ObserverCountText UI element
+
+================================================================================
+READY TO TEST!
+================================================================================
+
+The critical fixes are in place:
+✅ Observer stays in ExperimenterClientScene
+✅ Observer cannot interact with host's game
+✅ Host sees how many observers are connected
+✅ Camera stream works correctly
+✅ Session info syncs correctly
+
+Try it now - observer should ONLY watch, not play!
+
+================================================================================

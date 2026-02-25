@@ -1,0 +1,10 @@
+Participant: 1
+Session start: 25/02/2026 13:08:54
+=========================================
+
+SessionStart
+[Network] Relay Join Code: PLNWFB
+[Network] Started hosting - Mode: LAN (Direct), Connection: 10.2.0.2:7777
+[Network] Started hosting session
+[Network] Relay Join Code: LHHGTR
+[Network] Started hosting - Mode: Internet (Relay), Connection: LHHGTR

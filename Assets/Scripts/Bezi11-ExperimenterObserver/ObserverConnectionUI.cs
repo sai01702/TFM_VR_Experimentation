@@ -153,6 +153,12 @@ namespace Bezi11.ExperimenterObserver
                 }
             }
 
+            // CRITICAL: Disable scene management for observer client
+            // Observer STAYS in ExperimenterClientScene and does NOT load host's scenes
+            var config = NetworkManager.Singleton.NetworkConfig;
+            config.EnableSceneManagement = false;
+            
+            Debug.Log("[ObserverConnectionUI] Starting as OBSERVER client (scene sync DISABLED - staying in ExperimenterClientScene)");
             NetworkManager.Singleton.StartClient();
         }
 

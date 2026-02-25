@@ -1,0 +1,10 @@
+Participant: 3
+Session start: 25/02/2026 12:59:40
+=========================================
+
+SessionStart
+[Network] Relay Join Code: CGRGWT
+[Network] Started hosting - Mode: LAN (Direct), Connection: 10.2.0.2:7777
+[Network] Started hosting session
+[Network] Relay Join Code: QMQWDB
+[Network] Started hosting - Mode: Internet (Relay), Connection: QMQWDB
