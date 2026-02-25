@@ -121,7 +121,9 @@ namespace Bezi11.ExperimenterObserver
         {
             if (clientId == NetworkManager.ServerClientId) return;
 
-            Debug.Log($"[PlayerCameraStreamer] Observer client connected: {clientId} - Starting stream");
+            Debug.Log($"[PlayerCameraStreamer] ✅✅✅ Observer client connected: {clientId} - Starting stream!");
+            Debug.Log($"[PlayerCameraStreamer] Total connected clients: {NetworkManager.Singleton.ConnectedClientsIds.Count}");
+            Debug.Log($"[PlayerCameraStreamer] Server ClientId: {NetworkManager.ServerClientId}");
             isStreaming = true;
         }
 
@@ -238,6 +240,8 @@ namespace Bezi11.ExperimenterObserver
                 writer.WriteValueSafe(imageData.Length);
                 writer.WriteBytesSafe(imageData);
 
+                int sentCount = 0;
+                
                 // Send to all connected clients except server
                 foreach (var clientId in NetworkManager.Singleton.ConnectedClientsIds)
                 {
@@ -248,6 +252,18 @@ namespace Bezi11.ExperimenterObserver
                             clientId,
                             writer
                         );
+                        sentCount++;
+                    }
+                }
+                
+                if (sentCount == 0)
+                {
+                    Debug.LogWarning($"[PlayerCameraStreamer] ⚠️ No observers to send to! Total clients: {NetworkManager.Singleton.ConnectedClientsIds.Count}, ServerClientId: {NetworkManager.ServerClientId}");
+                    
+                    // Log all client IDs for debugging
+                    foreach (var clientId in NetworkManager.Singleton.ConnectedClientsIds)
+                    {
+                        Debug.LogWarning($"[PlayerCameraStreamer] Connected ClientId: {clientId}");
                     }
                 }
             }

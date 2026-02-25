@@ -42,12 +42,25 @@ namespace Bezi11.ExperimenterObserver
         private IEnumerator WaitForNetworkManagerAndRegister()
         {
             // Wait until NetworkManager exists and we're connected as client
-            while (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsClient || NetworkManager.Singleton.IsServer)
+            while (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsClient)
             {
                 yield return new WaitForSeconds(0.5f);
             }
+            
+            // CRITICAL: Make sure we're NOT the server (observers should be pure clients)
+            if (NetworkManager.Singleton.IsServer)
+            {
+                Debug.LogError("[ObserverCameraDisplay] ERROR: Observer is running as SERVER! This should never happen!");
+                if (streamStatusText != null)
+                {
+                    streamStatusText.text = "ERROR: Observer running as server!";
+                }
+                yield break;
+            }
 
-            Debug.Log("[ObserverCameraDisplay] NetworkManager ready as client, registering for camera frames");
+            Debug.Log($"[ObserverCameraDisplay] ✅ NetworkManager ready as CLIENT ONLY!");
+            Debug.Log($"[ObserverCameraDisplay] LocalClientId: {NetworkManager.Singleton.LocalClientId}");
+            Debug.Log($"[ObserverCameraDisplay] IsClient: {NetworkManager.Singleton.IsClient}, IsServer: {NetworkManager.Singleton.IsServer}, IsHost: {NetworkManager.Singleton.IsHost}");
             
             if (streamStatusText != null)
             {

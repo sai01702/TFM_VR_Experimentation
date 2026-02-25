@@ -50,14 +50,24 @@ namespace Bezi11
 
         private void OnClientConnected(ulong clientId)
         {
-            if (!NetworkManager.Singleton.IsServer) return;
+            Debug.Log($"[ObserverConnectionCounter] OnClientConnected fired! ClientId: {clientId}, IsServer: {NetworkManager.Singleton.IsServer}, ServerClientId: {NetworkManager.ServerClientId}");
+            
+            if (!NetworkManager.Singleton.IsServer)
+            {
+                Debug.Log("[ObserverConnectionCounter] Not server, ignoring connection");
+                return;
+            }
 
             // Server's own client ID is 0, others are observers
             if (clientId != NetworkManager.ServerClientId)
             {
                 observerCount++;
                 UpdateDisplay();
-                Debug.Log($"[ObserverConnectionCounter] Observer connected. Total observers: {observerCount}");
+                Debug.Log($"[ObserverConnectionCounter] ✅ Observer {clientId} connected! Total observers: {observerCount}");
+            }
+            else
+            {
+                Debug.Log($"[ObserverConnectionCounter] Server itself connected (ClientId: {clientId}), not counting as observer");
             }
         }
 
