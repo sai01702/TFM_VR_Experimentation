@@ -250,8 +250,13 @@ namespace Bezi11.ExperimenterObserver
                 return;
             }
 
-            Debug.Log("[ConnectionCodeGenerator] OnServerStarted called!");
+            Debug.Log("[ConnectionCodeGenerator] OnServerStarted called! Waiting for full initialization...");
+            
+            // CRITICAL: Wait for NetworkBootstrap to finish spawning NetworkSessionManager
+            await System.Threading.Tasks.Task.Delay(2000);
+            
             isHosting = true;
+            Debug.Log("[ConnectionCodeGenerator] Server initialization wait complete, showing connection info");
 
             bool usingRelay = useRelayMode && RelayConnectionManager.Instance != null && RelayConnectionManager.Instance.IsUsingRelay;
             string connectionInfo;

@@ -93,10 +93,10 @@ namespace Bezi11.ExperimenterObserver
             {
                 Debug.Log($"[NetworkBootstrap] ✅ StartHost() succeeded! IsServer: {NetworkManager.Singleton.IsServer}, ConnectedClients: {NetworkManager.Singleton.ConnectedClientsList.Count}");
 
-                // Wait a frame to ensure NetworkManager is fully initialized
-                await System.Threading.Tasks.Task.Delay(100);
+                // CRITICAL: Wait for NetworkManager to fully initialize
+                await System.Threading.Tasks.Task.Delay(500);
 
-                // CRITICAL: Spawn NetworkSessionManager after hosting starts
+                // Spawn NetworkSessionManager after hosting is ready
                 SpawnNetworkSessionManager();
 
                 if (ParticipantSession.Instance != null)
@@ -104,7 +104,10 @@ namespace Bezi11.ExperimenterObserver
                     ParticipantSession.Instance.AppendLog("[Network] Started hosting session");
                 }
                 
-                Debug.Log("[NetworkBootstrap] Hosting setup complete - ready for observer connections");
+                // Wait another moment for everything to settle
+                await System.Threading.Tasks.Task.Delay(500);
+                
+                Debug.Log("[NetworkBootstrap] ✅✅✅ Hosting setup COMPLETE - Server is ready for connections!");
             }
             else
             {
