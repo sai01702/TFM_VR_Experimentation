@@ -1,0 +1,10 @@
+Participant: 0
+Session start: 25/02/2026 14:42:50
+=========================================
+
+SessionStart
+[Network] Relay Join Code: GPQ8LJ
+[Network] Started hosting - Mode: LAN (Direct), Connection: 10.244.68.11:7777
+[Network] Started hosting session
+[Network] Client 0 disconnected
+[Network] Server stopped
