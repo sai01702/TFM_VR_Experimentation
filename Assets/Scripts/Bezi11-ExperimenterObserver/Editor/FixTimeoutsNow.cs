@@ -32,7 +32,7 @@ namespace Bezi11.ExperimenterObserver.Editor
                 nm.NetworkConfig.LoadSceneTimeOut = 300;
                 nm.NetworkConfig.SpawnTimeout = 30;
                 nm.NetworkConfig.ForceSamePrefabs = false;
-                nm.NetworkConfig.ConnectionApproval = false;
+                nm.NetworkConfig.ConnectionApproval = false; // Will be enabled when hosting starts
                 nm.NetworkConfig.EnableSceneManagement = true;
                 nm.NetworkConfig.EnableNetworkLogs = true;
                 
@@ -40,7 +40,7 @@ namespace Bezi11.ExperimenterObserver.Editor
                 Debug.Log($"  - ClientConnectionBufferTimeout: {nm.NetworkConfig.ClientConnectionBufferTimeout}");
                 Debug.Log($"  - SpawnTimeout: {nm.NetworkConfig.SpawnTimeout}");
                 Debug.Log($"  - ForceSamePrefabs: {nm.NetworkConfig.ForceSamePrefabs}");
-                Debug.Log($"  - ConnectionApproval: {nm.NetworkConfig.ConnectionApproval}");
+                Debug.Log($"  - ConnectionApproval: {nm.NetworkConfig.ConnectionApproval} (will be enabled at runtime)");
             }
 
             if (transport != null)

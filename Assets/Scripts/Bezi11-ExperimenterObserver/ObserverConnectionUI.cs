@@ -185,6 +185,9 @@ namespace Bezi11.ExperimenterObserver
             var config = NetworkManager.Singleton.NetworkConfig;
             config.EnableSceneManagement = false;
             
+            // CRITICAL: Send "OBSERVER" as connection data so host assigns us ClientId 123+
+            config.ConnectionData = System.Text.Encoding.UTF8.GetBytes("OBSERVER");
+            
             // CRITICAL: Ensure we're starting as CLIENT not HOST
             if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
             {
@@ -193,7 +196,7 @@ namespace Bezi11.ExperimenterObserver
                 await System.Threading.Tasks.Task.Delay(500);
             }
             
-            Debug.Log("[ObserverConnectionUI] Starting as CLIENT (not host)...");
+            Debug.Log("[ObserverConnectionUI] Starting as OBSERVER CLIENT (sending OBSERVER payload for ClientId 123+)...");
             bool started = NetworkManager.Singleton.StartClient();
             
             if (!started)

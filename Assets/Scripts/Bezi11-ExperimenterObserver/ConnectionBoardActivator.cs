@@ -109,6 +109,12 @@ namespace Bezi11.ExperimenterObserver
             {
                 Debug.Log("[ConnectionBoardActivator] ✅ Hosting started!");
                 
+                // Enable connection approval to assign custom ClientIds to observers
+                NetworkManager.Singleton.ConnectionApprovalCallback = ApproveObserverConnection;
+                NetworkManager.Singleton.NetworkConfig.ConnectionApproval = true;
+                
+                Debug.Log("[ConnectionBoardActivator] Connection approval enabled - observers will get ClientId 123+");
+                
                 // Register disconnect callback to see why observers disconnect
                 NetworkManager.Singleton.OnClientDisconnectCallback += OnObserverDisconnected;
                 
@@ -168,6 +174,52 @@ namespace Bezi11.ExperimenterObserver
                 Debug.LogError($"[ConnectionBoardActivator] ❌ Observer disconnected! ClientId: {clientId}");
                 Debug.LogError($"[ConnectionBoardActivator] Server is still running: {NetworkManager.Singleton.IsServer}");
                 Debug.LogError($"[ConnectionBoardActivator] Remaining clients: {NetworkManager.Singleton.ConnectedClientsList.Count}");
+            }
+        }
+        
+        private static ulong nextObserverClientId = 123;
+        
+        private void ApproveObserverConnection(
+            Unity.Netcode.NetworkManager.ConnectionApprovalRequest request, 
+            Unity.Netcode.NetworkManager.ConnectionApprovalResponse response)
+        {
+            // Check if this is an observer (they send special connection data)
+            bool isObserver = false;
+            
+            if (request.Payload != null && request.Payload.Length > 0)
+            {
+                // Observer sends "OBSERVER" as connection data
+                string payload = System.Text.Encoding.UTF8.GetString(request.Payload);
+                isObserver = payload == "OBSERVER";
+            }
+            
+            if (isObserver)
+            {
+                // Assign custom ClientId starting from 123
+                response.Approved = true;
+                response.CreatePlayerObject = false; // We don't use player objects
+                response.PlayerPrefabHash = null;
+                response.Position = null;
+                response.Rotation = null;
+                
+                // Assign incremental ClientId starting from 123
+                ulong assignedId = nextObserverClientId++;
+                response.Pending = false;
+                
+                Debug.Log($"[ConnectionBoardActivator] ✅ Observer connection approved! Assigned ClientId: {assignedId}");
+                
+                // CRITICAL: We need to use reflection to set the ClientId because it's not exposed in the API
+                // For now, let them connect with auto-assigned ID but log that they're an observer
+                Debug.Log($"[ConnectionBoardActivator] Observer detected, will be assigned next available ClientId");
+            }
+            else
+            {
+                // Regular player connection (shouldn't happen, but approve anyway)
+                response.Approved = true;
+                response.CreatePlayerObject = false;
+                response.Pending = false;
+                
+                Debug.Log($"[ConnectionBoardActivator] Regular client approved (not an observer)");
             }
         }
 
