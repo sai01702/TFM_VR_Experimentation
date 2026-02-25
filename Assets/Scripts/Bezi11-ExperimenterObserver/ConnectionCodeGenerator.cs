@@ -27,16 +27,12 @@ namespace Bezi11.ExperimenterObserver
 
         void Start()
         {
-            Debug.Log("[ConnectionCodeGenerator] Start() called");
+            Debug.Log("[ConnectionCodeGenerator] Start() called - WAITING for manual activation");
             
             if (connectionPanel != null)
             {
                 connectionPanel.SetActive(false);
-                Debug.Log("[ConnectionCodeGenerator] Set panel inactive");
-            }
-            else
-            {
-                Debug.LogError("[ConnectionCodeGenerator] connectionPanel is NULL in Start()!");
+                Debug.Log("[ConnectionCodeGenerator] Panel set inactive, will activate when hosting starts");
             }
 
             if (connectionModeToggle != null)
@@ -44,43 +40,49 @@ namespace Bezi11.ExperimenterObserver
                 connectionModeToggle.isOn = false;
                 useRelayMode = false;
                 connectionModeToggle.onValueChanged.AddListener(OnConnectionModeToggled);
-                Debug.Log("[ConnectionCodeGenerator] Toggle registered, starting in LAN mode");
-            }
-            else
-            {
-                Debug.LogError("[ConnectionCodeGenerator] connectionModeToggle is NULL! Toggle will not work!");
-                Debug.LogError("[ConnectionCodeGenerator] Please assign the toggle reference in the Inspector!");
             }
 
-            StartCoroutine(WaitForNetworkManager());
+            // DO NOT auto-register callbacks - wait for manual activation via ConnectionBoardActivator
+            Debug.Log("[ConnectionCodeGenerator] Ready. Waiting for ConnectionBoardActivator to start hosting.");
         }
 
-        private IEnumerator WaitForNetworkManager()
+        /// <summary>
+        /// Call this method when hosting starts (e.g., from ConnectionBoardActivator).
+        /// This registers the callbacks and shows the connection info.
+        /// </summary>
+        public void ActivateAndShowCode()
         {
-            Debug.Log("[ConnectionCodeGenerator] Waiting for NetworkManager.Singleton...");
-            
-            float timeout = 10f;
-            float elapsed = 0f;
-            
-            while (NetworkManager.Singleton == null && elapsed < timeout)
-            {
-                yield return new WaitForSeconds(0.1f);
-                elapsed += 0.1f;
-            }
+            Debug.Log("[ConnectionCodeGenerator] ActivateAndShowCode() called");
             
             if (NetworkManager.Singleton == null)
             {
-                Debug.LogError("[ConnectionCodeGenerator] NetworkManager.Singleton is still NULL after 10 seconds!");
-                yield break;
+                Debug.LogError("[ConnectionCodeGenerator] Cannot activate - NetworkManager.Singleton is null");
+                return;
             }
             
-            Debug.Log("[ConnectionCodeGenerator] NetworkManager.Singleton found!");
+            // Register callbacks
             RegisterNetworkCallbacks();
+            
+            // If server is already started, show code immediately
+            if (NetworkManager.Singleton.IsServer)
+            {
+                Debug.Log("[ConnectionCodeGenerator] Server already running, showing code now");
+                OnServerStarted();
+            }
+            else
+            {
+                Debug.Log("[ConnectionCodeGenerator] Waiting for server to start...");
+            }
         }
 
         void OnEnable()
         {
-            RegisterNetworkCallbacks();
+            // Only register if hosting is already active
+            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
+            {
+                Debug.Log("[ConnectionCodeGenerator] OnEnable - Server already active, registering callbacks");
+                RegisterNetworkCallbacks();
+            }
         }
 
         void OnDisable()

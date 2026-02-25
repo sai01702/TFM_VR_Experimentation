@@ -148,25 +148,26 @@ namespace Bezi11.ExperimenterObserver
                     return;
                 }
 
-                Debug.Log($"[ObserverConnectionUI] Joining relay with code: {connectionAddress}");
+                Debug.Log($"[ObserverConnectionUI] Joining relay: {connectionAddress}");
                 bool success = await RelayConnectionManager.Instance.JoinWithRelay(connectionAddress);
                 
                 if (!success)
                 {
-                    Debug.LogError("[ObserverConnectionUI] Failed to join relay");
-                    UpdateStatusText("Failed to join relay. Check code.");
+                    Debug.LogError("[ObserverConnectionUI] Relay join FAILED");
+                    UpdateStatusText("Failed to join relay - check code");
                     connectButton.interactable = true;
                     return;
                 }
                 
-                Debug.Log("[ObserverConnectionUI] Relay joined, transport configured");
-                await System.Threading.Tasks.Task.Delay(500);
+                Debug.Log("[ObserverConnectionUI] ✅ Relay joined! Waiting 2s for transport...");
+                UpdateStatusText("Relay joined, connecting...");
+                await System.Threading.Tasks.Task.Delay(2000);
             }
             else
             {
                 if (!ParseConnectionAddress(connectionAddress, out string ipAddress, out int port))
                 {
-                    UpdateStatusText("Invalid format. Use IP:Port");
+                    UpdateStatusText("Invalid format");
                     connectButton.interactable = true;
                     return;
                 }
@@ -178,23 +179,55 @@ namespace Bezi11.ExperimenterObserver
                 }
             }
 
-            // Disable scene management
+            // Disable scene management - observer stays in ExperimenterClientScene
             var config = NetworkManager.Singleton.NetworkConfig;
             config.EnableSceneManagement = false;
             
-            Debug.Log("[ObserverConnectionUI] Starting client...");
+            Debug.Log("[ObserverConnectionUI] Starting client NOW...");
             bool started = NetworkManager.Singleton.StartClient();
             
             if (!started)
             {
-                Debug.LogError("[ObserverConnectionUI] StartClient FAILED");
+                Debug.LogError("[ObserverConnectionUI] ❌ StartClient FAILED!");
                 UpdateStatusText("Failed to start client");
                 connectButton.interactable = true;
+                return;
             }
-            else
+
+            Debug.Log("[ObserverConnectionUI] StartClient succeeded, waiting for connection...");
+            UpdateStatusText("Connecting to host...");
+            
+            // Wait for actual connection with long timeout
+            float waitTime = 0f;
+            float timeout = 30f;
+            
+            while (waitTime < timeout)
             {
-                Debug.Log("[ObserverConnectionUI] StartClient succeeded, waiting for connection...");
-                UpdateStatusText("Connecting to host...");
+                await System.Threading.Tasks.Task.Delay(500);
+                waitTime += 0.5f;
+                
+                if (NetworkManager.Singleton.IsConnectedClient)
+                {
+                    Debug.Log($"[ObserverConnectionUI] ✅ CONNECTED after {waitTime:F1}s!");
+                    UpdateStatusText("Connected!");
+                    return;
+                }
+                
+                if (waitTime > 5f && ((int)waitTime) % 5 == 0)
+                {
+                    Debug.Log($"[ObserverConnectionUI] Still connecting... {waitTime:F0}s");
+                    UpdateStatusText($"Connecting... ({waitTime:F0}s)");
+                }
+            }
+            
+            // Timeout
+            Debug.LogError($"[ObserverConnectionUI] ❌ TIMEOUT after {timeout}s");
+            UpdateStatusText($"Connection timeout - Is host ready?");
+            connectButton.interactable = true;
+            
+            if (NetworkManager.Singleton != null)
+            {
+                NetworkManager.Singleton.Shutdown();
             }
         }
 

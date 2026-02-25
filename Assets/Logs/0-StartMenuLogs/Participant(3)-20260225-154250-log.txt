@@ -1,0 +1,13 @@
+Participant: 3
+Session start: 25/02/2026 15:42:50
+=========================================
+
+SessionStart
+[Network] Relay Join Code: KLMNNT
+[Network] Started hosting session
+[Network] Started hosting - Mode: LAN (Direct), Connection: 10.2.0.2:7777
+[Network] Client 0 disconnected
+[Network] Server stopped
+[Network] Relay Join Code: QKL7RW
+[Network] Started hosting - Mode: Internet (Relay), Connection: QKL7RW
+[Network] Started hosting - Mode: Internet (Relay), Connection: QKL7RW

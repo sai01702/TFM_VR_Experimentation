@@ -9,8 +9,9 @@ namespace Bezi11.ExperimenterObserver
         [Header("Configuration")]
         [SerializeField] private GameObject networkManagerPrefab;
         [SerializeField] private GameObject relayManagerPrefab;
-        [SerializeField] private GameObject networkSessionManagerPrefab;
+        [SerializeField] public GameObject networkSessionManagerPrefab; // Made public for ConnectionBoardActivator
         [SerializeField] private string roomSceneName = "RoomScene";
+        [SerializeField] private bool autoStartHosting = false; // DISABLED by default - use ConnectionBoardActivator instead
 
         private static bool networkManagerCreated;
         private static bool relayManagerCreated;
@@ -56,12 +57,18 @@ namespace Bezi11.ExperimenterObserver
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            if (scene.name == roomSceneName && NetworkManager.Singleton != null)
+            // Only auto-start if enabled (disabled by default - use ConnectionBoardActivator instead)
+            if (scene.name == roomSceneName && autoStartHosting && NetworkManager.Singleton != null)
             {
                 if (!NetworkManager.Singleton.IsServer && !NetworkManager.Singleton.IsClient)
                 {
+                    Debug.Log("[NetworkBootstrap] Auto-starting hosting (autoStartHosting is enabled)");
                     StartHosting();
                 }
+            }
+            else if (scene.name == roomSceneName)
+            {
+                Debug.Log("[NetworkBootstrap] RoomScene loaded. Hosting will start when player activates ConnectionBoard.");
             }
         }
 
@@ -73,7 +80,7 @@ namespace Bezi11.ExperimenterObserver
                 return;
             }
 
-            Debug.Log($"[NetworkBootstrap] Starting hosting... IsServer: {NetworkManager.Singleton.IsServer}, IsClient: {NetworkManager.Singleton.IsClient}");
+            Debug.Log($"[NetworkBootstrap] Starting hosting...");
 
             if (RelayConnectionManager.Instance != null && RelayConnectionManager.Instance.IsUsingRelay)
             {
@@ -91,12 +98,9 @@ namespace Bezi11.ExperimenterObserver
 
             if (started)
             {
-                Debug.Log($"[NetworkBootstrap] ✅ StartHost() succeeded! IsServer: {NetworkManager.Singleton.IsServer}, ConnectedClients: {NetworkManager.Singleton.ConnectedClientsList.Count}");
+                Debug.Log($"[NetworkBootstrap] ✅ StartHost() succeeded!");
 
-                // CRITICAL: Wait for NetworkManager to fully initialize
                 await System.Threading.Tasks.Task.Delay(500);
-
-                // Spawn NetworkSessionManager after hosting is ready
                 SpawnNetworkSessionManager();
 
                 if (ParticipantSession.Instance != null)
@@ -104,10 +108,8 @@ namespace Bezi11.ExperimenterObserver
                     ParticipantSession.Instance.AppendLog("[Network] Started hosting session");
                 }
                 
-                // Wait another moment for everything to settle
                 await System.Threading.Tasks.Task.Delay(500);
-                
-                Debug.Log("[NetworkBootstrap] ✅✅✅ Hosting setup COMPLETE - Server is ready for connections!");
+                Debug.Log("[NetworkBootstrap] ✅ Hosting setup complete!");
             }
             else
             {
