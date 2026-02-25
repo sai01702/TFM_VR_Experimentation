@@ -24,6 +24,7 @@ namespace Bezi11.ExperimenterObserver
         public string JoinCode { get; private set; }
 
         private const int MaxConnections = 5;
+        private bool isInitializing = false;
 
         public void SetConnectionMode(bool useRelay)
         {
@@ -62,8 +63,20 @@ namespace Bezi11.ExperimenterObserver
         private async Task InitializeUnityServices()
         {
 #if UNITY_SERVICES_INSTALLED
+            if (isInitializing)
+            {
+                Debug.Log("[RelayConnectionManager] Already initializing, waiting...");
+                while (isInitializing)
+                {
+                    await Task.Delay(100);
+                }
+                return;
+            }
+
             try
             {
+                isInitializing = true;
+
                 if (UnityServices.State == ServicesInitializationState.Uninitialized)
                 {
                     await UnityServices.InitializeAsync();
@@ -75,10 +88,18 @@ namespace Bezi11.ExperimenterObserver
                     await AuthenticationService.Instance.SignInAnonymouslyAsync();
                     Debug.Log("[RelayConnectionManager] Signed in anonymously");
                 }
+                else
+                {
+                    Debug.Log("[RelayConnectionManager] Already signed in");
+                }
             }
             catch (Exception e)
             {
                 Debug.LogError($"[RelayConnectionManager] Failed to initialize Unity Services: {e.Message}");
+            }
+            finally
+            {
+                isInitializing = false;
             }
 #else
             await Task.CompletedTask;
@@ -96,7 +117,10 @@ namespace Bezi11.ExperimenterObserver
 
             try
             {
-                await InitializeUnityServices();
+                if (!AuthenticationService.Instance.IsSignedIn)
+                {
+                    await InitializeUnityServices();
+                }
 
                 Allocation allocation = await RelayService.Instance.CreateAllocationAsync(MaxConnections);
                 Debug.Log($"[RelayConnectionManager] Relay allocation created");
@@ -143,7 +167,10 @@ namespace Bezi11.ExperimenterObserver
 
             try
             {
-                await InitializeUnityServices();
+                if (!AuthenticationService.Instance.IsSignedIn)
+                {
+                    await InitializeUnityServices();
+                }
 
                 JoinAllocation allocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
                 Debug.Log($"[RelayConnectionManager] Joined relay with code: {joinCode}");

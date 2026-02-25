@@ -52,16 +52,16 @@ public class DesktopHint : MonoBehaviour
     {
         if (label == null) label = GetComponentInChildren<TMP_Text>(true);
 
-        // Check if there's a LocalizedString component - if so, don't overwrite the text
+        // Check if there's a LocalizeStringEvent component - if so, don't overwrite the text
         if (label != null)
         {
-            LocalizedString localizedString = label.GetComponent<LocalizedString>();
-            if (localizedString == null)
+            LocalizeStringEvent localizeStringEvent = label.GetComponent<LocalizeStringEvent>();
+            if (localizeStringEvent == null)
             {
-                // Only set the text if there's no LocalizedString component
+                // Only set the text if there's no LocalizeStringEvent component
                 label.text = desktopMessage;
             }
-            // If LocalizedString exists, it will handle the text automatically
+            // If LocalizeStringEvent exists, it will handle the text automatically
         }
     }
 
