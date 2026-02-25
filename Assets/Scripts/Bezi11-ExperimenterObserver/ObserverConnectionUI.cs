@@ -17,6 +17,7 @@ namespace Bezi11.ExperimenterObserver
         [SerializeField] private Toggle useRelayToggle;
 
         private const int DefaultPort = 7777;
+        private bool isConnecting = false;
 
         void Start()
         {
@@ -138,6 +139,7 @@ namespace Bezi11.ExperimenterObserver
 
             UpdateStatusText("Connecting...");
             connectButton.interactable = false;
+            isConnecting = true;
 
             if (useRelay)
             {
@@ -197,32 +199,58 @@ namespace Bezi11.ExperimenterObserver
             Debug.Log("[ObserverConnectionUI] StartClient succeeded, waiting for connection...");
             UpdateStatusText("Connecting to host...");
             
-            // Wait for actual connection with long timeout
+            // Give Unity a moment to process StartClient
+            await System.Threading.Tasks.Task.Delay(100);
+            
+            // Wait for actual connection - check IsClient not IsConnectedClient
             float waitTime = 0f;
             float timeout = 30f;
             
             while (waitTime < timeout)
             {
-                await System.Threading.Tasks.Task.Delay(500);
-                waitTime += 0.5f;
-                
-                if (NetworkManager.Singleton.IsConnectedClient)
+                // Check if callback already handled connection
+                if (!isConnecting)
                 {
-                    Debug.Log($"[ObserverConnectionUI] ✅ CONNECTED after {waitTime:F1}s!");
-                    UpdateStatusText("Connected!");
+                    Debug.Log("[ObserverConnectionUI] Connection confirmed by callback!");
                     return;
                 }
                 
+                // Check if we're actually connected as a client
+                if (NetworkManager.Singleton != null && 
+                    NetworkManager.Singleton.IsClient && 
+                    NetworkManager.Singleton.LocalClientId != ulong.MaxValue)
+                {
+                    Debug.Log($"[ObserverConnectionUI] ✅ CONNECTED! IsClient: True, LocalClientId: {NetworkManager.Singleton.LocalClientId}");
+                    isConnecting = false;
+                    UpdateStatusText("Connected!");
+                    
+                    if (observerPanel != null)
+                    {
+                        observerPanel.SetActive(true);
+                    }
+                    
+                    if (disconnectButton != null)
+                    {
+                        disconnectButton.interactable = true;
+                    }
+                    
+                    return;
+                }
+                
+                await System.Threading.Tasks.Task.Delay(500);
+                waitTime += 0.5f;
+                
                 if (waitTime > 5f && ((int)waitTime) % 5 == 0)
                 {
-                    Debug.Log($"[ObserverConnectionUI] Still connecting... {waitTime:F0}s");
+                    Debug.Log($"[ObserverConnectionUI] Still connecting... {waitTime:F0}s (IsClient: {NetworkManager.Singleton?.IsClient})");
                     UpdateStatusText($"Connecting... ({waitTime:F0}s)");
                 }
             }
             
             // Timeout
+            isConnecting = false;
             Debug.LogError($"[ObserverConnectionUI] ❌ TIMEOUT after {timeout}s");
-            UpdateStatusText($"Connection timeout - Is host ready?");
+            UpdateStatusText($"Connection timeout");
             connectButton.interactable = true;
             
             if (NetworkManager.Singleton != null)
@@ -252,15 +280,25 @@ namespace Bezi11.ExperimenterObserver
         {
             if (clientId == NetworkManager.Singleton.LocalClientId)
             {
+                Debug.Log("[ObserverConnectionUI] ✅ OnClientConnected callback - We are connected!");
+                isConnecting = false;
+                
                 UpdateStatusText("Connected!");
-                disconnectButton.interactable = true;
+                
+                if (connectButton != null)
+                {
+                    connectButton.interactable = false;
+                }
+                
+                if (disconnectButton != null)
+                {
+                    disconnectButton.interactable = true;
+                }
 
                 if (observerPanel != null)
                 {
                     observerPanel.SetActive(true);
                 }
-
-                Debug.Log("[ObserverConnectionUI] Successfully connected to host");
             }
         }
 
