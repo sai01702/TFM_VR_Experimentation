@@ -79,8 +79,12 @@ namespace Bezi11.ExperimenterObserver.Editor
             Debug.Log($"  - ClientConnectionBufferTimeout: {nm.NetworkConfig.ClientConnectionBufferTimeout}");
             Debug.Log($"  - SpawnTimeout: {nm.NetworkConfig.SpawnTimeout}");
             Debug.Log($"  - NetworkPrefabsList: Bezi11NetworkPrefabs");
+            Debug.Log("");
+            Debug.Log("IMPORTANT: ExperimenterClientScene also needs:");
+            Debug.Log("  - NetworkManager ✅");
+            Debug.Log("  - RelayConnectionManager ✅ (should already be there)");
             Debug.Log("========================================");
-            Debug.Log("NOW TEST: Observer should connect with ClientId > 0!");
+            Debug.Log("NOW TEST: Observer should connect with ClientId: 123!");
         }
     }
 }
