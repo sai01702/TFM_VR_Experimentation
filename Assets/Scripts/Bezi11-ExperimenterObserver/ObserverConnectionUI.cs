@@ -196,7 +196,7 @@ namespace Bezi11.ExperimenterObserver
                 await System.Threading.Tasks.Task.Delay(500);
             }
             
-            Debug.Log("[ObserverConnectionUI] Starting as OBSERVER CLIENT (sending OBSERVER payload for ClientId 123+)...");
+            Debug.Log("[ObserverConnectionUI] Starting as OBSERVER CLIENT (sending OBSERVER payload)...");
             bool started = NetworkManager.Singleton.StartClient();
             
             if (!started)

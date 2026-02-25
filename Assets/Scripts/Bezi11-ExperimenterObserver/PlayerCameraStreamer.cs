@@ -131,11 +131,25 @@ namespace Bezi11.ExperimenterObserver
 
             Debug.Log($"[PlayerCameraStreamer] Observer client disconnected: {clientId}");
 
-            // Stop streaming if no more observers
-            if (NetworkManager.Singleton.ConnectedClientsList.Count <= 1)
+            // Count remaining observers (exclude server)
+            int observerCount = 0;
+            foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+            {
+                if (client.ClientId != NetworkManager.ServerClientId)
+                {
+                    observerCount++;
+                    Debug.Log($"[PlayerCameraStreamer] Still connected: ClientId {client.ClientId}");
+                }
+            }
+            
+            if (observerCount == 0)
             {
                 isStreaming = false;
                 Debug.Log("[PlayerCameraStreamer] No more observers - Stopping stream");
+            }
+            else
+            {
+                Debug.Log($"[PlayerCameraStreamer] {observerCount} observer(s) still connected - Continuing stream");
             }
         }
 
