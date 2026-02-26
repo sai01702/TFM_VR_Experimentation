@@ -1,4 +1,5 @@
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -57,18 +58,17 @@ namespace Bezi11.ExperimenterObserver
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            // Only auto-start if enabled (disabled by default - use ConnectionBoardActivator instead)
-            if (scene.name == roomSceneName && autoStartHosting && NetworkManager.Singleton != null)
+            if (scene.name == roomSceneName && NetworkManager.Singleton != null)
             {
                 if (!NetworkManager.Singleton.IsServer && !NetworkManager.Singleton.IsClient)
                 {
-                    Debug.Log("[NetworkBootstrap] Auto-starting hosting (autoStartHosting is enabled)");
+                    Debug.Log("[NetworkBootstrap] RoomScene loaded - auto-starting host session...");
                     StartHosting();
                 }
-            }
-            else if (scene.name == roomSceneName)
-            {
-                Debug.Log("[NetworkBootstrap] RoomScene loaded. Hosting will start when player activates ConnectionBoard.");
+                else
+                {
+                    Debug.Log("[NetworkBootstrap] RoomScene loaded but already hosting/connected, skipping.");
+                }
             }
         }
 
@@ -80,18 +80,31 @@ namespace Bezi11.ExperimenterObserver
                 return;
             }
 
-            Debug.Log($"[NetworkBootstrap] Starting hosting...");
+            Debug.Log($"[NetworkBootstrap] Starting host session...");
 
-            if (RelayConnectionManager.Instance != null && RelayConnectionManager.Instance.IsUsingRelay)
+            bool usingRelay = RelayConnectionManager.Instance != null && RelayConnectionManager.Instance.IsUsingRelay;
+
+            if (usingRelay)
             {
-                Debug.Log("[NetworkBootstrap] Starting relay hosting...");
+                Debug.Log("[NetworkBootstrap] Relay mode - allocating relay...");
                 string joinCode = await RelayConnectionManager.Instance.StartHostWithRelay();
                 if (string.IsNullOrEmpty(joinCode))
                 {
                     Debug.LogError("[NetworkBootstrap] Failed to start relay hosting");
                     return;
                 }
-                Debug.Log($"[NetworkBootstrap] Relay hosting started with code: {joinCode}");
+                Debug.Log($"[NetworkBootstrap] Relay code: {joinCode}");
+            }
+            else
+            {
+                Debug.Log("[NetworkBootstrap] LAN mode - hosting on port 7777...");
+                var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+                if (transport != null)
+                {
+                    transport.ConnectionData.Address = "0.0.0.0";
+                    transport.ConnectionData.Port = 7777;
+                    transport.ConnectionData.ServerListenAddress = "0.0.0.0";
+                }
             }
 
             bool started = NetworkManager.Singleton.StartHost();
