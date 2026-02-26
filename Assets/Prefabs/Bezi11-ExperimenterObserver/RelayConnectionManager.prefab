@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88634cb19a6f6c245b367ab414a64f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useRelayForInternetConnection: 1
+  useRelayForInternetConnection: 0
