@@ -1,69 +1,103 @@
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 
-    /// <summary>
-    /// Add this component to the same GameObject as
-    /// the NetworkManager component.
-    /// </summary>
-    public class HelloWorldManager : MonoBehaviour
+[RequireComponent(typeof(NetworkManager))]
+public class HelloWorldManager : MonoBehaviour
+{
+    private NetworkManager networkManager;
+    private UnityTransport transport;
+
+    private string ipAddress = "127.0.0.1";
+    private ushort port = 7777;
+
+    private void Awake()
     {
-        private NetworkManager m_NetworkManager;
+        networkManager = GetComponent<NetworkManager>();
+        transport = networkManager.GetComponent<UnityTransport>();
+    }
 
-        private void Awake()
+    private void OnGUI()
+    {
+        GUILayout.BeginArea(new Rect(10, 10, 320, 400));
+        GUILayout.Label("=== LAN Multiplayer Debug ===");
+
+        if (!networkManager.IsClient && !networkManager.IsServer)
         {
-            m_NetworkManager = GetComponent<NetworkManager>();
+            DrawConnectionInputs();
+            DrawStartButtons();
+        }
+        else
+        {
+            DrawStatus();
+            DrawDisconnectButton();
         }
 
-        private void OnGUI()
+        GUILayout.EndArea();
+    }
+
+    private void DrawConnectionInputs()
+    {
+        GUILayout.Space(10);
+
+        GUILayout.Label("IP Address:");
+        ipAddress = GUILayout.TextField(ipAddress);
+
+        GUILayout.Label("Port:");
+        string portString = GUILayout.TextField(port.ToString());
+        ushort.TryParse(portString, out port);
+
+        GUILayout.Space(10);
+    }
+
+    private void DrawStartButtons()
+    {
+        if (GUILayout.Button("Start Host"))
         {
-            GUILayout.BeginArea(new Rect(10, 10, 300, 300));
-            if (!m_NetworkManager.IsClient && !m_NetworkManager.IsServer)
-            {
-                StartButtons();
-            }
-            else
-            {
-                StatusLabels();
+            transport.ConnectionData.Address = "0.0.0.0";
+            transport.ConnectionData.Port = port;
 
-                SubmitNewPosition();
-            }
-
-            GUILayout.EndArea();
+            networkManager.StartHost();
         }
 
-        private void StartButtons()
+        if (GUILayout.Button("Start Client"))
         {
-            if (GUILayout.Button("Host")) m_NetworkManager.StartHost();
-            if (GUILayout.Button("Client")) m_NetworkManager.StartClient();
-            if (GUILayout.Button("Server")) m_NetworkManager.StartServer();
+            transport.ConnectionData.Address = ipAddress;
+            transport.ConnectionData.Port = port;
+
+            networkManager.StartClient();
         }
 
-        private void StatusLabels()
+        if (GUILayout.Button("Start Server (Headless)"))
         {
-            var mode = m_NetworkManager.IsHost ?
-                "Host" : m_NetworkManager.IsServer ? "Server" : "Client";
+            transport.ConnectionData.Address = "0.0.0.0";
+            transport.ConnectionData.Port = port;
 
-            GUILayout.Label("Transport: " +
-                m_NetworkManager.NetworkConfig.NetworkTransport.GetType().Name);
-            GUILayout.Label("Mode: " + mode);
-        }
-
-        private void SubmitNewPosition()
-        {
-            if (GUILayout.Button(m_NetworkManager.IsServer ? "Move" : "Request Position Change"))
-            {
-                if (m_NetworkManager.IsServer && !m_NetworkManager.IsClient)
-                {
-                    foreach (ulong uid in m_NetworkManager.ConnectedClientsIds)
-                        m_NetworkManager.SpawnManager.GetPlayerNetworkObject(uid).GetComponent<HelloWorldPlayer>().Move();
-                }
-                else
-                {
-                    var playerObject = m_NetworkManager.SpawnManager.GetLocalPlayerObject();
-                    var player = playerObject.GetComponent<HelloWorldPlayer>();
-                    player.Move();
-                }
-            }
+            networkManager.StartServer();
         }
     }
 
+    private void DrawStatus()
+    {
+        GUILayout.Space(10);
+
+        string mode =
+            networkManager.IsHost ? "Host" :
+            networkManager.IsServer ? "Server" :
+            "Client";
+
+        GUILayout.Label("Mode: " + mode);
+        GUILayout.Label("Transport: " + transport.GetType().Name);
+        GUILayout.Label("Connected Clients: " + networkManager.ConnectedClientsIds.Count);
+    }
+
+    private void DrawDisconnectButton()
+    {
+        GUILayout.Space(15);
+
+        if (GUILayout.Button("Shutdown"))
+        {
+            networkManager.Shutdown();
+        }
+    }
+}
