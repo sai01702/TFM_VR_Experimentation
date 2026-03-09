@@ -13,14 +13,12 @@ public class NetworkRigSpawner : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SpawnRigServerRpc(bool isVR, Vector3 pos, Quaternion rot, ServerRpcParams rpcParams = default)
     {
-        GameObject prefab = isVR
-            ? FindObjectOfType<SceneRigInstaller>().vrRigPrefab
-            : FindObjectOfType<SceneRigInstaller>().desktopRigPrefab;
+        var installer = FindObjectOfType<SceneRigInstaller>();
+        GameObject prefab = isVR ? installer.vrRigPrefab : installer.desktopRigPrefab;
 
         var rig = Instantiate(prefab, pos, rot);
 
         var netObj = rig.GetComponent<NetworkObject>();
-
         netObj.SpawnAsPlayerObject(rpcParams.Receive.SenderClientId);
     }
 }

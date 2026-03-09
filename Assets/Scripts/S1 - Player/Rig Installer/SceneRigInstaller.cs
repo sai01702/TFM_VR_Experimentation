@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
-
-public class SceneRigInstaller : MonoBehaviour
+using Unity.Netcode;
+public class SceneRigInstaller : NetworkBehaviour
 {
     public GameObject desktopRigPrefab; // your Desktop Rig prefab
     public GameObject vrRigPrefab;      // your XR Origin (Action-based) prefab
@@ -39,7 +39,9 @@ public class SceneRigInstaller : MonoBehaviour
 
         var pos = spawnPoint ? spawnPoint.position : Vector3.zero;
         var rot = spawnPoint ? spawnPoint.rotation : Quaternion.identity;
-        currentRig = Instantiate(prefab, pos, rot);
+        //currentRig = Instantiate(prefab, pos, rot); old local spawning code but we need netcode to spawn the rig so that it gets spawned on all clients and has a NetworkObject component
+        bool isVR = mode == GameMode.VR;
+        NetworkRigSpawner.Instance.SpawnRigServerRpc(isVR, pos, rot);
 
         var pi = currentRig.GetComponent<PlayerInput>();
         if (pi != null)

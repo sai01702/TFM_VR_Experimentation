@@ -5596,7 +5596,7 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 934567302}
-    PlayerPrefab: {fileID: 7442898710332207105, guid: 80ff5d061520b4e228ff8bd5d5077ca4, type: 3}
+    PlayerPrefab: {fileID: 0}
     Prefabs:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: a601896cd9777f1488f3df6001bfa750, type: 2}
@@ -12717,8 +12717,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2003545033}
-  - component: {fileID: 2003545035}
   - component: {fileID: 2003545034}
+  - component: {fileID: 2003545035}
   m_Layer: 0
   m_Name: NetworkSystems
   m_TagString: Untagged
