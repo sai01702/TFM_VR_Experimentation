@@ -153,6 +153,7 @@ GameObject:
   - component: {fileID: 6589274506679457211}
   - component: {fileID: 1442239249263661059}
   - component: {fileID: -3797388917557548575}
+  - component: {fileID: 3545450152290465666}
   m_Layer: 0
   m_Name: Desktop Rig
   m_TagString: Player
@@ -300,7 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3647248639
+  GlobalObjectIdHash: 1479084080
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -342,3 +343,15 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &3545450152290465666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8955973245134529063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc9a26b8db7c29f4490e5e86d16a7259, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -19,6 +19,10 @@ public class NetworkRigSpawner : NetworkBehaviour
         var rig = Instantiate(prefab, pos, rot);
 
         var netObj = rig.GetComponent<NetworkObject>();
+        if (!NetworkManager.Singleton.IsHost)
+        {
+            return;
+        }
         netObj.SpawnAsPlayerObject(rpcParams.Receive.SenderClientId);
     }
 }

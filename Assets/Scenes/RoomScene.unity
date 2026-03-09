@@ -12719,6 +12719,7 @@ GameObject:
   - component: {fileID: 2003545033}
   - component: {fileID: 2003545034}
   - component: {fileID: 2003545035}
+  - component: {fileID: 2003545036}
   m_Layer: 0
   m_Name: NetworkSystems
   m_TagString: Untagged
@@ -12776,6 +12777,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee8cdefedd001141b99d900feb24ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2003545036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003545030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d449917c89f73a2448c243ef89b37372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spectatorCameraPrefab: {fileID: 7953640796819455271, guid: 1b83f90232cb18446a510223eb83884a, type: 3}
 --- !u!1 &2029560895
 GameObject:
   m_ObjectHideFlags: 0

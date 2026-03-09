@@ -27,6 +27,11 @@ public class SceneRigInstaller : NetworkBehaviour
 
     void Install()
     {
+
+        if (!NetworkManager.Singleton.IsHost)
+            return;
+
+
         var mode = GameSettings.Instance.CurrentMode;
         XRBootstrapper.Instance.ApplyMode(mode);
 
