@@ -95,6 +95,7 @@ public class LanConnectionUI : MonoBehaviour
 
     void UpdateSessionInfo()
     {
+        // If networking not active
         if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
         {
             participantText.text = "N/A";
@@ -104,30 +105,40 @@ public class LanConnectionUI : MonoBehaviour
         }
 
         int totalClients = NetworkManager.Singleton.ConnectedClientsIds.Count;
-
         int observers = Mathf.Max(0, totalClients - 1);
+
+        // ----- PARTICIPANT TEXT -----
+
+        string hostId = "Unknown";
+
+        if (NetworkSessionInfo.Instance != null)
+            hostId = NetworkSessionInfo.Instance.HostParticipantId.Value.ToString();
 
         if (NetworkManager.Singleton.IsHost)
         {
             if (observers == 0)
-                participantText.text = "Host";
+                participantText.text = $"Host ({hostId})";
             else if (observers == 1)
-                participantText.text = "Host + 1 Observer";
+                participantText.text = $"Host ({hostId}) + 1 Observer";
             else
-                participantText.text = $"Host + {observers} Observers";
+                participantText.text = $"Host ({hostId}) + {observers} Observers";
         }
         else
         {
-            if (observers == 1)
-                participantText.text = "Client (Observer)";
-            else
-                participantText.text = $"Client (Observer {NetworkManager.Singleton.LocalClientId})";
+            participantText.text = $"Observer connected to Host ({hostId})";
         }
 
-        sceneNameText.text = SceneManager.GetActiveScene().name;
+        // ----- SCENE NAME -----
 
-        if (GameSettings.Instance != null)
-            gameModeText.text = GameSettings.Instance.CurrentMode.ToString();
+        if (NetworkSessionInfo.Instance != null)
+            sceneNameText.text = NetworkSessionInfo.Instance.HostSceneName.Value.ToString();
+        else
+            sceneNameText.text = "N/A";
+
+        // ----- GAME MODE -----
+
+        if (NetworkSessionInfo.Instance != null)
+            gameModeText.text = NetworkSessionInfo.Instance.HostGameMode.Value.ToString();
         else
             gameModeText.text = "N/A";
     }
