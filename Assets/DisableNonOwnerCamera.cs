@@ -8,6 +8,16 @@ public class DisableNonOwnerCamera : NetworkBehaviour
     void Start()
     {
         cam = GetComponent<Camera>();
+        if (cam == null)
+        {
+            cam = GetComponentInChildren<Camera>(true);
+        }
+
+        if (cam == null)
+        {
+            Debug.LogWarning($"No Camera found on {name} or its children for {nameof(DisableNonOwnerCamera)}.");
+            return;
+        }
 
         if (!IsOwner)
             cam.enabled = false;

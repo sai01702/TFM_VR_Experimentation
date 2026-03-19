@@ -2070,3 +2070,27 @@ Objetivo: Colocar 5 sombreros en sus stands correctos
 [9.44s] ERROR - Sombrero 'Crown' colocado incorrectamente en stand 'PoliceCap'
     Intentos para este sombrero: 1
 
+
+--- NUEVA SESION ---
+Sesión iniciada el: 17/03/2026 16:29:49
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 17/03/2026 16:29:49
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+
+--- NUEVA SESION ---
+Sesión iniciada el: 17/03/2026 16:30:23
+
+=== INICIO DEL PUZZLE ===
+Tiempo de inicio: 17/03/2026 16:30:23
+Objetivo: Colocar 5 sombreros en sus stands correctos
+
+[9,58s] AGARRE - Sombrero 'Crown' agarrado
+[9,58s] PISTA - Pista mostrada para sombrero 'Crown'
+[11,34s] SUELTA - Sombrero 'Crown' soltado
+[11,34s] ACIERTO - Sombrero 'Crown' colocado correctamente en stand 'Crown'
+    Progreso: 1/5 sombreros correctos
+    Intentos para este sombrero: 1
+    Tiempo desde primer agarre: 1,76s
+

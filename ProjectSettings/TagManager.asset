@@ -15,6 +15,7 @@ TagManager:
   - Stand
   - New tag
   - Button3D
+  - MazeExit
   layers:
   - Default
   - TransparentFX
