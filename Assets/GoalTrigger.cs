@@ -1,13 +1,7 @@
 using UnityEngine;
 
-public class MazeExit : MonoBehaviour
+public class GoalTrigger : MonoBehaviour
 {
-    void Start()
-    {
-        // Register this exit in the manager
-        MazeManager.Instance.RegisterExit(this.transform);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
