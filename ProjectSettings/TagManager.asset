@@ -13,9 +13,9 @@ TagManager:
   - Bala
   - Disparable
   - Stand
-  - New tag
   - Button3D
   - MazeExit
+  - GuideAgent
   layers:
   - Default
   - TransparentFX
