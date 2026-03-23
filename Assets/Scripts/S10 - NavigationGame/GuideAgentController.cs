@@ -3,20 +3,33 @@ using UnityEngine.AI;
 
 public class GuideAgentController : MonoBehaviour
 {
+    [Header("References")]
     public NavigationPathManager pathManager;
     public Transform player;
 
+    [Header("Behavior Settings")]
     public float maxDistance = 3f;
+    public float rotationSpeed = 2f;
+    public float turnThreshold = 10f;
 
     private NavMeshAgent agent;
+    private Animator animator;
+
     private Vector3[] pathPoints;
     private int currentIndex = 0;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false; // 🔥 we control rotation manually
 
-        // 🔥 Auto-find player
+        animator = GetComponentInChildren<Animator>();
+
+        if (animator == null)
+        {
+            Debug.LogError("Animator NOT found in children!");
+        }
+
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
 
         if (playerObj == null)
@@ -54,14 +67,54 @@ public class GuideAgentController : MonoBehaviour
         if (distanceToPlayer > maxDistance)
         {
             agent.isStopped = true;
-            return;
+
+            // 👀 Look at player
+            Vector3 direction = player.position - transform.position;
+            direction.y = 0;
+
+            float angle = Vector3.Angle(transform.forward, direction);
+
+            if (direction != Vector3.zero && angle > turnThreshold)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+                transform.rotation = Quaternion.Slerp(
+                    transform.rotation,
+                    targetRotation,
+                    Time.deltaTime * rotationSpeed
+                );
+            }
         }
         else
         {
-            agent.isStopped = false;
+            // ✅ IMPORTANT FIX: resume movement
+            if (agent.isStopped)
+            {
+                agent.isStopped = false;
+
+                if (currentIndex < pathPoints.Length)
+                {
+                    agent.SetDestination(pathPoints[currentIndex]);
+                }
+            }
+
+            // 🚶 Rotate toward path
+            Vector3 direction = agent.steeringTarget - transform.position;
+            direction.y = 0;
+
+            if (direction.magnitude > 0.1f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+                transform.rotation = Quaternion.Slerp(
+                    transform.rotation,
+                    targetRotation,
+                    Time.deltaTime * rotationSpeed
+                );
+            }
         }
 
-        // Continue path
+        // ➡️ Move along path
         if (!agent.pathPending && agent.remainingDistance < 0.2f)
         {
             currentIndex++;
@@ -70,6 +123,19 @@ public class GuideAgentController : MonoBehaviour
             {
                 MoveToNextPoint();
             }
+        }
+
+        // 🎭 ANIMATION CONTROL
+        if (animator != null)
+        {
+            float speed = agent.velocity.magnitude;
+
+            if (agent.hasPath && !agent.isStopped)
+            {
+                speed = 1f;
+            }
+
+            animator.SetFloat("Speed", speed);
         }
     }
 
