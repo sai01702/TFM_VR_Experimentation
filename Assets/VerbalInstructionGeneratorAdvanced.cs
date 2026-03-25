@@ -1,25 +1,33 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class VerbalInstructionGenerator : MonoBehaviour
+public class VerbalInstructionGeneratorAdvanced : MonoBehaviour
 {
     [Header("References")]
     public NavigationPathManager pathManager;
     public Transform player;
     public Transform playerCamera;
+
+    [Header("Audio")]
     public AudioSource audioSource;
 
-    [Header("Audio Clips")]
+    [Header("Clips")]
     public AudioClip goForward;
     public AudioClip turnLeft;
     public AudioClip turnRight;
     public AudioClip turnAround;
+
+    public AudioClip in1meter;
+    public AudioClip in2meters;
+    public AudioClip in3meters;
+
     public AudioClip keepGoingForward;
     public AudioClip wrongWay;
     public AudioClip destinationReached;
 
     [Header("Settings")]
     public float triggerDistance = 1.5f;
+    public float offPathThreshold = 2.5f;
     public float offPathTimeLimit = 3f;
     public float repeatDelay = 5f;
 
@@ -37,35 +45,47 @@ public class VerbalInstructionGenerator : MonoBehaviour
     private float offPathTimer = 0f;
     private bool isOffPath = false;
 
-    // 🔥 NEW (important)
-    private float lastDistanceToTarget = Mathf.Infinity;
-    
-    private bool hasReachedDestination = false;
+    private bool hasSpokenDistance = false;
 
     void Start()
     {
         Debug.Log("[VOICE] System initializing...");
 
-        // Player
+        // 🔍 Player
         if (player == null)
         {
-            GameObject obj = GameObject.FindGameObjectWithTag("Player");
-            if (obj != null) player = obj.transform;
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+
+            if (playerObj != null)
+                player = playerObj.transform;
+            else
+                Debug.LogError("[VOICE] Player NOT found!");
         }
 
-        // Camera
-        if (playerCamera == null && Camera.main != null)
-            playerCamera = Camera.main.transform;
+        // 🎥 Camera
+        if (playerCamera == null)
+        {
+            Camera cam = Camera.main;
 
-        // Audio
+            if (cam != null)
+                playerCamera = cam.transform;
+            else
+                Debug.LogError("[VOICE] Camera NOT found!");
+        }
+
+        // 🔊 Audio
         if (audioSource == null)
         {
             audioSource = GetComponent<AudioSource>();
+
             if (audioSource == null)
                 audioSource = gameObject.AddComponent<AudioSource>();
+
+            audioSource.spatialBlend = 0f;
+            audioSource.playOnAwake = false;
         }
 
-        // Path
+        // 🧭 Path
         if (pathManager == null)
             pathManager = FindObjectOfType<NavigationPathManager>();
 
@@ -73,6 +93,10 @@ public class VerbalInstructionGenerator : MonoBehaviour
         {
             pathCorners = pathManager.GetPathCorners();
             Debug.Log("[VOICE] Path corners: " + pathCorners.Length);
+        }
+        else
+        {
+            Debug.LogError("[VOICE] PathManager NOT found!");
         }
     }
 
@@ -82,23 +106,17 @@ public class VerbalInstructionGenerator : MonoBehaviour
 
         if (currentIndex >= pathCorners.Length - 1)
         {
-            if (!hasReachedDestination)
-            {
-                hasReachedDestination = true;
-
-                Speak(destinationReached, "Destination reached");
-
-                Debug.Log("[VOICE] 🎉 DESTINATION TRIGGERED ONCE");
-            }
-
+            Speak(destinationReached, "Destination reached");
             return;
         }
 
         float distance = Vector3.Distance(player.position, pathCorners[currentIndex]);
-        string dir = GetDirection(pathCorners[currentIndex]);
+        string dir = GetRelativeDirection(pathCorners[currentIndex]);
 
-        // ✅ NEW: BEHAVIOR-BASED WRONG WAY DETECTION
-        if (distance > lastDistanceToTarget + 0.2f)
+        // 🚨 OFF PATH
+        float pathDistance = GetDistanceFromPath();
+
+        if (pathDistance > offPathThreshold)
         {
             offPathTimer += Time.deltaTime;
 
@@ -111,6 +129,8 @@ public class VerbalInstructionGenerator : MonoBehaviour
 
                 RecalculatePath();
             }
+
+            return;
         }
         else
         {
@@ -118,19 +138,26 @@ public class VerbalInstructionGenerator : MonoBehaviour
             isOffPath = false;
         }
 
-        lastDistanceToTarget = distance;
-
         // 🎯 CORNER
         if (distance < triggerDistance)
         {
-            SpeakDirection(GetDirection(pathCorners[currentIndex + 1]));
+            SpeakDirection(GetRelativeDirection(pathCorners[currentIndex + 1]));
 
             currentIndex++;
+            hasSpokenDistance = false;
             lastInstructionTime = Time.time;
             return;
         }
 
-        // 🟢 SMART FORWARD (ONLY LONG DISTANCE)
+        // 📏 DISTANCE + DIRECTION (combined)
+        if (distance < 3f && !hasSpokenDistance)
+        {
+            SpeakCombined(distance, dir);
+            hasSpokenDistance = true;
+            return;
+        }
+
+        // 🔁 SMART FORWARD (ANTI-SPAM)
         if (dir == "forward"
             && distance > minForwardDistance
             && Time.time - lastForwardTime > forwardCooldown)
@@ -148,10 +175,11 @@ public class VerbalInstructionGenerator : MonoBehaviour
         }
     }
 
-    // 🧭 RELATIVE DIRECTION (CAMERA BASED)
-    string GetDirection(Vector3 target)
+    // 🧭 DIRECTION
+    string GetRelativeDirection(Vector3 target)
     {
         Vector3 toTarget = (target - player.position).normalized;
+
         Vector3 forward = playerCamera != null ? playerCamera.forward : player.forward;
 
         forward.y = 0;
@@ -162,25 +190,80 @@ public class VerbalInstructionGenerator : MonoBehaviour
         if (angle > 150f || angle < -150f) return "back";
         if (angle > 30f) return "right";
         if (angle < -30f) return "left";
+
         return "forward";
     }
 
     void SpeakDirection(string dir)
     {
-        if (dir == "left") Speak(turnLeft, "Turn left");
-        else if (dir == "right") Speak(turnRight, "Turn right");
-        else if (dir == "back") Speak(turnAround, "Turn around");
-        else Speak(goForward, "Go forward");
+        switch (dir)
+        {
+            case "forward":
+                Speak(goForward, "Go forward");
+                break;
+            case "left":
+                Speak(turnLeft, "Turn left");
+                break;
+            case "right":
+                Speak(turnRight, "Turn right");
+                break;
+            case "back":
+                Speak(turnAround, "Turn around");
+                break;
+        }
     }
 
-    void Speak(AudioClip clip, string text)
+    void SpeakCombined(float distance, string dir)
     {
-        Debug.Log("[VOICE] " + text);
+        int d = Mathf.RoundToInt(distance);
+
+        string sentence = d <= 1 ? "In 1 meter, " :
+                          d == 2 ? "In 2 meters, " :
+                                   "In 3 meters, ";
+
+        switch (dir)
+        {
+            case "left": sentence += "turn left"; break;
+            case "right": sentence += "turn right"; break;
+            case "back": sentence += "turn around"; break;
+            default: sentence += "go forward"; break;
+        }
+
+        Speak(GetClipForDirection(dir), sentence);
+    }
+
+    AudioClip GetClipForDirection(string dir)
+    {
+        switch (dir)
+        {
+            case "left": return turnLeft;
+            case "right": return turnRight;
+            case "back": return turnAround;
+            default: return goForward;
+        }
+    }
+
+    void Speak(AudioClip clip, string debugText)
+    {
+        Debug.Log("[VOICE] " + debugText);
 
         if (audioSource == null || clip == null) return;
 
         audioSource.Stop();
         audioSource.PlayOneShot(clip);
+    }
+
+    float GetDistanceFromPath()
+    {
+        float min = Mathf.Infinity;
+
+        foreach (var p in pathCorners)
+        {
+            float d = Vector3.Distance(player.position, p);
+            if (d < min) min = d;
+        }
+
+        return min;
     }
 
     void RecalculatePath()
@@ -196,6 +279,8 @@ public class VerbalInstructionGenerator : MonoBehaviour
 
         pathCorners = newPath.corners;
         currentIndex = 1;
+
+        lastInstructionTime = Time.time;
 
         Debug.Log("[VOICE] Path recalculated");
     }
