@@ -20,7 +20,7 @@ public class VerbalInstructionGenerator : MonoBehaviour
 
     [Header("Settings")]
     public float triggerDistance = 1.5f;
-    public float offPathTimeLimit = 3f;
+    public float offPathTimeLimit = 2f;
     public float repeatDelay = 5f;
 
     [Header("Forward Control")]
