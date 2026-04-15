@@ -1,33 +1,20 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.IO; // Needed to write files
+using System.Text; // Needed to manually build JSON
 
-// This class represents ONE point in a JSON-friendly format (UPDATED for analytics system)
+// This class represents ONE point in a JSON-friendly format (SIMPLIFIED for analytics system)
 [System.Serializable]
 public class PathPoint
 {
-    public float position_x; // X position (Unity X axis)
-    public float position_z; // Z position (Unity Z axis)
-    public int index;        // Order in path (important for plotting)
+    public float x; // X position (Unity X axis)
+    public float z; // Z position (Unity Z axis)
 
     // Constructor: converts Unity Vector3 → our JSON format
-    public PathPoint(Vector3 v, int i)
+    public PathPoint(Vector3 v)
     {
-        position_x = v.x;
-        position_z = v.z;
-        index = i;
-    }
-}
-
-// Unity cannot directly serialize arrays → we wrap it
-[System.Serializable]
-public class Wrapper<T>
-{
-    public T[] items; // This will hold our array
-
-    public Wrapper(T[] items)
-    {
-        this.items = items;
+        x = v.x;
+        z = v.z;
     }
 }
 
@@ -39,13 +26,13 @@ public class PathExporter : MonoBehaviour
     public Transform goalPoint;  // Where path ends
 
     [Header("Save Settings")]
-    public string saveFolder = "Assets/Log/4-NavigationSceneLogs/"; // 👈 CHANGE THIS IN INSPECTOR
+    public string saveFolder = "Assets/Log/4-NavigationSceneLogs/"; // CHANGE THIS IN INSPECTOR
 
     private NavMeshPath path; // Unity path container
 
     void Start()
     {
-        Debug.Log("🔍 Starting path export...");
+        Debug.Log("Starting path export...");
 
         // Create a new empty path object
         path = new NavMeshPath();
@@ -70,28 +57,39 @@ public class PathExporter : MonoBehaviour
         // Safety check → if no path exists
         if (path == null || path.corners.Length == 0)
         {
-            Debug.LogError("❌ No path data to export!");
+            Debug.LogError("No path data to export!");
             return;
         }
 
-        // Create timestamp (UPDATED - now generated per export)
+        // Create timestamp - generated per export)
         string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
 
-        // Create an array to store converted data
-        PathPoint[] data = new PathPoint[path.corners.Length];
+        // Build JSON manually to get PURE ARRAY format (no wrapper)
+        StringBuilder json = new StringBuilder();
+        json.Append("[\n");
 
         // Loop through each corner
         for (int i = 0; i < path.corners.Length; i++)
         {
-            // Convert Unity Vector3 → JSON-friendly format
-            data[i] = new PathPoint(path.corners[i], i);
+            Vector3 p = path.corners[i];
+
+            // Convert Unity Vector3 → simplified JSON format
+            PathPoint point = new PathPoint(p);
+
+            // Write JSON line manually
+            json.Append($"  {{ \"x\": {point.x:F3}, \"z\": {point.z:F3} }}");
+
+            // Add comma except for last element
+            if (i < path.corners.Length - 1)
+                json.Append(",");
+
+            json.Append("\n");
 
             // Debug each point
-            Debug.Log("Corner " + i + ": " + path.corners[i]);
+            Debug.Log("Corner " + i + ": " + p);
         }
 
-        // Convert array into JSON string
-        string json = JsonUtility.ToJson(new Wrapper<PathPoint>(data), true);
+        json.Append("]");
 
         // Ensure folder exists
         if (!Directory.Exists(saveFolder))
@@ -101,34 +99,13 @@ public class PathExporter : MonoBehaviour
         }
 
         // Define file path (NOW CORRECTLY BUILT)
-        string filePath = Path.Combine(saveFolder, "pathCorners_" + timestamp + ".json");
+        string filePath = Path.Combine(saveFolder, "idealPath_" + timestamp + ".json");
 
         // Write JSON string into file
-        File.WriteAllText(filePath, json);
+        File.WriteAllText(filePath, json.ToString());
 
         // Confirm export
         Debug.Log("✅ Path exported to: " + filePath);
     }
 
-    // 🔥 BONUS: Visualize path in Scene view
-    void OnDrawGizmos()
-    {
-        // If no path, do nothing
-        if (path == null || path.corners == null) return;
-
-        Gizmos.color = Color.red; // Set color
-
-        // Loop through corners
-        for (int i = 0; i < path.corners.Length; i++)
-        {
-            // Draw a sphere at each corner
-            Gizmos.DrawSphere(path.corners[i], 0.2f);
-
-            // Draw a line to next point
-            if (i < path.corners.Length - 1)
-            {
-                Gizmos.DrawLine(path.corners[i], path.corners[i + 1]);
-            }
-        }
-    }
 }
