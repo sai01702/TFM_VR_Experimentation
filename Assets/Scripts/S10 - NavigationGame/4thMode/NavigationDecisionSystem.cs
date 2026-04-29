@@ -32,7 +32,7 @@ public class NavigationDecisionSystem : MonoBehaviour
     public float pathThreshold = 3.5f;
     public float testDistance = 2f;
     public float lookAheadDistance = 1.5f;
-    public float entryOffset = 1.5f; // 🔥 entry node mesafesi
+    public float entryOffset = 1.5f; // entry node mesafesi
 
     public float routeTargetLookAhead = 1.25f;
     public float decisionMergeDistance = 2.0f;

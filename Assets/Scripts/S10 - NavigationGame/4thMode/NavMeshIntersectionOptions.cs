@@ -25,12 +25,12 @@ using UnityEngine.AI;
 public class NavMeshIntersectionOptions : MonoBehaviour
 {
     [Header("Candidate Detection")]
-    public float intersectionMergeDistance = 1.0f;
+    public float intersectionMergeDistance = 2.6655f;
     public int minimumNeighborCount = 3;
 
     [Header("Option Detection")]
     public float optionSearchRadius = 2.5f;
-    public float directionMergeAngle = 15f;
+    public float directionMergeAngle = 24f;
 
     public List<IntersectionWithOptions> results = new List<IntersectionWithOptions>();
 
