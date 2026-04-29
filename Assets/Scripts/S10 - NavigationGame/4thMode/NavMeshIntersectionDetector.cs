@@ -13,7 +13,7 @@ public class NavMeshIntersectionDetector : MonoBehaviour
         DetectIntersections();
     }
 
-    void DetectIntersections()
+    public void DetectIntersections()
     {
         intersections.Clear();
 
@@ -118,17 +118,6 @@ public class NavMeshIntersectionDetector : MonoBehaviour
         return result;
     }
 
-    void OnDrawGizmos()
-    {
-        if (!Application.isPlaying) return;
-
-        Gizmos.color = Color.cyan;
-
-        foreach (var i in intersections)
-        {
-            Gizmos.DrawSphere(i.position, 0.3f);
-        }
-    }
 }
 
 // =======================

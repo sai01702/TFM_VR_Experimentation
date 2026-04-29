@@ -224,29 +224,6 @@ public class DecisionPointDetector : MonoBehaviour
         return best;
     }
 
-    // ================================
-    // GIZMOS
-    // ================================
-    void OnDrawGizmos()
-    {
-        if (!Application.isPlaying) return;
-
-        if (decisionPoints == null) return;
-
-        foreach (var dp in decisionPoints)
-        {
-            // point
-            Gizmos.color = Color.red;
-            Gizmos.DrawSphere(dp.position, 0.25f);
-
-            // options
-            foreach (var dir in dp.options)
-            {
-                Gizmos.color = (dir == dp.correctOption) ? Color.green : Color.yellow;
-                Gizmos.DrawLine(dp.position, dp.position + dir * 2f);
-            }
-        }
-    }
 }
 
 // ================================

@@ -114,22 +114,6 @@ public class NavMeshIntersectionOptions : MonoBehaviour
         return result;
     }
 
-    void OnDrawGizmos()
-    {
-        if (!Application.isPlaying) return;
-
-        foreach (var r in results)
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawSphere(r.position, 0.25f);
-
-            foreach (var dir in r.options)
-            {
-                Gizmos.color = Color.magenta;
-                Gizmos.DrawLine(r.position, r.position + dir * 2f);
-            }
-        }
-    }
 }
 
 // =====================
