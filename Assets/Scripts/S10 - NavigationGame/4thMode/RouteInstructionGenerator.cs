@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Text;
 using System.Diagnostics;
+using Debug = UnityEngine.Debug;
 
 public class RouteInstructionGenerator : MonoBehaviour
 {
@@ -9,52 +10,78 @@ public class RouteInstructionGenerator : MonoBehaviour
 
     private Vector3[] pathCorners;
 
+    [Header("Tuning")]
+    public float turnThreshold = 45f;       // Angle to consider a real turn
+    public float minSegmentDistance = 0.5f; // Ignore tiny segments
+
     void Start()
     {
         if (pathManager == null)
             pathManager = FindObjectOfType<NavigationPathManager>();
 
+        if (pathManager == null)
+        {
+            UnityEngine.Debug.LogError("PathManager not found!");
+            return;
+        }
+
         pathCorners = pathManager.GetPathCorners();
+
+        if (pathCorners == null || pathCorners.Length < 2)
+        {
+            UnityEngine.Debug.LogError("Invalid path.");
+            return;
+        }
+
+        DebugDrawPath();
 
         string fullInstruction = GenerateFullInstructions();
 
         UnityEngine.Debug.Log("FULL ROUTE:\n" + fullInstruction);
-
-        // Send this to Python (gTTS)
 
         GenerateAudio(fullInstruction);
     }
 
     string GenerateFullInstructions()
     {
-        if (pathCorners == null || pathCorners.Length < 2)
-            return "No valid path.";
-
         StringBuilder sentence = new StringBuilder();
 
-        for (int i = 0; i < pathCorners.Length - 1; i++)
+        float accumulatedDistance = 0f;
+
+        sentence.Append("Start by walking forward. ");
+
+        for (int i = 1; i < pathCorners.Length - 1; i++)
         {
+            Vector3 prev = pathCorners[i - 1];
             Vector3 current = pathCorners[i];
             Vector3 next = pathCorners[i + 1];
 
-            // Distance between points
-            float distance = Vector3.Distance(current, next);
-            if (distance < 0.5f)
-            {
-                continue;
-            }
-            // Direction calculation
-            string direction = GetTurnDirection(i);
+            float segmentDistance = Vector3.Distance(prev, current);
 
-            // FIRST SEGMENT → no turn yet
-            if (i == 0)
+            if (segmentDistance < minSegmentDistance)
+                continue;
+
+            accumulatedDistance += segmentDistance;
+
+            string turn = GetTurnDirection(prev, current, next);
+
+            // If a real turn happens → emit instruction
+            if (turn != "forward")
             {
-                sentence.Append($"Walk forward for {Mathf.Round(distance)} meters. ");
+                sentence.Append(
+                    $"Walk forward for {Mathf.RoundToInt(accumulatedDistance)} meters, then turn {turn}. "
+                );
+
+                accumulatedDistance = 0f;
             }
-            else
-            {
-                sentence.Append($"Then turn {direction} and walk for {Mathf.Round(distance)} meters. ");
-            }
+        }
+
+        // Final segment to goal
+        if (accumulatedDistance > 0f)
+        {
+            sentence.Append(
+                $"Continue straight for {Mathf.RoundToInt(accumulatedDistance)} meters. "
+            );
         }
 
         sentence.Append("You will reach your destination.");
@@ -62,54 +89,71 @@ public class RouteInstructionGenerator : MonoBehaviour
         return sentence.ToString();
     }
 
-    string GetTurnDirection(int index)
+    string GetTurnDirection(Vector3 prev, Vector3 current, Vector3 next)
     {
-        if (index == 0 || index >= pathCorners.Length - 1)
-            return "forward";
-
-        Vector3 prev = pathCorners[index - 1];
-        Vector3 current = pathCorners[index];
-        Vector3 next = pathCorners[index + 1];
-
         Vector3 dir1 = (current - prev).normalized;
         Vector3 dir2 = (next - current).normalized;
 
         float angle = Vector3.SignedAngle(dir1, dir2, Vector3.up);
 
-        if (angle > 30f) return "right";
-        if (angle < -30f) return "left";
+        // IMPORTANT: Unity angle sign
+        if (angle > turnThreshold) return "left";
+        if (angle < -turnThreshold) return "right";
 
         return "forward";
     }
 
+    void DebugDrawPath()
+    {
+        if (pathCorners == null) return;
+
+        for (int i = 0; i < pathCorners.Length - 1; i++)
+        {
+            Debug.DrawLine(pathCorners[i], pathCorners[i + 1], Color.green, 10f);
+        }
+
+        foreach (var point in pathCorners)
+        {
+            Debug.DrawLine(point, point + Vector3.up * 2f, Color.red, 10f);
+        }
+    }
+
     void GenerateAudio(string text)
-{
-    text = text.Replace("\"", "");
+    {
+        text = text.Replace("\"", "");
 
-    string pythonFile = Application.dataPath + "/generate_tts.py";
+        string pythonFile = Application.dataPath + "/generate_tts.py";
 
-    UnityEngine.Debug.Log("Running Python: " + pythonFile);
+        UnityEngine.Debug.Log("Running Python: " + pythonFile);
 
-    ProcessStartInfo start = new ProcessStartInfo();
+        ProcessStartInfo start = new ProcessStartInfo();
 
-    start.FileName = "/Library/Frameworks/Python.framework/Versions/3.14/bin/python3";
-    start.Arguments = $"\"{pythonFile}\" \"{text}\"";
+#if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
+        start.FileName = "/Library/Frameworks/Python.framework/Versions/3.14/bin/python3";
+#elif UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+        start.FileName = "python";
+#else
+        UnityEngine.Debug.LogError("Unsupported platform for TTS.");
+        return;
+#endif
 
-    start.UseShellExecute = false;
-    start.RedirectStandardOutput = true;
-    start.RedirectStandardError = true;
-    start.CreateNoWindow = false;
+        start.Arguments = $"\"{pythonFile}\" \"{text}\"";
 
-    Process process = Process.Start(start);
+        start.UseShellExecute = false;
+        start.RedirectStandardOutput = true;
+        start.RedirectStandardError = true;
+        start.CreateNoWindow = false;
 
-    string output = process.StandardOutput.ReadToEnd();
-    string error = process.StandardError.ReadToEnd();
+        Process process = Process.Start(start);
 
-    process.WaitForExit();
+        string output = process.StandardOutput.ReadToEnd();
+        string error = process.StandardError.ReadToEnd();
 
-    UnityEngine.Debug.Log("PYTHON OUTPUT:\n" + output);
+        process.WaitForExit();
 
-    if (!string.IsNullOrEmpty(error))
-        UnityEngine.Debug.LogError("PYTHON ERROR:\n" + error);
-}
+        UnityEngine.Debug.Log("PYTHON OUTPUT:\n" + output);
+
+        if (!string.IsNullOrEmpty(error))
+            UnityEngine.Debug.LogError("PYTHON ERROR:\n" + error);
+    }
 }

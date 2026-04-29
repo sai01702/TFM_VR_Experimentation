@@ -16,6 +16,8 @@ TagManager:
   - Button3D
   - MazeExit
   - GuideAgent
+  - CinemachineTarget
+  - MazeStart
   layers:
   - Default
   - TransparentFX
