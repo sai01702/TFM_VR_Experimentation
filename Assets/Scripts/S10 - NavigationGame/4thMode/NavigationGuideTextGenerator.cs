@@ -2,6 +2,22 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
+/*
+ * V4 pipeline role: GUIDE/TTS TEXT GENERATOR.
+ *
+ * This script receives already-detected DecisionNode data from NavigationDecisionSystem
+ * and turns it into human-readable route text in the Console.
+ *
+ * It does not detect NavMesh intersections and it does not draw debug visuals.
+ * Its job is only language generation:
+ * - find the correct entry at each decision node,
+ * - decide whether the route is straight/left/right,
+ * - detect simple split wording such as "the road splits into 2 paths",
+ * - print both per-decision debug lines and one full route sentence.
+ *
+ * Later, a real TTS component can read the same generated sentence instead of
+ * only logging it.
+ */
 public class NavigationGuideTextGenerator : MonoBehaviour
 {
     [Header("Guide Logging")]
@@ -16,6 +32,8 @@ public class NavigationGuideTextGenerator : MonoBehaviour
         if (corners == null || corners.Length < 2)
             return;
 
+        // Full route text is built alongside per-node debug logs so we can inspect
+        // each decision while also seeing the final sentence the user would hear.
         StringBuilder fullGuide = new StringBuilder();
         fullGuide.Append("V4 Guide Route: Start. ");
 
@@ -86,6 +104,8 @@ public class NavigationGuideTextGenerator : MonoBehaviour
 
     string GetGuideInstruction(DecisionNode node, EntryNode correctEntry, Vector3[] corners)
     {
+        // Use the upcoming path direction, not only the first yellow square, because
+        // some turns happen just after a decision point.
         Vector3 guideDirection = GetGuideOutgoingDirection(node.position, correctEntry.direction, corners);
         string turnText = GetTurnInstruction(node.position, guideDirection, corners);
 
@@ -123,6 +143,8 @@ public class NavigationGuideTextGenerator : MonoBehaviour
         if (incomingDirection.sqrMagnitude <= Mathf.Epsilon)
             incomingDirection = GetPathDirectionAtPoint(node.position, corners);
 
+        // Count visually distinct outgoing path groups by angle. This is intentionally
+        // language-focused and may differ from raw entry option count.
         Vector3 correctDirection = FlattenDirection(guideDirection);
         List<float> pathAngles = new List<float>();
 

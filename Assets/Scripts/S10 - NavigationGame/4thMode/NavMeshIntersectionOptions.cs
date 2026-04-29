@@ -2,10 +2,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/*
+ * V4 pipeline role: RAW DECISION CANDIDATE PROVIDER.
+ *
+ * This script now owns the full raw-candidate step that used to be split across
+ * two components.
+ *
+ * It performs both jobs in one NavMesh triangulation pass:
+ * 1. Convert Unity's baked NavMesh into triangle data.
+ * 2. Build triangle adjacency by checking shared edges.
+ * 3. Find triangles with 3+ neighbors. These are rough intersection candidates.
+ * 4. Merge nearby candidate positions to reduce duplicate node spam.
+ * 5. For each merged candidate, collect outgoing directions from nearby connected
+ *    triangles and merge directions that point almost the same way.
+ *
+ * Output:
+ *   results = List<IntersectionWithOptions>
+ *
+ * NavigationDecisionSystem reads this list, filters it against the correct route,
+ * marks the correct option, and creates the debug visuals/guide text.
+ */
 public class NavMeshIntersectionOptions : MonoBehaviour
 {
-    public NavMeshIntersectionDetector detector;
+    [Header("Candidate Detection")]
+    public float intersectionMergeDistance = 1.0f;
+    public int minimumNeighborCount = 3;
 
+    [Header("Option Detection")]
+    public float optionSearchRadius = 2.5f;
     public float directionMergeAngle = 15f;
 
     public List<IntersectionWithOptions> results = new List<IntersectionWithOptions>();
@@ -23,100 +47,170 @@ public class NavMeshIntersectionOptions : MonoBehaviour
         Vector3[] vertices = triangulation.vertices;
         int[] indices = triangulation.indices;
 
-        // 🔹 triangle list
-        List<Triangle> triangles = new List<Triangle>();
+        List<NavMeshTriangleData> triangles = BuildTriangleList(vertices, indices);
+        Dictionary<int, List<int>> adjacency = BuildAdjacency(triangles);
+        List<Vector3> candidatePositions = FindIntersectionCandidates(triangles, adjacency);
+        candidatePositions = MergeClosePositions(candidatePositions, intersectionMergeDistance);
+
+        foreach (var candidate in candidatePositions)
+        {
+            List<Vector3> directions = FindOutgoingDirections(candidate, triangles, adjacency);
+            directions = MergeDirections(directions);
+
+            results.Add(new IntersectionWithOptions
+            {
+                position = candidate,
+                options = directions
+            });
+        }
+
+        Debug.Log("Intersection options generated: " + results.Count);
+    }
+
+    List<NavMeshTriangleData> BuildTriangleList(Vector3[] vertices, int[] indices)
+    {
+        List<NavMeshTriangleData> triangles = new List<NavMeshTriangleData>();
 
         for (int i = 0; i < indices.Length; i += 3)
         {
-            Triangle t = new Triangle();
-            t.a = vertices[indices[i]];
-            t.b = vertices[indices[i + 1]];
-            t.c = vertices[indices[i + 2]];
-            t.center = (t.a + t.b + t.c) / 3f;
+            NavMeshTriangleData triangle = new NavMeshTriangleData
+            {
+                a = vertices[indices[i]],
+                b = vertices[indices[i + 1]],
+                c = vertices[indices[i + 2]]
+            };
 
-            triangles.Add(t);
+            triangle.center = (triangle.a + triangle.b + triangle.c) / 3f;
+            triangles.Add(triangle);
         }
 
-        foreach (var intersection in detector.intersections)
+        return triangles;
+    }
+
+    Dictionary<int, List<int>> BuildAdjacency(List<NavMeshTriangleData> triangles)
+    {
+        Dictionary<int, List<int>> adjacency = new Dictionary<int, List<int>>();
+
+        for (int i = 0; i < triangles.Count; i++)
+            adjacency[i] = new List<int>();
+
+        for (int i = 0; i < triangles.Count; i++)
         {
-            List<Vector3> dirs = new List<Vector3>();
-
-            foreach (var tri in triangles)
+            for (int j = i + 1; j < triangles.Count; j++)
             {
-                // 🔥 intersection’a yakın triangle’ları bul
-                if (Vector3.Distance(tri.center, intersection.position) < 2.5f)
-                {
-                    foreach (var other in triangles)
-                    {
-                        if (tri == other) continue;
+                if (!ShareEdge(triangles[i], triangles[j]))
+                    continue;
 
-                        if (ShareEdge(tri, other))
-                        {
-                            Vector3 dir = (other.center - tri.center).normalized;
-                            dirs.Add(dir);
-                        }
-                    }
-                }
+                adjacency[i].Add(j);
+                adjacency[j].Add(i);
+            }
+        }
+
+        return adjacency;
+    }
+
+    List<Vector3> FindIntersectionCandidates(List<NavMeshTriangleData> triangles, Dictionary<int, List<int>> adjacency)
+    {
+        List<Vector3> candidates = new List<Vector3>();
+
+        for (int i = 0; i < triangles.Count; i++)
+        {
+            if (adjacency[i].Count >= minimumNeighborCount)
+                candidates.Add(triangles[i].center);
+        }
+
+        return candidates;
+    }
+
+    List<Vector3> FindOutgoingDirections(Vector3 candidate, List<NavMeshTriangleData> triangles, Dictionary<int, List<int>> adjacency)
+    {
+        List<Vector3> directions = new List<Vector3>();
+
+        for (int i = 0; i < triangles.Count; i++)
+        {
+            if (Vector3.Distance(triangles[i].center, candidate) > optionSearchRadius)
+                continue;
+
+            foreach (int neighborIndex in adjacency[i])
+            {
+                Vector3 direction = triangles[neighborIndex].center - triangles[i].center;
+                direction.y = 0f;
+
+                if (direction.sqrMagnitude <= Mathf.Epsilon)
+                    continue;
+
+                directions.Add(direction.normalized);
+            }
+        }
+
+        return directions;
+    }
+
+    List<Vector3> MergeClosePositions(List<Vector3> positions, float mergeDistance)
+    {
+        List<Vector3> merged = new List<Vector3>();
+
+        foreach (var position in positions)
+        {
+            bool wasMerged = false;
+
+            for (int i = 0; i < merged.Count; i++)
+            {
+                if (Vector3.Distance(position, merged[i]) > mergeDistance)
+                    continue;
+
+                merged[i] = (merged[i] + position) * 0.5f;
+                wasMerged = true;
+                break;
             }
 
-            // 🔹 duplicate temizle
-            dirs = MergeDirections(dirs);
-
-            IntersectionWithOptions res = new IntersectionWithOptions();
-            res.position = intersection.position;
-            res.options = dirs;
-
-            results.Add(res);
+            if (!wasMerged)
+                merged.Add(position);
         }
 
-        Debug.Log("Options generated for intersections: " + results.Count);
+        return merged;
     }
 
-    // 🔹 EDGE CHECK
-    bool ShareEdge(Triangle t1, Triangle t2)
+    List<Vector3> MergeDirections(List<Vector3> directions)
     {
-        int shared = 0;
+        List<Vector3> merged = new List<Vector3>();
 
-        if (Approximately(t1.a, t2.a) || Approximately(t1.a, t2.b) || Approximately(t1.a, t2.c)) shared++;
-        if (Approximately(t1.b, t2.a) || Approximately(t1.b, t2.b) || Approximately(t1.b, t2.c)) shared++;
-        if (Approximately(t1.c, t2.a) || Approximately(t1.c, t2.b) || Approximately(t1.c, t2.c)) shared++;
-
-        return shared >= 2;
-    }
-
-    bool Approximately(Vector3 a, Vector3 b)
-    {
-        return Vector3.Distance(a, b) < 0.01f;
-    }
-
-    // 🔹 DIRECTION MERGE
-    List<Vector3> MergeDirections(List<Vector3> dirs)
-    {
-        List<Vector3> result = new List<Vector3>();
-
-        foreach (var d in dirs)
+        foreach (var direction in directions)
         {
-            bool merged = false;
+            bool alreadyExists = false;
 
-            foreach (var r in result)
+            foreach (var existing in merged)
             {
-                if (Vector3.Angle(d, r) < directionMergeAngle)
+                if (Vector3.Angle(direction, existing) < directionMergeAngle)
                 {
-                    merged = true;
+                    alreadyExists = true;
                     break;
                 }
             }
 
-            if (!merged)
-                result.Add(d);
+            if (!alreadyExists)
+                merged.Add(direction);
         }
 
-        return result;
+        return merged;
     }
 
-}
+    bool ShareEdge(NavMeshTriangleData first, NavMeshTriangleData second)
+    {
+        int shared = 0;
 
-// =====================
+        if (Approximately(first.a, second.a) || Approximately(first.a, second.b) || Approximately(first.a, second.c)) shared++;
+        if (Approximately(first.b, second.a) || Approximately(first.b, second.b) || Approximately(first.b, second.c)) shared++;
+        if (Approximately(first.c, second.a) || Approximately(first.c, second.b) || Approximately(first.c, second.c)) shared++;
+
+        return shared >= 2;
+    }
+
+    bool Approximately(Vector3 first, Vector3 second)
+    {
+        return Vector3.Distance(first, second) < 0.01f;
+    }
+}
 
 [System.Serializable]
 public class IntersectionWithOptions
@@ -125,8 +219,10 @@ public class IntersectionWithOptions
     public List<Vector3> options;
 }
 
-public class NavTriangle
+public class NavMeshTriangleData
 {
-    public Vector3 a, b, c;
+    public Vector3 a;
+    public Vector3 b;
+    public Vector3 c;
     public Vector3 center;
 }

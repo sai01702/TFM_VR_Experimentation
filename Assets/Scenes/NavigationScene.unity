@@ -980,7 +980,6 @@ GameObject:
   - component: {fileID: 1963210293}
   - component: {fileID: 1963210295}
   - component: {fileID: 1963210296}
-  - component: {fileID: 1963210297}
   - component: {fileID: 1963210298}
   - component: {fileID: 1963210299}
   m_Layer: 0
@@ -1052,20 +1051,6 @@ MonoBehaviour:
   minDecisionDistance: 2
   duplicateAngleThreshold: 15
   decisionPoints: []
---- !u!114 &1963210297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1963210292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e10f543f6fc71e4ab4f64dc55c1f8e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mergeDistance: 1
-  intersections: []
 --- !u!114 &1963210298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1078,7 +1063,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83efd808590c56349aaf76baa6c3217d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detector: {fileID: 1963210297}
+  intersectionMergeDistance: 1
+  minimumNeighborCount: 3
+  optionSearchRadius: 2.5
   directionMergeAngle: 15
   results: []
 --- !u!114 &1963210299

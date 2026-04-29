@@ -2,6 +2,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/*
+ * Legacy/prototype script.
+ *
+ * This script samples a calculated path and tries to infer decision points by
+ * probing around the path samples. It is NOT part of the current V4_HumanVerbalGuide
+ * component stack shown in the Inspector.
+ *
+ * Current V4 uses:
+ *   NavMeshIntersectionOptions -> NavigationDecisionSystem -> NavigationGuideTextGenerator
+ *
+ * You can keep this file in the project as reference, but do not attach it to the
+ * current V4 object unless you intentionally want to test this older approach.
+ */
 public class DecisionPointDetector : MonoBehaviour
 {
     public Transform startPoint;
