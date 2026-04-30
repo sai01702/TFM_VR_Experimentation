@@ -6430,7 +6430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b689b42fef864e4eb94ba05bd3cc1d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectionString: mongodb://localhost:27017
+  connectionString: mongodb+srv://mllhzhz_db_user:M0YVBvSUMwTVvnMq@vranalysis.0uwi8nl.mongodb.net/?appName=vrAnalysis
   dbName: test
   collectionName: tfg
 --- !u!4 &1825243372

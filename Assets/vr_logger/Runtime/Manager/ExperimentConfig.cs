@@ -2,6 +2,8 @@ using UnityEngine;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
+using MongoDB.Driver;
+using MongoDB.Bson;
 
 namespace VRLogger
 {
@@ -17,8 +19,8 @@ namespace VRLogger
         public string GroupName = "Grupo_A";
         public string IndependentVariable = "";
         public float TurnDurationSeconds = 60f;
-        public float PlayAreaWidth = 2.5f;
-        public float PlayAreaDepth = 2.5f;
+        [HideInInspector] public float PlayAreaWidth = 0f;
+        [HideInInspector] public float PlayAreaDepth = 0f;
 
         [Header("Participants")]
         public int ParticipantCount = 4;
@@ -38,7 +40,7 @@ namespace VRLogger
         public bool UseMovementTracker = true;
         public bool UseHandTracker = false;
         public bool UseFootTracker = false;
-        public bool UseRaycastLogger = true;
+        [HideInInspector] public bool UseRaycastLogger = true;
         public bool UseCollisionLogger = true;
 
         [Header("GM Controls")]
@@ -412,6 +414,7 @@ namespace VRLogger
                 { "controller_error", "interface_error" },
                 { "wrong_button", "interface_error" },
                 { "ui_interaction", "interface_action" },
+                { "ui_error", "interface_error" },
                 { "menu_opened", "interface_action" },
                 { "menu_closed", "interface_action" },
                 { "help_requested", "help_event" },
@@ -535,6 +538,23 @@ namespace VRLogger
             return jsonConfig;
         }
 
+        /// <summary>
+        /// Called by VRTrackingManager at start to inject auto-calculated scene bounds.
+        /// Updates both the C# fields and the already-built JSON so Mongo receives the real values.
+        /// </summary>
+        public void SetPlayAreaBounds(float width, float depth)
+        {
+            PlayAreaWidth = width;
+            PlayAreaDepth = depth;
+
+            if (jsonConfig != null && jsonConfig["session"] is JObject session)
+            {
+                session["play_area_width"] = width;
+                session["play_area_depth"] = depth;
+                Debug.Log($"[ExperimentConfig] 📐 Play area bounds updated → W={width:F2} m, D={depth:F2} m");
+            }
+        }
+
 #if UNITY_EDITOR
         [ContextMenu("Load From Profile (Overwrite Inspector)")]
         public void LoadFromProfile()
@@ -621,6 +641,227 @@ namespace VRLogger
             UnityEditor.EditorUtility.SetDirty(activeProfile);
             UnityEditor.AssetDatabase.SaveAssets();
             Debug.Log($"Saved values to profile: {activeProfile.name}");
+        }
+
+        [ContextMenu("Pull Config from Streamlit (MongoDB)")]
+        public async void PullConfigFromMongoDB()
+        {
+            var usm = FindFirstObjectByType<UserSessionManager>();
+            string uri = usm != null && !string.IsNullOrEmpty(usm.connectionString) ? usm.connectionString : "mongodb://localhost:27017";
+            string db = usm != null && !string.IsNullOrEmpty(usm.dbName) ? usm.dbName : "test";
+            string col = usm != null && !string.IsNullOrEmpty(usm.collectionName) ? usm.collectionName : "tfg";
+
+            Debug.Log($"[ExperimentConfig] Connecting to Mongo to pull config from: {uri} -> {db}.{col}");
+            
+            try
+            {
+                var client = new MongoClient(uri);
+                var database = client.GetDatabase(db);
+                var collection = database.GetCollection<BsonDocument>(col);
+
+                // Find the latest document where event_type == "config"
+                var filter = Builders<BsonDocument>.Filter.Eq("event_type", "config");
+                var sort = Builders<BsonDocument>.Sort.Descending("timestamp");
+                var latestConfigDoc = await collection.Find(filter).Sort(sort).FirstOrDefaultAsync();
+
+                if (latestConfigDoc == null)
+                {
+                    Debug.LogWarning("[ExperimentConfig] No configuration found in MongoDB.");
+#if UNITY_EDITOR
+                    UnityEditor.EditorUtility.DisplayDialog("Pull Config", "No configuration found in MongoDB.", "OK");
+#endif
+                    return;
+                }
+
+                if (!latestConfigDoc.Contains("event_context"))
+                {
+                    Debug.LogError("[ExperimentConfig] Latest config doc missing event_context.");
+                    return;
+                }
+                
+                // Read Bson to JSON string and parse
+                string jsonString = latestConfigDoc["event_context"].ToJson();
+                JObject cfg = JObject.Parse(jsonString);
+
+                // Apply to fields
+                SessionName = (string)cfg["session"]?["session_name"] ?? SessionName;
+                GroupName = (string)cfg["session"]?["group_name"] ?? GroupName;
+                IndependentVariable = (string)cfg["session"]?["independent_variable"] ?? IndependentVariable;
+                
+                if (cfg["session"]?["turn_duration_seconds"] != null)
+                    TurnDurationSeconds = (float)cfg["session"]["turn_duration_seconds"];
+
+                if (cfg["participants"]?["count"] != null)
+                    ParticipantCount = (int)cfg["participants"]["count"];
+                
+                if (cfg["participants"]?["order"] is JArray arr)
+                {
+                    ParticipantOrder = new List<string>();
+                    foreach (var token in arr) ParticipantOrder.Add(token.ToString());
+                }
+
+                string manualUser = (string)cfg["_ui"]?["manual_participant"];
+                if (manualUser != null) ManualParticipantName = manualUser;
+
+                ExperimentId = (string)cfg["experiment_selection"]?["experiment_id"] ?? ExperimentId;
+                FormulaProfile = (string)cfg["experiment_selection"]?["formula_profile"] ?? FormulaProfile;
+                Description = (string)cfg["experiment_selection"]?["description"] ?? Description;
+
+                if (cfg["modules"] != null)
+                {
+                    UseGazeTracker = (bool?)cfg["modules"]["useGazeTracker"] ?? UseGazeTracker;
+                    UseEyeTracker = (bool?)cfg["modules"]["useEyeTracker"] ?? UseEyeTracker;
+                    UseMovementTracker = (bool?)cfg["modules"]["useMovementTracker"] ?? UseMovementTracker;
+                    UseHandTracker = (bool?)cfg["modules"]["useHandTracker"] ?? UseHandTracker;
+                    UseFootTracker = (bool?)cfg["modules"]["useFootTracker"] ?? UseFootTracker;
+                    UseRaycastLogger = (bool?)cfg["modules"]["useRaycastLogger"] ?? UseRaycastLogger;
+                    UseCollisionLogger = (bool?)cfg["modules"]["useCollisionLogger"] ?? UseCollisionLogger;
+                }
+
+                if (cfg["participant_flow"] != null)
+                {
+                    string mode = (string)cfg["participant_flow"]["mode"];
+                    if (mode == "manual") FlowMode = FlowModeType.Manual;
+                    else FlowMode = FlowModeType.Turns;
+
+                    string end = (string)cfg["participant_flow"]["end_condition"];
+                    if (end == "gm") EndCondition = EndConditionType.GM;
+                    else EndCondition = EndConditionType.Timer;
+
+                    EnableGMControls = (bool?)cfg["participant_flow"]["gm_controls"]?["enabled"] ?? EnableGMControls;
+                }
+
+                // If metrics weights were changed, apply them:
+                if (cfg["metrics"]?["efectividad"]?["hit_ratio"]?["weight"] != null)
+                    Metrics.HitRatio.Weight = (float)cfg["metrics"]["efectividad"]["hit_ratio"]["weight"];
+
+                if (cfg["metrics"]?["efectividad"]?["success_rate"]?["weight"] != null)
+                    Metrics.SuccessRate.Weight = (float)cfg["metrics"]["efectividad"]["success_rate"]["weight"];
+
+                // ----- NEW: Parsed Custom Event Roles and Mappings ----- //
+                if (cfg["event_roles"] is JObject eventRolesObj)
+                {
+                    Dictionary<string, string> baseRoleMap = new Dictionary<string, string>
+                    {
+                        { "target_hit", "action_success" }, { "target_miss", "action_fail" },
+                        { "goal_reached", "action_success" }, { "object_placed_correctly", "action_success" },
+                        { "object_dropped", "action_fail" }, { "fall_detected", "action_fail" },
+                        { "task_start", "task_start" }, { "task_end", "task_end" },
+                        { "task_restart", "task_restart" }, { "task_timeout", "task_abandoned" },
+                        { "task_abandoned", "task_abandoned" }, { "session_start", "session_start" },
+                        { "session_end", "session_end" }, { "early_leave", "session_end" },
+                        { "collision", "navigation_error" }, { "navigation_error", "navigation_error" },
+                        { "controller_error", "interface_error" }, { "wrong_button", "interface_error" },
+                        { "ui_interaction", "interface_action" }, { "ui_error", "interface_error" },
+                        { "menu_opened", "interface_action" }, { "menu_closed", "interface_action" },
+                        { "help_requested", "help_event" }, { "guide_used", "help_event" },
+                        { "hint_used", "help_event" }, { "tutorial_step", "help_event" },
+                        { "movement_frame", "movement_update" }, { "teleport_used", "movement_action" },
+                        { "walk_step", "movement_action" }, { "sharp_turn", "movement_action" },
+                        { "turn_event", "movement_action" }, { "inspect_object", "exploration_event" },
+                        { "gaze_sustained", "gaze_event" }, { "gaze_frequency_change", "gaze_event" },
+                        { "gaze_exit", "gaze_event" }, { "action_with_gaze_check", "gaze_action" },
+                        { "eye_tracking_sample", "gaze_sample" }, { "controller_action", "interaction_event" },
+                        { "object_grabbed", "interaction_event" }, { "object_released", "interaction_event" },
+                        { "trigger_pull", "interaction_event" }, { "audio_triggered", "audio_event" },
+                        { "sound_source_active", "audio_event" }, { "head_turn", "audio_reaction" },
+                        { "inactivity_frame", "inactivity_event" }, { "timeout_detected", "inactivity_event" },
+                        { "system_warning", "system_event" }, { "performance_drop", "system_event" },
+                        { "latency_spike", "system_event" }, { "spawn_object", "task_start" },
+                        { "bullet_hit", "action_success" }, { "reaction_time", "performance_measure" },
+                        { "manual_despawn", "action_fail" }, { "custom_event", "custom_event" }
+                    };
+
+                    CustomEventRoles.Clear();
+                    foreach (var prop in eventRolesObj.Properties())
+                    {
+                        string eName = prop.Name;
+                        string rValue = prop.Value.ToString();
+
+                        if (!baseRoleMap.ContainsKey(eName) || baseRoleMap[eName] != rValue)
+                        {
+                            if (System.Enum.TryParse(rValue, true, out EventRoleType parsedRole))
+                            {
+                                CustomEventRoles.Add(new EventRoleMapping { EventName = eName, Role = parsedRole });
+                            }
+                        }
+                    }
+                }
+
+                // ----- NEW: Parsed Custom Metrics ----- //
+                if (cfg["metrics"] is JObject metricsObj)
+                {
+                    HashSet<string> baseMetricKeys = new HashSet<string> {
+                        "hit_ratio", "success_rate", "learning_curve_mean", "progression", "success_after_restart",
+                        "avg_reaction_time_ms", "avg_task_duration_ms", "time_per_success_s", "navigation_errors",
+                        "learning_stability", "error_reduction_rate", "voluntary_play_time_s", "aid_usage", "interface_errors",
+                        "activity_level_per_min", "first_success_time_s", "inactivity_time_s", "sound_localization_time_s", "audio_performance_gain"
+                    };
+
+                    CustomMetrics.Clear();
+                    foreach (var categoryProp in metricsObj.Properties())
+                    {
+                        string catStr = categoryProp.Name;
+                        if (!System.Enum.TryParse(catStr, true, out MetricCategoryType catEnum)) continue;
+
+                        if (categoryProp.Value is JObject catObj)
+                        {
+                            foreach (var metricProp in catObj.Properties())
+                            {
+                                string mName = metricProp.Name;
+                                if (!baseMetricKeys.Contains(mName) && metricProp.Value is JObject mData)
+                                {
+                                    CustomMetricDefinition cmd = new CustomMetricDefinition();
+                                    cmd.MetricName = mName;
+                                    cmd.Category = catEnum;
+                                    cmd.TargetEventName = (string)mData["target_event"] ?? mName;
+
+                                    string aggStr = (string)mData["aggregation"] ?? "Count";
+                                    if (System.Enum.TryParse(aggStr, true, out MetricAggregationType aggEnum))
+                                        cmd.Aggregation = aggEnum;
+                                    else
+                                        cmd.Aggregation = MetricAggregationType.Count;
+
+                                    cmd.Config = new MetricConfig {
+                                        Enabled = (bool?)mData["enabled"] ?? true,
+                                        Weight = (float?)mData["weight"] ?? 0.5f,
+                                        Min = (float?)mData["min"] ?? 0f,
+                                        Max = (float?)mData["max"] ?? 100f,
+                                        Invert = (bool?)mData["invert"] ?? false
+                                    };
+                                    CustomMetrics.Add(cmd);
+                                }
+                            }
+                        }
+                    }
+                }
+                // ------------------------------------------------------- //
+
+                // Crucial step: if we have an activeProfile, unassign it so the Inspector fields take precedence.
+                // Or you could let them save it to the profile by clicking "Save To Profile" later.
+                if (activeProfile != null)
+                {
+                    Debug.LogWarning("[ExperimentConfig] An Active Profile was assigned. It has been unlinked so the downloaded values take precedence. If you want to overwrite your old profile, assign it back and click 'Save To Profile'.");
+                    activeProfile = null;
+                }
+
+                // Force Editor Refresh
+                UnityEditor.EditorUtility.SetDirty(this);
+                // Required to ensure the inspector actually repaints its values immediately
+                UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(gameObject.scene);
+
+                Debug.Log("[ExperimentConfig] ✅ Successfully pulled and applied configuration from MongoDB!");
+#if UNITY_EDITOR
+                UnityEditor.EditorUtility.DisplayDialog("Pull Config", "Successfully pulled and applied configuration from MongoDB!", "OK");
+#endif
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[ExperimentConfig] ❌ Failed to pull config: {ex.Message}");
+#if UNITY_EDITOR
+                UnityEditor.EditorUtility.DisplayDialog("Error", $"Failed to pull config: {ex.Message}", "OK");
+#endif
+            }
         }
 #endif
     }

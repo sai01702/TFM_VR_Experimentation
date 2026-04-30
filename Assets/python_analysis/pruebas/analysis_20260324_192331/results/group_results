@@ -1,0 +1,17 @@
+{
+    "Global": {
+        "efectividad": {
+            "score": 0.0
+        },
+        "eficiencia": {
+            "score": 0.0
+        },
+        "satisfaccion": {
+            "score": 0.0
+        },
+        "presencia": {
+            "score": 0.0
+        },
+        "global_score": 0.0
+    }
+}

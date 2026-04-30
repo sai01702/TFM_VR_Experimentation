@@ -4,11 +4,13 @@
 
 El **VR Logger** es un paquete para Unity que facilita la captura y análisis de comportamiento en VR.
 
-Novedades v2.0:
+Novedades v2.1:
 * **ExperimentConfig**: Configuración centralizada sin código (Inspector).
 * **ExperimentProfile**: Perfiles reutilizables (ScriptableObjects).
-* **Inspector Event Mapping**: Define tus eventos (ej: `bullet_hit` -> `Action_Success`) visualmente.
-* **Plugins Modulares**: Activa/desactiva Gaze, Movement, Hand, etc.
+* **Streamlit Configurator**: Crea configuraciones de experimentos en una UI web y descárgalas en Unity con 1 clic ("Pull Config from Streamlit"). Incluye **Gestión de Participantes** y **Cuestionarios SUS** integrados directamente con el Dashboard de visualización y el Informe en PDF.
+* **Dynamic Play Area**: El tamaño del área de juego para los mapas de seguimiento espaciales se extrae **automáticamente** en tiempo de ejecución de las gafas de RV o usando el nuevo **NavMeshBoundsLogger** para dibujar la geometría real del mapa.
+* **Inspector Event Mapping**: Define tus eventos (ej: `bullet_hit` -> `action_success`) visualmente.
+* **Catálogo de Componentes**: Colección inmensa de scripts listos para arrastrar y soltar que evitan tener que programar eventos (`SemanticZoneLogger`, `TaskZoneBoundaryLogger`, etc.).
 
 ---
 
@@ -94,17 +96,37 @@ await UserSessionManager.Instance.LogEventWithSession(
 
 ---
 
-## 🧩 Plugins disponibles
+## 🧩 Componentes y Plugins de Registro
 
-Actívalos desde el **ExperimentProfile** (sección *Modules*):
+Úsalos arrastrándolos a tus objetos (`Assets/vr_logger/Runtime/Components`) o actívalos desde el **ExperimentProfile**:
 
-| Plugin | Descripción | Log generado |
+| Componente | Descripción | Log generado / Rol |
 | :--- | :--- | :--- |
-| **GazeTracker** | Registra qué objeto mira el usuario (Raycast desde cámara). | `gaze_sustained`, `gaze_frequency_change` |
-| **MovementTracker** | Registra posición/rotación de HMD cada X segundos. | `movement_update` |
-| **HandTracker** | Registra posición de manos (Controllers). | `hand_movement` |
-| **CollisionLogger** | Detecta colisiones físicas con tags específicos. | `collision` (`Navigation_Error`) |
-| **RaycastLogger** | Lanza rayos desde controladores para ver interacciones. | `ui_interaction` |
+| **NavMeshBoundsLogger** | Extrae automáticamente el contorno del NavMesh para dibujar el plano de la habitación exacto en Python. | `NAVMESH_BOUNDARY` |
+| **SemanticZoneLogger** | Convierte triggers volumétricos (zonas del mapa) en aciertos o errores automáticos para estudios de decisión en laberintos o puzzles. | `action_success` / `action_fail` |
+| **DirectionalSemanticZoneLogger** | Permite asignar éxitos/errores según la cara (N/S/E/O) por la que se sale de un cruce. Soporta formas complejas (ej. pentágonos) asignándoles 'Balizas' en cada salida. | `action_success` / `action_fail` / `backtrack` |
+| **TaskZoneBoundaryLogger**| Registra el inicio y fin de una tarea concreta al entrar/salir de un collider. | `task_start` / `task_end` |
+| **CheckpointProgression** | Marca checkponts intermedios para curvas de aprendizaje. | `action_success` |
+| **NavigationErrorCollider**| Registra colisiones físicas con paredes u obstáculos penalizando la eficiencia. | `action_fail` / `navigation_error` |
+| **AidInteractionLogger** * | Registra solicitudes de ayuda o visualización de pistas al mirarlas o tocarlas. | `help_event` |
+| **UIActionInterceptor** * | Intercepta clicks en botones de UI (Canvas) automáticamente sin tocar el código del botón. | (Según config map) |
+| **InertiaInactivityLogger**| Analiza la varianza de la cámara para detectar si el usuario se ha quedado "congelado" o inactivo, ignorando temblores. | `inactivity_detected` |
+| **LifecycleReactionLogger**| Mide tiempos de reacción en milisegundos puros basándose en cuándo un objeto aparece y se destruye/apaga. | `action_success` |
+| **GazeTracker** | Registra qué objeto mira el usuario (Raycast cruzado desde cámara). | `gaze_sustained` |
+| **MovementTracker** | Registra posición/rotación de cabeza y manos cada X segundos (Telemetría para mapas espaciales). | `movement_update` |
+| **NetcodeVRLoggerBridge**| Script puente para juegos Multijugador (NGO). Sincroniza las teclas del Game Master (N, P, E) por la red. | (Comandos Internos) |
+
+*\* Requieren colliders físicos, oculares o componentes Selectable de Unity UI para funcionar.*
+
+---
+
+## 🌐 Integración con Multijugador (Netcode for GameObjects)
+
+Si tu experimento es **Multijugador / Remoto** y usas la tecnología oficial de Unity NGO con un Game Master (GM), sigue estos pasos para que todo funcione perfecto sin duplicar datos en MongoDB:
+
+1. **Añadir el Puente**: Arrastra el componente `NetcodeVRLoggerBridge` a cualquier `NetworkObject` persistente de tu escena (ej. tu jugador en red, o el NetworkManager). 
+2. **Desactivar controles locales**: En el perfil `ExperimentProfile` de tu escena, DEBES destildar la casilla **"Enable GM Controls (Keyboard)"**. Ahora será tu red la que sincronice las pulsaciones de todo el mundo.
+3. **El "Truco de la Abuela" para la Base de Datos**: Como todos usaréis la misma "build" del juego (.exe), debes evitar que el PC del GM también se conecte a Mongo y mande eventos vacíos. En la versión que vayas a usar como GM, en el `UserSessionManager`, **escribe un Connection String falso o inventado** (ej: `mongodb://no-conectar:111`). Al tener la IP rota, su base de datos fallará en silencio y ¡solo tu jugador VR oficial enviará logs!
 
 ---
 
