@@ -196,7 +196,7 @@ public class NavigationGuideTextGenerator : MonoBehaviour
             return "Go straight";
 
         if (absAngle < 60f)
-            return signedAngle > 0f ? "Take a slight right" : "Take a slight left";
+            return signedAngle > 0f ? "Take the right" : "Take the left";
 
         if (absAngle < 130f)
             return signedAngle > 0f ? "Turn right" : "Turn left";
