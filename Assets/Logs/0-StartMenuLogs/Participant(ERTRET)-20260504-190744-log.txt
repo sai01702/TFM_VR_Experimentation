@@ -1,0 +1,11 @@
+Participant: ERTRET
+Session start: 04/05/2026 19:07:44
+=========================================
+
+SessionStart
+
+=== Navigation Game Log ===
+Mode: Desktop
+Started: 04/05/2026 19:08:00
+Lobby: Guide = Roadline, Maze 1
+

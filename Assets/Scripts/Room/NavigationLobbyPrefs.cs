@@ -22,4 +22,22 @@ public static class NavigationLobbyPrefs
         mazeIndex = PlayerPrefs.GetInt(MazeIndexKey, -1);
         return guideModeIndex >= 0 && mazeIndex >= 0;
     }
+
+    /// <summary>0 Roadline, 1 Agent, 2 Verbal — matches UI order.</summary>
+    public static string GetGuideModeDisplayName(int guideModeIndex)
+    {
+        string[] labels = { "Roadline", "Humanoid agent", "Verbal agent" };
+        if (guideModeIndex >= 0 && guideModeIndex < labels.Length)
+            return labels[guideModeIndex];
+        if (guideModeIndex >= 0)
+            return $"Mode {guideModeIndex}";
+        return "Unknown";
+    }
+
+    public static string GetMazeDisplayName(int mazeIndex)
+    {
+        if (mazeIndex < 0)
+            return "Unknown";
+        return $"Maze {mazeIndex + 1}";
+    }
 }

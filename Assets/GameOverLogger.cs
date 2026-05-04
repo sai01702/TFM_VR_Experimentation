@@ -26,6 +26,12 @@ public class GameOverLogger : MonoBehaviour
                         $"Accuracy = {SceneTracker.Instance.puzzleAccuracy:F1}%";
                 break;
 
+            case "NavigationScene":
+                // Details are in NavigationParticipantLog blocks (same pattern as shooter + ObjetivosManager).
+                line += $"Guided = {SceneTracker.Instance.navigationRound1Seconds:F3}s, " +
+                        $"Unguided = {SceneTracker.Instance.navigationRound2Seconds:F3}s";
+                break;
+
             default:
                 line += "Unknown scene.";
                 break;

@@ -1024,3 +1024,20 @@ Player: Player
   - Success rate: 100.0%
 =====================================
 
+[18:02:11] GAME START - Attempt #1
+[18:02:11] APPLICATION GAINED FOCUS
+[18:02:21] COURSE COMPLETED!
+  - Final time: 8.94 seconds
+  - Total attempts: 1
+  - Total falls: 0
+  - Success rate: 100.0%
+=====================================
+
+[19:20:43] GAME START - Attempt #1
+[19:20:53] COURSE COMPLETED!
+  - Final time: 9.88 seconds
+  - Total attempts: 1
+  - Total falls: 0
+  - Success rate: 100.0%
+=====================================
+

@@ -1,29 +1,79 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NavigationGameManager : MonoBehaviour
 {
     public static NavigationGameManager Instance;
 
-    private float startTime;
+    float _roundStartTime;
+    bool _timerActive;
+
+    /// <summary>Completion times for the last finished session (seconds), set when each round ends.</summary>
+    public float LastRound1Seconds { get; private set; }
+    public float LastRound2Seconds { get; private set; }
 
     void Awake()
     {
         Instance = this;
     }
 
+    /// <summary>Called when loading finishes and when round 2 begins (session-controlled).</summary>
+    public void BeginRoundTimer()
+    {
+        _roundStartTime = Time.time;
+        _timerActive = true;
+    }
+
+    public void NotifyRoundGoalReached(int roundIndex)
+    {
+        if (!_timerActive)
+            return;
+
+        float elapsed = Time.time - _roundStartTime;
+        if (roundIndex == 1)
+            LastRound1Seconds = elapsed;
+        else if (roundIndex == 2)
+            LastRound2Seconds = elapsed;
+
+        Debug.Log($"Navigation round {roundIndex} completion time: {elapsed:F2}s");
+        _timerActive = false;
+    }
+
+    /// <summary>Direct play in NavigationScene without <see cref="NavigationSessionController"/>.</summary>
     void Start()
     {
-        startTime = Time.time;
+        if (NavigationSessionController.Instance != null)
+            return;
+        BeginRoundTimer();
     }
 
     public void PlayerReachedGoal()
     {
-        float time = Time.time - startTime;
+        if (NavigationSessionController.Instance != null)
+            return;
 
-        Debug.Log("Goal reached!");
-        Debug.Log("Completion Time: " + time);
-
+        float time = Time.time - _roundStartTime;
+        Debug.Log("Goal reached! Time: " + time);
         EndGame();
+    }
+
+    public void EndNavigationSession()
+    {
+        Debug.Log("Navigation session finished (both rounds complete).");
+
+        int guide = -1;
+        int maze = -1;
+        NavigationLobbyPrefs.TryGet(out guide, out maze);
+
+        NavigationParticipantLog.LogSessionEnd(LastRound1Seconds, LastRound2Seconds, guide, maze);
+
+        if (SceneTracker.Instance != null)
+        {
+            SceneTracker.Instance.PreviousScene = SceneManager.GetActiveScene().name;
+            SceneTracker.Instance.SetNavigationResults(LastRound1Seconds, LastRound2Seconds, guide, maze);
+        }
+
+        SceneManager.LoadScene("GameOverScene");
     }
 
     void EndGame()

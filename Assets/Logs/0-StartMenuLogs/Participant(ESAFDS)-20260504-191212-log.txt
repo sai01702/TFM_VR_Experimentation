@@ -1,0 +1,21 @@
+Participant: ESAFDS
+Session start: 04/05/2026 19:12:12
+=========================================
+
+SessionStart
+
+=== Navigation Game Log ===
+Mode: Desktop
+Started: 04/05/2026 19:12:34
+Lobby: Guide = Roadline, Maze 1
+
+
+=== Navigation Game Ended ===
+End time: 04/05/2026 19:13:12
+Guided round: 14.888s
+Unguided round: 11.994s
+Lobby: Guide = Roadline, Maze 1
+
+[GameOver] From scene 'NavigationScene' - Guided = 14.888s, Unguided = 11.994s
+Session finished.
+

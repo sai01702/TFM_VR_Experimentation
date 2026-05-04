@@ -13,6 +13,12 @@ public class SceneTracker : MonoBehaviour
     public float puzzleTime = 0f;
     public float puzzleAccuracy = 0f;
 
+    [Header("Navigation scene (two rounds)")]
+    public float navigationRound1Seconds = 0f;
+    public float navigationRound2Seconds = 0f;
+    public int navigationGuideModeIndex = -1;
+    public int navigationMazeIndex = -1;
+
     void Awake()
     {
         if (Instance == null)
@@ -42,5 +48,13 @@ public class SceneTracker : MonoBehaviour
     {
         puzzleTime = time;
         puzzleAccuracy = accuracy;
+    }
+
+    public void SetNavigationResults(float guidedRoundSeconds, float unguidedRoundSeconds, int guideModeIndex, int mazeIndex)
+    {
+        navigationRound1Seconds = guidedRoundSeconds;
+        navigationRound2Seconds = unguidedRoundSeconds;
+        navigationGuideModeIndex = guideModeIndex;
+        navigationMazeIndex = mazeIndex;
     }
 }

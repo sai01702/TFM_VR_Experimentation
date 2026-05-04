@@ -1,0 +1,8 @@
+Participant: yey
+Session start: 04/05/2026 18:43:56
+=========================================
+
+SessionStart
+[GameOver] From scene 'NavigationScene' - Mode = Roadline, Maze 1, Guided = 14.385s, Unguided = 12.374s
+Session finished.
+

@@ -1,0 +1,8 @@
+Participant: t
+Session start: 04/05/2026 18:53:22
+=========================================
+
+SessionStart
+[GameOver] From scene 'PuzzleScene' - Time = 26.2s, Accuracy = 50.0%
+Session finished.
+

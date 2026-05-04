@@ -1,0 +1,8 @@
+Participant: sey
+Session start: 04/05/2026 18:36:03
+=========================================
+
+SessionStart
+[GameOver] From scene 'NavigationScene' - Guided = 15.245s, Unguided = 14.755s
+Session finished.
+

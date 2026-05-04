@@ -103641,7 +103641,7 @@ GameObject:
   - component: {fileID: 1804607553}
   - component: {fileID: 1804607554}
   m_Layer: 0
-  m_Name: rootMazeObject
+  m_Name: Maze4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

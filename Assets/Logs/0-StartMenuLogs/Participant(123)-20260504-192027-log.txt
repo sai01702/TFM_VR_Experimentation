@@ -1,0 +1,8 @@
+Participant: 123
+Session start: 04/05/2026 19:20:27
+=========================================
+
+SessionStart
+[GameOver] From scene 'ObstacleCourseScene' - Time = 9.9s, Success = 100.0%
+Session finished.
+
