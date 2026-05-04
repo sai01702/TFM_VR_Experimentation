@@ -584,6 +584,39 @@ MonoBehaviour:
   maze: {fileID: 11400000, guid: f23a542fc1fbac747b06bbf15348e5cc, type: 2}
   mazeInstantiator: {fileID: 11400000, guid: 6781560c0b28f8f4d95810d2b0059055, type: 2}
   bakedMeshes: []
+--- !u!1 &837556050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 837556051}
+  m_Layer: 0
+  m_Name: PathExportation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &837556051
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837556050}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 18.981806, y: -37.625168, z: 18.555882}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1024115129}
+  - {fileID: 2024115002}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &975266567
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,12 +688,12 @@ GameObject:
   - component: {fileID: 1024115129}
   - component: {fileID: 1024115128}
   m_Layer: 0
-  m_Name: PathExporterForAnalysis
+  m_Name: DestinationPathExporter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1024115128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -684,12 +717,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1024115127}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.3932014, y: 2.0434933, z: -4.2216887}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -16.588604, y: 39.668663, z: -22.77757}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 837556051}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1031423580
 GameObject:
@@ -1122,7 +1155,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1963210294
 Transform:
   m_ObjectHideFlags: 0
@@ -1282,12 +1315,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2024115001}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.3932014, y: 2.0434933, z: -4.2216887}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -16.588604, y: 39.668663, z: -22.77757}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 837556051}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2024115003
 MonoBehaviour:
@@ -1399,8 +1432,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2118726341}
+  - component: {fileID: 2118726342}
   m_Layer: 0
-  m_Name: MazeGeneratorSystem(RefencesOfLoaderCouldBeMissing_seachTFM)
+  m_Name: MazeGeneratorSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1424,6 +1458,24 @@ Transform:
   - {fileID: 330185825}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2118726342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118726340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16332c9658203854893eeda73c08040d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: "In this object, sometimes referenced object inside maze loader dissapears.
+    So, go to Maze Loader object (child object of this object), then expend \xA8Maze\xA8
+    section on Maze Loader script, then you will see two section having object assigned
+    to them (or not) which are maze generator and maze settings. for each field you
+    need to assign TFMAgentMazeGenerator and   TFMMazeSettings. This way you can
+    start using Maze generation.  (RefencesOfLoaderCouldBeMissing_seachTFM)"
 --- !u!1 &2143897000
 GameObject:
   m_ObjectHideFlags: 0
@@ -1554,9 +1606,8 @@ SceneRoots:
   - {fileID: 553411162}
   - {fileID: 1091086911}
   - {fileID: 2118726341}
-  - {fileID: 1024115129}
   - {fileID: 512637966}
   - {fileID: 1446949273}
   - {fileID: 975266569}
   - {fileID: 1963210294}
-  - {fileID: 2024115002}
+  - {fileID: 837556051}
