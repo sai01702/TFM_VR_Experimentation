@@ -89,53 +89,66 @@ public class LoginScreen : MonoBehaviour
                 Debug.Log("[LoginScreen] Input field submit listeners added");
         }
 
-        // Auto-focus the input field after a frame delay (only once per session)
+        // Fix: Disable RaycastTarget on background images that might block button clicks
+        DisableBackgroundRaycasts();
+
+        // Ensure EventSystem is properly set up BEFORE auto-focus so the input
+        // module is stable when ActivateInputField() runs.
+        FixEventSystem();
+
+        // Auto-focus the input field after the input module has settled
+        // (only once per session)
         if (autoFocusInputOnStart && !hasAutoFocused)
         {
             StartCoroutine(FocusInputFieldDelayed());
         }
-
-        // Fix: Disable RaycastTarget on background images that might block button clicks
-        DisableBackgroundRaycasts();
-        
-        // Ensure EventSystem is properly set up
-        FixEventSystem();
     }
 
     System.Collections.IEnumerator FocusInputFieldDelayed()
     {
-        yield return null; // Wait one frame
-        yield return null; // Wait another frame for safety
-        
-        // Only focus if nothing else has been selected yet
-        if (idInput != null && EventSystem.current != null)
-        {
-            // Don't steal focus if user has already tabbed to something else
-            var currentSelection = EventSystem.current.currentSelectedGameObject;
-            if (currentSelection == null || currentSelection == idInput.gameObject)
-            {
-                EventSystem.current.SetSelectedGameObject(idInput.gameObject);
-                idInput.ActivateInputField();
-                idInput.Select();
-                hasAutoFocused = true;
-                
-                if (enableDebug)
-                    Debug.Log("[LoginScreen] Auto-focused input field (one-time)");
-            }
-        }
+        // Real-time delay so the input module finishes its enable cycle and
+        // the keyboard text-input pipeline is live before we activate.
+        yield return new WaitForSecondsRealtime(0.15f);
+
+        if (idInput == null || EventSystem.current == null) yield break;
+
+        // Don't steal focus if user has already tabbed to something else
+        var currentSelection = EventSystem.current.currentSelectedGameObject;
+        if (currentSelection != null && currentSelection != idInput.gameObject) yield break;
+
+        // Mimic the click-away-then-back workaround: fully deactivate, wait a
+        // frame, then re-select and re-activate. This forces TMP_InputField to
+        // re-subscribe to keyboard text input cleanly.
+        EventSystem.current.SetSelectedGameObject(null);
+        idInput.DeactivateInputField();
+        yield return null;
+
+        EventSystem.current.SetSelectedGameObject(idInput.gameObject);
+        idInput.ActivateInputField();
+        idInput.Select();
+        idInput.caretPosition = idInput.text.Length;
+
+        hasAutoFocused = true;
+
+        if (enableDebug)
+            Debug.Log("[LoginScreen] Auto-focused input field (one-time)");
     }
 
     void ResetInputSystem()
     {
-        // Force reset Input System - this fixes state issues between play sessions
+        // Force reset Input System - this fixes state issues between play sessions.
+        // Skip Keyboard and Mouse: resetting them on a UI scene clears their state
+        // right when TMP_InputField is about to subscribe to keyboard text input,
+        // leaving the field selected but unable to receive keystrokes.
         if (InputSystem.devices.Count > 0)
         {
             foreach (var device in InputSystem.devices)
             {
+                if (device is Keyboard || device is Mouse) continue;
                 InputSystem.ResetDevice(device);
             }
             if (enableDebug)
-                Debug.Log("[LoginScreen] Input devices reset");
+                Debug.Log("[LoginScreen] Input devices reset (keyboard/mouse skipped)");
         }
     }
 

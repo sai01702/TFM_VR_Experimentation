@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CursorHelper : MonoBehaviour
@@ -18,6 +19,22 @@ public class CursorHelper : MonoBehaviour
         if (playerInput == null) playerInput = GetComponentInParent<PlayerInput>();
         if (playerInput != null && !string.IsNullOrEmpty(lookActionName))
             _lookAction = playerInput.actions?[lookActionName];
+    }
+
+    void Start()
+    {
+        if (GameSettings.Instance == null) return;
+        if (GameSettings.Instance.CurrentMode != GameMode.Desktop) return;
+        HideCursor();
+        StartCoroutine(HideCursorAfterOtherScripts());
+    }
+
+    IEnumerator HideCursorAfterOtherScripts()
+    {
+        yield return null;
+        if (GameSettings.Instance == null) yield break;
+        if (GameSettings.Instance.CurrentMode != GameMode.Desktop) yield break;
+        HideCursor();
     }
 
     public void ShowCursor()
