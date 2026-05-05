@@ -79,6 +79,42 @@ MonoBehaviour:
     m_Key: Button_Text
     m_Metadata:
       m_Items: []
+  - m_Id: 126578357495181312
+    m_Key: MazeUISTART
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126582761380163584
+    m_Key: GameModeHeader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126582957333852160
+    m_Key: NavUIRoadline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126583286448304128
+    m_Key: NavUI2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126583592116596736
+    m_Key: NavUI3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126583670348754944
+    m_Key: MazeSelect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126583799478792192
+    m_Key: Maze1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126583909763821568
+    m_Key: Maze2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126583936431206400
+    m_Key: Maze3
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

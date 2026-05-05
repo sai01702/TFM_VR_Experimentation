@@ -89,6 +89,42 @@ MonoBehaviour:
       You''ve completed the challenge.'
     m_Metadata:
       m_Items: []
+  - m_Id: 126578357495181312
+    m_Localized: START
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126582761380163584
+    m_Localized: Game Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126582957333852160
+    m_Localized: "\u25CB Roadline"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126583286448304128
+    m_Localized: "\u25CB Humanoid Agent\t"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126583592116596736
+    m_Localized: "\u25CB Verbal Agent"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126583670348754944
+    m_Localized: Maze Select
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126583799478792192
+    m_Localized: "\u25A1 Maze 1"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126583909763821568
+    m_Localized: "\u25A1 Maze 2"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126583936431206400
+    m_Localized: "\u25A1 Maze 3"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
