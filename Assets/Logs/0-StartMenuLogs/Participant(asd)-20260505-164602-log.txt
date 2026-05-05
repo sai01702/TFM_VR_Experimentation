@@ -1,0 +1,23 @@
+Participant: asd
+Session start: 05/05/2026 16:46:02
+=========================================
+
+SessionStart
+SessionStart
+SessionStart
+
+=== Shooter Game - Reaction Time Log ===
+Mode: Desktop
+Started: 05/05/2026 16:46:13
+
+Spawned object 1: ObjetivoRea2
+Manual despawn
+Spawned object 2: ObjetivoRea
+Reaction time: 3.016 seconds
+Spawned object 3: ObjetivoRea3
+
+=== Shooter Game Ended ===
+End time: 05/05/2026 16:46:23
+Final Score: 1
+Total Spawns: 3
+

@@ -1,0 +1,5 @@
+Participant: asd
+Session start: 05/05/2026 15:57:40
+=========================================
+
+SessionStart

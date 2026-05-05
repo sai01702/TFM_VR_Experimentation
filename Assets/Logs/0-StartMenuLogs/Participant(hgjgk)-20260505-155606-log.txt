@@ -1,0 +1,8 @@
+Participant: hgjgk
+Session start: 05/05/2026 15:56:06
+=========================================
+
+SessionStart
+[GameOver] From scene 'PuzzleScene' - Time = 19.1s, Accuracy = 100.0%
+Session finished.
+

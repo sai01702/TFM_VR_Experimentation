@@ -62,6 +62,11 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dee2fc7505b770841a96b43bfc3b5903
+    m_Address: Assets/Localization/Shooting_Hint_Info Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: a8475e1eec3456a4e8cccb6e65fcf2ba, type: 2}
   m_SchemaSet:

@@ -158,7 +158,7 @@ public class GameOverResultsManager : MonoBehaviour
         tmp.fontWeight = FontWeight.Medium;
         tmp.color = new Color(1f, 1f, 1f, 1f);
         tmp.faceColor = new Color32(255, 255, 255, 255);
-        float fs = resultText != null ? Mathf.Clamp(resultText.fontSize * 2.25f, 10f, 11f) : 18f;
+        float fs = resultText != null ? Mathf.Clamp(resultText.fontSize * 2.25f, 3f, 4f) : 18f;
         tmp.fontSize = fs;
 
         var rt = tmp.rectTransform;
@@ -280,9 +280,8 @@ public class GameOverResultsManager : MonoBehaviour
             }
         }
 
-        var baseCanva = GameObject.Find("BaseCanva");
-        if (baseCanva != null && baseCanva.scene == SceneManager.GetActiveScene())
-            baseCanva.SetActive(false);
+        // Do not disable the whole BaseCanva canvas: other modes may share UI roots;
+        // legacy score TMPs are already cleared/hidden above.
     }
 
     /// <summary>mm:ss.mmm (milliseconds always three digits).</summary>
