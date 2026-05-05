@@ -109594,6 +109594,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1947869167}
   - component: {fileID: 1947869166}
+  - component: {fileID: 1947869169}
+  - component: {fileID: 1947869168}
   m_Layer: 0
   m_Name: vrlogger
   m_TagString: Untagged
@@ -109613,7 +109615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b689b42fef864e4eb94ba05bd3cc1d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectionString: mongodb://localhost:27017
+  connectionString: mongodb+srv://mllhzhz_db_user:M0YVBvSUMwTVvnMq@vranalysis.0uwi8nl.mongodb.net/?appName=vrAnalysis
   dbName: test
   collectionName: tfg
 --- !u!4 &1947869167
@@ -109631,6 +109633,190 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1947869168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947869165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df58545af9903474e8caa15aa1ff8008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vrCamera: {fileID: 0}
+  playerTransform: {fileID: 0}
+  leftFoot: {fileID: 0}
+  rightFoot: {fileID: 0}
+  leftHand: {fileID: 0}
+  rightHand: {fileID: 0}
+--- !u!114 &1947869169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947869165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c74969676ed21264083870b3fd95d67e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeProfile: {fileID: 11400000, guid: 5e0dbbef06cbe4e43bf7bba059b7ab03, type: 2}
+  SessionName: ExperimentoLaberinto
+  GroupName: GrupoUnico
+  IndependentVariable: Bot
+  MapName: Maze2
+  TurnDurationSeconds: 60
+  PlayAreaWidth: 0
+  PlayAreaDepth: 0
+  ParticipantCount: 1
+  ParticipantOrder:
+  - U001
+  ManualParticipantName: 
+  ExperimentId: laberinto
+  FormulaProfile: default
+  Description: "Laberinto con 3 modos de gu\xEDa diferentes. "
+  UseGazeTracker: 1
+  UseEyeTracker: 1
+  UseMovementTracker: 1
+  UseHandTracker: 1
+  UseFootTracker: 0
+  UseRaycastLogger: 1
+  UseCollisionLogger: 1
+  EnableGMControls: 1
+  FlowMode: 1
+  EndCondition: 1
+  CustomMetrics: []
+  CustomEventRoles: []
+  Metrics:
+    HitRatio:
+      Enabled: 1
+      Weight: 0.35
+      Min: 0
+      Max: 1
+      Invert: 0
+    SuccessRate:
+      Enabled: 1
+      Weight: 0.3
+      Min: 0
+      Max: 1
+      Invert: 0
+    LearningCurveMean:
+      Enabled: 1
+      Weight: 0.15
+      Min: 0
+      Max: 1
+      Invert: 0
+    Progression:
+      Enabled: 1
+      Weight: 0.1
+      Min: 0
+      Max: 10
+      Invert: 0
+    SuccessAfterRestart:
+      Enabled: 1
+      Weight: 0.1
+      Min: 0
+      Max: 1
+      Invert: 0
+    PathEfficiency:
+      Enabled: 1
+      Weight: 0.2
+      Min: 0
+      Max: 1
+      Invert: 0
+    GazeOnPathRatio:
+      Enabled: 0
+      Weight: 0.2
+      Min: 0
+      Max: 1
+      Invert: 0
+    AvgReactionTimeMs:
+      Enabled: 1
+      Weight: 0.4
+      Min: 100
+      Max: 5000
+      Invert: 1
+    AvgTaskDurationMs:
+      Enabled: 1
+      Weight: 0.3
+      Min: 1000
+      Max: 30000
+      Invert: 1
+    TimePerSuccessS:
+      Enabled: 1
+      Weight: 0.2
+      Min: 0
+      Max: 60
+      Invert: 1
+    NavigationErrors:
+      Enabled: 1
+      Weight: 0.1
+      Min: 0
+      Max: 10
+      Invert: 1
+    LearningStability:
+      Enabled: 1
+      Weight: 0.3
+      Min: 0
+      Max: 1
+      Invert: 0
+    ErrorReductionRate:
+      Enabled: 1
+      Weight: 0.25
+      Min: 0
+      Max: 1
+      Invert: 0
+    VoluntaryPlayTimeS:
+      Enabled: 1
+      Weight: 0.25
+      Min: 0
+      Max: 60
+      Invert: 0
+    AidUsage:
+      Enabled: 1
+      Weight: 0.1
+      Min: 0
+      Max: 5
+      Invert: 1
+    InterfaceErrors:
+      Enabled: 1
+      Weight: 0.1
+      Min: 0
+      Max: 5
+      Invert: 1
+    ActivityLevelPerMin:
+      Enabled: 1
+      Weight: 0.25
+      Min: 0
+      Max: 100
+      Invert: 0
+    FirstSuccessTimeS:
+      Enabled: 1
+      Weight: 0.25
+      Min: 0
+      Max: 30
+      Invert: 1
+    InactivityTimeS:
+      Enabled: 1
+      Weight: 0.2
+      Min: 0
+      Max: 60
+      Invert: 1
+    SoundLocalizationTimeS:
+      Enabled: 1
+      Weight: 0.15
+      Min: 0
+      Max: 10
+      Invert: 1
+    AudioPerformanceGain:
+      Enabled: 1
+      Weight: 0.15
+      Min: -1
+      Max: 1
+      Invert: 0
 --- !u!1 &1951861862
 GameObject:
   m_ObjectHideFlags: 0

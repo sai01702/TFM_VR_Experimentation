@@ -18,6 +18,7 @@ namespace VRLogger
         public string SessionName = "Dia_1";
         public string GroupName = "Grupo_A";
         public string IndependentVariable = "";
+        public string MapName = "";
         public float TurnDurationSeconds = 60f;
         [HideInInspector] public float PlayAreaWidth = 0f;
         [HideInInspector] public float PlayAreaDepth = 0f;
@@ -224,6 +225,7 @@ namespace VRLogger
             string sName = p ? p.SessionName : SessionName;
             string gName = p ? p.GroupName : GroupName;
             string iv = p ? p.IndependentVariable : IndependentVariable;
+            string mName = p ? p.MapName : MapName;
             float tDuration = p ? p.TurnDurationSeconds : TurnDurationSeconds;
             // Since ExperimentProfile doesn't have PlayArea yet, we fallback to local for now
             float pAWidth = PlayAreaWidth; 
@@ -277,6 +279,7 @@ namespace VRLogger
                 { "session_name", sName },
                 { "group_name", gName },
                 { "independent_variable", iv },
+                { "map_name", mName },
                 { "turn_duration_seconds", tDuration },
                 { "play_area_width", pAWidth },
                 { "play_area_depth", pADepth }
@@ -575,6 +578,7 @@ namespace VRLogger
             SessionName = activeProfile.SessionName;
             GroupName = activeProfile.GroupName;
             IndependentVariable = activeProfile.IndependentVariable;
+            MapName = activeProfile.MapName;
             TurnDurationSeconds = activeProfile.TurnDurationSeconds;
             
             ParticipantCount = activeProfile.ParticipantCount;
@@ -617,6 +621,7 @@ namespace VRLogger
             activeProfile.SessionName = SessionName;
             activeProfile.GroupName = GroupName;
             activeProfile.IndependentVariable = IndependentVariable;
+            activeProfile.MapName = MapName;
             activeProfile.TurnDurationSeconds = TurnDurationSeconds;
             
             activeProfile.ParticipantCount = ParticipantCount;
@@ -693,6 +698,7 @@ namespace VRLogger
                 SessionName = (string)cfg["session"]?["session_name"] ?? SessionName;
                 GroupName = (string)cfg["session"]?["group_name"] ?? GroupName;
                 IndependentVariable = (string)cfg["session"]?["independent_variable"] ?? IndependentVariable;
+                MapName = (string)cfg["session"]?["map_name"] ?? MapName;
                 
                 if (cfg["session"]?["turn_duration_seconds"] != null)
                     TurnDurationSeconds = (float)cfg["session"]["turn_duration_seconds"];

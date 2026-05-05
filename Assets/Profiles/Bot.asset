@@ -15,6 +15,7 @@ MonoBehaviour:
   SessionName: ExperimentoLaberinto
   GroupName: GrupoUnico
   IndependentVariable: Bot
+  MapName: Maze4
   TurnDurationSeconds: 60
   ParticipantCount: 1
   ParticipantOrder:
