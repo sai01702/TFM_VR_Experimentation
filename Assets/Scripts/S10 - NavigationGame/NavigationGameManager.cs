@@ -22,6 +22,10 @@ public class NavigationGameManager : MonoBehaviour
     {
         _roundStartTime = Time.time;
         _timerActive = true;
+        
+        try {
+            VRLogger.LoggerService.LogEvent("task_start", "task_start", 1, null);
+        } catch (System.Exception) { }
     }
 
     public void NotifyRoundGoalReached(int roundIndex)
@@ -37,6 +41,10 @@ public class NavigationGameManager : MonoBehaviour
 
         Debug.Log($"Navigation round {roundIndex} completion time: {elapsed:F2}s");
         _timerActive = false;
+        
+        try {
+            VRLogger.LoggerService.LogEvent("task_end", "task_end", "success", null);
+        } catch (System.Exception) { }
     }
 
     /// <summary>Direct play in NavigationScene without <see cref="NavigationSessionController"/>.</summary>
@@ -54,6 +62,11 @@ public class NavigationGameManager : MonoBehaviour
 
         float time = Time.time - _roundStartTime;
         Debug.Log("Goal reached! Time: " + time);
+        
+        try {
+            VRLogger.LoggerService.LogEvent("task_end", "task_end", "success", null);
+        } catch (System.Exception) { }
+        
         EndGame();
     }
 
