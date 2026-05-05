@@ -1,0 +1,33 @@
+{
+    "efectividad": {
+        "score": 0.8000000000000002,
+        "hit_ratio": 1.0,
+        "success_rate": 0.8333333333333334,
+        "learning_curve_mean": 1.0,
+        "progression": 5,
+        "success_after_restart": 0.0
+    },
+    "eficiencia": {
+        "score": 0.7000000000000001,
+        "avg_reaction_time_ms": 0.0,
+        "avg_task_duration_ms": 718.24167575,
+        "time_per_success_s": 14111.617181818181,
+        "navigation_errors": 10
+    },
+    "satisfaccion": {
+        "score": 0.5,
+        "learning_stability": 1.0,
+        "error_reduction_rate": 0.0,
+        "voluntary_play_time_s": 0.0,
+        "aid_usage": 0,
+        "interface_errors": 0
+    },
+    "presencia": {
+        "score": 0.163884558037365,
+        "activity_level_per_min": 0.8507497327041101,
+        "first_success_time_s": 22.539,
+        "inactivity_time_s": 155091.81,
+        "audio_performance_gain": 0.0
+    },
+    "global_score": 0.5409711395093413
+}
