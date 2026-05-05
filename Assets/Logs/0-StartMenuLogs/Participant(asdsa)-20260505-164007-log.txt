@@ -1,0 +1,27 @@
+Participant: asdsa
+Session start: 05/05/2026 16:40:07
+=========================================
+
+SessionStart
+SessionStart
+SessionStart
+
+=== Shooter Game - Reaction Time Log ===
+Mode: Desktop
+Started: 05/05/2026 16:40:19
+
+Spawned object 1: ObjetivoRea1
+Reaction time: 1.558 seconds
+Spawned object 2: ObjetivoRea5
+Reaction time: 0.998 seconds
+Spawned object 3: ObjetivoRea5
+Reaction time: 1.058 seconds
+Spawned object 4: ObjetivoRea1
+Reaction time: 1.437 seconds
+Spawned object 5: ObjetivoRea
+Reaction time: 0.977 seconds
+Spawned object 6: ObjetivoRea
+Reaction time: 1.256 seconds
+Spawned object 7: ObjetivoRea4
+Reaction time: 3.836 seconds
+Spawned object 8: ObjetivoRea1

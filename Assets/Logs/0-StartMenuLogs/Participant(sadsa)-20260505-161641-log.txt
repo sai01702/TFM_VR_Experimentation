@@ -1,0 +1,8 @@
+Participant: sadsa
+Session start: 05/05/2026 16:16:41
+=========================================
+
+SessionStart
+[GameOver] From scene 'PuzzleScene' - Time = 11.7s, Accuracy = 83.3%
+Session finished.
+

@@ -10459,7 +10459,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &645736379
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14558,7 +14558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca34097c5d53d164294c7f397c0b9928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  desktopRigPrefab: {fileID: 8955973245134529063, guid: 852c29bd72fe4c34ca1ab923109b0117, type: 3}
+  desktopRigPrefab: {fileID: 3599829665306934548, guid: 5d960d2aeb29e4f448946d96a916f015, type: 3}
   desktopRigPrefab_Voz: {fileID: 8955973245134529063, guid: dd50dc8e90f65f7428e8e2b68ff1eedb, type: 3}
   vrRigPrefab: {fileID: 8139999958096412554, guid: 394b46e18913aba4e86c15194d95863e, type: 3}
   vozObject: {fileID: 0}
@@ -18144,7 +18144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1080217362
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22714,6 +22714,7 @@ GameObject:
   - component: {fileID: 1406463082}
   - component: {fileID: 1406463081}
   - component: {fileID: 1406463080}
+  - component: {fileID: 1406463083}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -22789,6 +22790,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1406463083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406463079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8e3c21a9b4d6e7f8091a2b3c4d5e6f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableDebugLogs: 0
 --- !u!1 &1406784691
 GameObject:
   m_ObjectHideFlags: 0

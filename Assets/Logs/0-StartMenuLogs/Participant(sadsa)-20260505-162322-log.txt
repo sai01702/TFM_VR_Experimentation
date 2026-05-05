@@ -1,0 +1,5 @@
+Participant: sadsa
+Session start: 05/05/2026 16:23:22
+=========================================
+
+SessionStart

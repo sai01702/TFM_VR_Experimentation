@@ -1,0 +1,10 @@
+Participant: Seyit
+Session start: 05/05/2026 16:14:55
+=========================================
+
+SessionStart
+SessionStart
+SessionStart
+[GameOver] From scene 'PuzzleScene' - Time = 13.8s, Accuracy = 100.0%
+Session finished.
+
