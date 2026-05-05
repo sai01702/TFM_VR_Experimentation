@@ -36,7 +36,7 @@ MonoBehaviour:
   EndCondition: 1
   Metrics:
     HitRatio:
-      Enabled: 0
+      Enabled: 1
       Weight: 0.35
       Min: 0
       Max: 1
@@ -48,7 +48,7 @@ MonoBehaviour:
       Max: 1
       Invert: 0
     LearningCurveMean:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.15
       Min: 0
       Max: 1
@@ -96,19 +96,19 @@ MonoBehaviour:
       Max: 60
       Invert: 1
     NavigationErrors:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.1
       Min: 0
       Max: 10
       Invert: 1
     LearningStability:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.122
       Min: 0
       Max: 1
       Invert: 0
     ErrorReductionRate:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.25
       Min: 0
       Max: 1
@@ -132,19 +132,19 @@ MonoBehaviour:
       Max: 5
       Invert: 1
     ActivityLevelPerMin:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.25
       Min: 0
       Max: 100
       Invert: 0
     FirstSuccessTimeS:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.25
       Min: 0
       Max: 30
       Invert: 1
     InactivityTimeS:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.2
       Min: 0
       Max: 60

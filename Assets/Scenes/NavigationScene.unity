@@ -110547,6 +110547,11 @@ Transform:
   - {fileID: 2099702527}
   m_Father: {fileID: 1416695200}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &509569168 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 652680843537151190, guid: e8229f28b1b778244b3f0e307a1b1973, type: 3}
+  m_PrefabInstance: {fileID: 1157947471}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &509675363
 GameObject:
   m_ObjectHideFlags: 0
@@ -186418,9 +186423,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mazeRoots:
-  - {fileID: 1542152824}
   - {fileID: 1532024600}
   - {fileID: 1506915903}
+  - {fileID: 1542152824}
   guideModeRoots:
   - {fileID: 512637963}
   - {fileID: 1446949267}
@@ -204811,12 +204816,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df58545af9903474e8caa15aa1ff8008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vrCamera: {fileID: 0}
-  playerTransform: {fileID: 0}
+  vrCamera: {fileID: 1635978308}
+  playerTransform: {fileID: 1157947479}
   leftFoot: {fileID: 0}
   rightFoot: {fileID: 0}
-  leftHand: {fileID: 0}
-  rightHand: {fileID: 0}
+  leftHand: {fileID: 1281229392}
+  rightHand: {fileID: 509569168}
 --- !u!114 &934497733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204858,7 +204863,7 @@ MonoBehaviour:
   CustomEventRoles: []
   Metrics:
     HitRatio:
-      Enabled: 0
+      Enabled: 1
       Weight: 0.35
       Min: 0
       Max: 1
@@ -204870,7 +204875,7 @@ MonoBehaviour:
       Max: 1
       Invert: 0
     LearningCurveMean:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.15
       Min: 0
       Max: 1
@@ -204918,19 +204923,19 @@ MonoBehaviour:
       Max: 60
       Invert: 1
     NavigationErrors:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.1
       Min: 0
       Max: 10
       Invert: 1
     LearningStability:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.122
       Min: 0
       Max: 1
       Invert: 0
     ErrorReductionRate:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.25
       Min: 0
       Max: 1
@@ -204954,19 +204959,19 @@ MonoBehaviour:
       Max: 5
       Invert: 1
     ActivityLevelPerMin:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.25
       Min: 0
       Max: 100
       Invert: 0
     FirstSuccessTimeS:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.25
       Min: 0
       Max: 30
       Invert: 1
     InactivityTimeS:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.2
       Min: 0
       Max: 60
@@ -254499,6 +254504,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 896971463485266676, guid: e8229f28b1b778244b3f0e307a1b1973, type: 3}
   m_PrefabInstance: {fileID: 1157947471}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1157947479 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7036631218477760252, guid: e8229f28b1b778244b3f0e307a1b1973, type: 3}
+  m_PrefabInstance: {fileID: 1157947471}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1158594833
 GameObject:
   m_ObjectHideFlags: 0
@@ -280227,6 +280237,11 @@ Transform:
   - {fileID: 1486231789}
   m_Father: {fileID: 803972524}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1281229392 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7457028561171096448, guid: e8229f28b1b778244b3f0e307a1b1973, type: 3}
+  m_PrefabInstance: {fileID: 1157947471}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1281323941
 GameObject:
   m_ObjectHideFlags: 0
@@ -335150,7 +335165,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1542152825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355864,6 +355879,11 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!20 &1635978308 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 3619756199392411722, guid: e8229f28b1b778244b3f0e307a1b1973, type: 3}
+  m_PrefabInstance: {fileID: 1157947471}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1636250671
 GameObject:
   m_ObjectHideFlags: 0
