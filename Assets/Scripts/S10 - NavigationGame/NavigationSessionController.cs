@@ -331,7 +331,48 @@ public class NavigationSessionController : MonoBehaviour
         var origin = tagged.GetComponentInParent<XROrigin>();
         if (origin != null)
         {
-            origin.MoveCameraToWorldLocation(destination.position);
+            // MoveCameraToWorldLocation expects the desired *camera* world position. Using the floor
+            // spawn point alone drives the HMD to ground level (round 2 VR bug).
+            var rigTransform = origin.transform;
+            var xrCc = rigTransform.GetComponent<CharacterController>()
+                       ?? rigTransform.GetComponentInChildren<CharacterController>();
+
+            bool hadCc = xrCc != null && xrCc.enabled;
+            if (hadCc)
+                xrCc.enabled = false;
+
+            try
+            {
+                var cam = origin.Camera;
+                if (cam != null)
+                {
+                    Vector3 cameraWorldOffset = cam.transform.position - rigTransform.position;
+                    Vector3 targetCameraWorldPos = destination.position + cameraWorldOffset;
+                    origin.MoveCameraToWorldLocation(targetCameraWorldPos);
+
+                    // Face maze entry (yaw only); rotate around camera so eye height is unchanged.
+                    Vector3 fromFwd = Vector3.ProjectOnPlane(cam.transform.forward, Vector3.up);
+                    Vector3 destFwd = Vector3.ProjectOnPlane(destination.forward, Vector3.up);
+                    if (fromFwd.sqrMagnitude > 1e-6f && destFwd.sqrMagnitude > 1e-6f)
+                    {
+                        fromFwd.Normalize();
+                        destFwd.Normalize();
+                        float yawAngle = Vector3.SignedAngle(fromFwd, destFwd, Vector3.up);
+                        if (Mathf.Abs(yawAngle) > 0.01f)
+                            rigTransform.RotateAround(cam.transform.position, Vector3.up, yawAngle);
+                    }
+                }
+                else
+                {
+                    rigTransform.SetPositionAndRotation(destination.position, destination.rotation);
+                }
+            }
+            finally
+            {
+                if (hadCc && xrCc != null)
+                    xrCc.enabled = true;
+            }
+
             return;
         }
 

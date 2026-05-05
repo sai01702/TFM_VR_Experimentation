@@ -158,7 +158,7 @@ public class GameOverResultsManager : MonoBehaviour
         tmp.fontWeight = FontWeight.Medium;
         tmp.color = new Color(1f, 1f, 1f, 1f);
         tmp.faceColor = new Color32(255, 255, 255, 255);
-        float fs = resultText != null ? Mathf.Clamp(resultText.fontSize * 2.25f, 10f, 11f) : 18f;
+        float fs = resultText != null ? Mathf.Clamp(resultText.fontSize * 2.25f, 6f, 8f) : 18f;
         tmp.fontSize = fs;
 
         var rt = tmp.rectTransform;

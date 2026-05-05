@@ -1,0 +1,11 @@
+Participant: g
+Session start: 05/05/2026 12:05:32
+=========================================
+
+SessionStart
+
+=== Navigation Game Log ===
+Mode: VR
+Started: 05/05/2026 12:05:44
+Lobby: Guide = Roadline, Maze 1
+
