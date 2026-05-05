@@ -15,7 +15,7 @@ MonoBehaviour:
   SessionName: ExperimentoLaberinto
   GroupName: GrupoUnico
   IndependentVariable: Bot
-  MapName: Maze4
+  MapName: Maze3
   TurnDurationSeconds: 60
   ParticipantCount: 1
   ParticipantOrder:
@@ -36,7 +36,7 @@ MonoBehaviour:
   EndCondition: 1
   Metrics:
     HitRatio:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.35
       Min: 0
       Max: 1
@@ -54,13 +54,13 @@ MonoBehaviour:
       Max: 1
       Invert: 0
     Progression:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.1
       Min: 0
       Max: 10
       Invert: 0
     SuccessAfterRestart:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.1
       Min: 0
       Max: 1
@@ -78,7 +78,7 @@ MonoBehaviour:
       Max: 1
       Invert: 0
     AvgReactionTimeMs:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.4
       Min: 100
       Max: 5000
@@ -90,7 +90,7 @@ MonoBehaviour:
       Max: 30000
       Invert: 1
     TimePerSuccessS:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.2
       Min: 0
       Max: 60
@@ -103,7 +103,7 @@ MonoBehaviour:
       Invert: 1
     LearningStability:
       Enabled: 1
-      Weight: 0.3
+      Weight: 0.122
       Min: 0
       Max: 1
       Invert: 0
@@ -114,19 +114,19 @@ MonoBehaviour:
       Max: 1
       Invert: 0
     VoluntaryPlayTimeS:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.25
       Min: 0
       Max: 60
       Invert: 0
     AidUsage:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.1
       Min: 0
       Max: 5
       Invert: 1
     InterfaceErrors:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.1
       Min: 0
       Max: 5
@@ -150,13 +150,13 @@ MonoBehaviour:
       Max: 60
       Invert: 1
     SoundLocalizationTimeS:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.15
       Min: 0
       Max: 10
       Invert: 1
     AudioPerformanceGain:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.15
       Min: -1
       Max: 1
