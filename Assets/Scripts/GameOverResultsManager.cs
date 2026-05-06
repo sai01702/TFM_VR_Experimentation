@@ -71,6 +71,7 @@ public class GameOverResultsManager : MonoBehaviour
                 results =
                     $"Guided round: {FormatNavigationDuration(nav1)}\n" +
                     $"Unguided round: {FormatNavigationDuration(nav2)}";
+
                 ApplyNavigationResults(results);
                 Debug.Log($"GameOverResultsManager: Mostrando resultados para {previousScene} - {results}");
                 return;
@@ -158,7 +159,7 @@ public class GameOverResultsManager : MonoBehaviour
         tmp.fontWeight = FontWeight.Medium;
         tmp.color = new Color(1f, 1f, 1f, 1f);
         tmp.faceColor = new Color32(255, 255, 255, 255);
-        float fs = resultText != null ? Mathf.Clamp(resultText.fontSize * 2.25f, 3f, 4f) : 18f;
+        float fs = resultText != null ? Mathf.Clamp(resultText.fontSize * 2.25f, 8f, 8f) : 18f;
         tmp.fontSize = fs;
 
         var rt = tmp.rectTransform;
@@ -167,6 +168,9 @@ public class GameOverResultsManager : MonoBehaviour
         rt.pivot = new Vector2(0.5f, 0f);
         rt.sizeDelta = new Vector2(Mathf.Max(rt.sizeDelta.x, 640f), Mathf.Max(rt.sizeDelta.y, 92f));
         rt.anchoredPosition = new Vector2(0f, 78f);
+
+        // Stats label is reparented last (above Button_Exit); TMP defaults to raycastTarget — disable so Exit stays clickable.
+        tmp.raycastTarget = false;
     }
 
     static void ExpandNavigationPanelIfClipped(GameObject navigationPanel)

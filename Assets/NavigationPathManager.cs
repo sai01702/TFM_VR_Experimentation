@@ -40,9 +40,23 @@ public class NavigationPathManager : MonoBehaviour
     public void TryAssignGoalFromMazeExit()
     {
         goalPoint = null;
+        TryResolveMazeExitGoal(startPoint, limitSearchToSubtree, out Transform resolved);
+        goalPoint = resolved;
+    }
+
+    /// <summary>
+    /// Resolves a goal transform from active hierarchy objects tagged <c>MazeExit</c>, using the same rules as <see cref="TryAssignGoalFromMazeExit"/>.
+    /// </summary>
+    /// <param name="startPoint">Used when multiple exits exist to prefer one with a complete NavMesh path; may be null (first candidate wins).</param>
+    /// <param name="limitSearchToSubtree">If set, only search under this transform; if null, search all loaded scenes.</param>
+    /// <param name="goal">The chosen exit transform, or null if none found.</param>
+    /// <returns>True if <paramref name="goal"/> was assigned.</returns>
+    public static bool TryResolveMazeExitGoal(Transform startPoint, Transform limitSearchToSubtree, out Transform goal)
+    {
+        goal = null;
 
         var candidates = new List<Transform>(4);
-        foreach (Transform t in EnumerateTransformsForSearch())
+        foreach (Transform t in EnumerateTransformsForSubtree(limitSearchToSubtree))
         {
             if (t == null)
                 continue;
@@ -53,12 +67,14 @@ public class NavigationPathManager : MonoBehaviour
             candidates.Add(t);
         }
 
+        string searchDesc = limitSearchToSubtree != null ? "'" + limitSearchToSubtree.name + "'" : "all loaded scenes";
+
         if (candidates.Count == 0)
         {
             Debug.LogWarning(
-                $"NavigationPathManager: No active GameObject with tag '{MazeExitTag}' found under {(limitSearchToSubtree != null ? "'" + limitSearchToSubtree.name + "'" : "all loaded scenes")}. " +
+                $"NavigationPathManager: No active GameObject with tag '{MazeExitTag}' found under {searchDesc}. " +
                 "Ensure the tag exists, the exit object is active, and the collider/transform you tagged is on that GameObject.");
-            return;
+            return false;
         }
 
         if (candidates.Count > 1)
@@ -72,9 +88,9 @@ public class NavigationPathManager : MonoBehaviour
                 {
                     if (TryNavMeshPathComplete(startPoint.position, t.position))
                     {
-                        goalPoint = t;
+                        goal = t;
                         Debug.Log($"NavigationPathManager: goalPoint assigned to '{t.name}' (path OK), path: {BuildHierarchyPath(t)}.");
-                        return;
+                        return true;
                     }
                 }
 
@@ -83,8 +99,9 @@ public class NavigationPathManager : MonoBehaviour
             }
         }
 
-        goalPoint = candidates[0];
-        Debug.Log($"NavigationPathManager: goalPoint assigned to active '{goalPoint.name}' ({MazeExitTag}), path: {BuildHierarchyPath(goalPoint)}.");
+        goal = candidates[0];
+        Debug.Log($"NavigationPathManager: goalPoint assigned to active '{goal.name}' ({MazeExitTag}), path: {BuildHierarchyPath(goal)}.");
+        return true;
     }
 
     static bool TryNavMeshPathComplete(Vector3 fromWorld, Vector3 toWorld)
@@ -114,6 +131,12 @@ public class NavigationPathManager : MonoBehaviour
     }
 
     IEnumerable<Transform> EnumerateTransformsForSearch()
+    {
+        foreach (Transform t in EnumerateTransformsForSubtree(limitSearchToSubtree))
+            yield return t;
+    }
+
+    static IEnumerable<Transform> EnumerateTransformsForSubtree(Transform limitSearchToSubtree)
     {
         if (limitSearchToSubtree != null)
         {

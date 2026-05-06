@@ -1,0 +1,8 @@
+Participant: 2312321
+Session start: 06/05/2026 16:49:07
+=========================================
+
+SessionStart
+[GameOver] From scene 'PuzzleScene' - Time = 10.2s, Accuracy = 83.3%
+Session finished.
+

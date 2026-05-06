@@ -15540,6 +15540,50 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 818800347010664645, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: normalColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 818800347010664645, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: normalColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 818800347010664645, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: normalColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 818800347010664645, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: selectedColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 818800347010664645, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: selectedColor.g
+      value: 0.593675
+      objectReference: {fileID: 0}
+    - target: {fileID: 818800347010664645, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: selectedColor.r
+      value: 0.8396226
+      objectReference: {fileID: 0}
+    - target: {fileID: 818800347010664645, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: shadowDistance.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 818800347010664645, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: shadowDistance.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 818800347010664645, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: glowShadowColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 818800347010664645, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: glowShadowColor.g
+      value: 0.75236225
+      objectReference: {fileID: 0}
+    - target: {fileID: 818800347010664645, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: glowShadowColor.r
+      value: 0.9056604
+      objectReference: {fileID: 0}
     - target: {fileID: 1064067940543639084, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
