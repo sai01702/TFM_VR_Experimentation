@@ -1,0 +1,13 @@
+Participant: gfghjf
+Session start: 06/05/2026 17:25:28
+=========================================
+
+SessionStart
+SessionStart
+SessionStart
+
+=== Navigation Game Log ===
+Mode: VR
+Started: 06/05/2026 17:25:38
+Lobby: Guide = Roadline, Maze 1
+
