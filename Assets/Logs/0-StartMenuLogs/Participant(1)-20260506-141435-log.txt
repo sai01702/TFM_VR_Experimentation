@@ -1,0 +1,21 @@
+Participant: 1
+Session start: 06/05/2026 14:14:35
+=========================================
+
+SessionStart
+
+=== Navigation Game Log ===
+Mode: Desktop
+Started: 06/05/2026 14:14:40
+Lobby: Guide = Roadline, Maze 3
+
+
+=== Navigation Game Ended ===
+End time: 06/05/2026 14:17:17
+Guided round: 12,274s
+Unguided round: 116,737s
+Lobby: Guide = Roadline, Maze 3
+
+[GameOver] From scene 'NavigationScene' - Guided = 12,274s, Unguided = 116,737s
+Session finished.
+
