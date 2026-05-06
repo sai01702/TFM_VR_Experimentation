@@ -17,9 +17,10 @@ MonoBehaviour:
   IndependentVariable: Bot
   MapName: Maze3
   TurnDurationSeconds: 60
-  ParticipantCount: 1
+  ParticipantCount: 2
   ParticipantOrder:
   - U001
+  - U001_2
   ManualParticipantName: 
   ExperimentId: laberinto
   FormulaProfile: default

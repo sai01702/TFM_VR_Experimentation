@@ -121,7 +121,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 14d819ab8936d434d919e36bca702686, type: 2}
 --- !u!1 &720177
 GameObject:
   m_ObjectHideFlags: 0
@@ -204842,9 +204842,10 @@ MonoBehaviour:
   TurnDurationSeconds: 60
   PlayAreaWidth: 0
   PlayAreaDepth: 0
-  ParticipantCount: 1
+  ParticipantCount: 2
   ParticipantOrder:
   - U001
+  - U001_2
   ManualParticipantName: 
   ExperimentId: laberinto
   FormulaProfile: default
