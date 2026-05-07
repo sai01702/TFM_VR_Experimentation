@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7685375984732235553}
   - component: {fileID: -3446026509371014861}
   - component: {fileID: 697458877866130}
+  - component: {fileID: -3091274724468707378}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -177,3 +178,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+--- !u!114 &-3091274724468707378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49993786337062907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ad9321b979beb94f8346cec57767a48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackedObject: {fileID: 363242077655272222}
+  checkInterval: 0.2
+  sharpTurnThreshold: 45

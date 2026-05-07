@@ -26,12 +26,12 @@ MonoBehaviour:
   FormulaProfile: default
   Description: "Laberinto con 3 modos de gu\xEDa diferentes. "
   UseGazeTracker: 1
-  UseEyeTracker: 1
+  UseEyeTracker: 0
   UseMovementTracker: 1
-  UseHandTracker: 1
+  UseHandTracker: 0
   UseFootTracker: 0
   UseRaycastLogger: 1
-  UseCollisionLogger: 1
+  UseCollisionLogger: 0
   EnableGMControls: 1
   FlowMode: 1
   EndCondition: 1

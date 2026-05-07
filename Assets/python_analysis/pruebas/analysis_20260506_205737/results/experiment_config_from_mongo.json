@@ -1,0 +1,264 @@
+{
+    "session": {
+        "session_name": "ExperimentoLaberinto",
+        "group_name": "GrupoUnico",
+        "independent_variable": "PathLine",
+        "map_name": "Maze3",
+        "turn_duration_seconds": 60.0,
+        "play_area_width": 65.96675,
+        "play_area_depth": 40.978363
+    },
+    "participants": {
+        "count": 2,
+        "order": [
+            "U001",
+            "U001_2"
+        ]
+    },
+    "experiment_selection": {
+        "experiment_id": "laberinto",
+        "formula_profile": "default",
+        "description": "Laberinto con 3 modos de gu\u00eda diferentes. "
+    },
+    "modules": {
+        "useGazeTracker": false,
+        "useEyeTracker": true,
+        "useMovementTracker": true,
+        "useHandTracker": false,
+        "useFootTracker": false,
+        "useRaycastLogger": true,
+        "useCollisionLogger": false
+    },
+    "participant_flow": {
+        "mode": "manual",
+        "end_condition": "gm",
+        "gm_controls": {
+            "enabled": true
+        }
+    },
+    "metrics": {
+        "efectividad": {
+            "hit_ratio": {
+                "enabled": true,
+                "weight": 0.35,
+                "min": 0.0,
+                "max": 1.0,
+                "invert": false
+            },
+            "success_rate": {
+                "enabled": true,
+                "weight": 0.3,
+                "min": 0.0,
+                "max": 1.0,
+                "invert": false
+            },
+            "learning_curve_mean": {
+                "enabled": false,
+                "weight": 0.15,
+                "min": 0.0,
+                "max": 1.0,
+                "invert": false
+            },
+            "progression": {
+                "enabled": false,
+                "weight": 0.1,
+                "min": 0.0,
+                "max": 10.0,
+                "invert": false
+            },
+            "success_after_restart": {
+                "enabled": false,
+                "weight": 0.1,
+                "min": 0.0,
+                "max": 1.0,
+                "invert": false
+            },
+            "path_efficiency": {
+                "enabled": true,
+                "weight": 0.2,
+                "min": 0.0,
+                "max": 1.0,
+                "invert": false
+            },
+            "gaze_on_path_ratio": {
+                "enabled": true,
+                "weight": 0.2,
+                "min": 0.0,
+                "max": 1.0,
+                "invert": false
+            }
+        },
+        "eficiencia": {
+            "avg_reaction_time_ms": {
+                "enabled": false,
+                "weight": 0.4,
+                "min": 100.0,
+                "max": 5000.0,
+                "invert": true
+            },
+            "avg_task_duration_ms": {
+                "enabled": true,
+                "weight": 0.3,
+                "min": 1000.0,
+                "max": 30000.0,
+                "invert": true
+            },
+            "time_per_success_s": {
+                "enabled": false,
+                "weight": 0.2,
+                "min": 0.0,
+                "max": 60.0,
+                "invert": true
+            },
+            "navigation_errors": {
+                "enabled": false,
+                "weight": 0.1,
+                "min": 0.0,
+                "max": 10.0,
+                "invert": true
+            }
+        },
+        "satisfaccion": {
+            "learning_stability": {
+                "enabled": false,
+                "weight": 0.122,
+                "min": 0.0,
+                "max": 1.0,
+                "invert": false
+            },
+            "error_reduction_rate": {
+                "enabled": false,
+                "weight": 0.25,
+                "min": 0.0,
+                "max": 1.0,
+                "invert": false
+            },
+            "voluntary_play_time_s": {
+                "enabled": false,
+                "weight": 0.25,
+                "min": 0.0,
+                "max": 60.0,
+                "invert": false
+            },
+            "aid_usage": {
+                "enabled": false,
+                "weight": 0.1,
+                "min": 0.0,
+                "max": 5.0,
+                "invert": true
+            },
+            "interface_errors": {
+                "enabled": false,
+                "weight": 0.1,
+                "min": 0.0,
+                "max": 5.0,
+                "invert": true
+            }
+        },
+        "presencia": {
+            "activity_level_per_min": {
+                "enabled": false,
+                "weight": 0.25,
+                "min": 0.0,
+                "max": 100.0,
+                "invert": false
+            },
+            "first_success_time_s": {
+                "enabled": false,
+                "weight": 0.25,
+                "min": 0.0,
+                "max": 30.0,
+                "invert": true
+            },
+            "inactivity_time_s": {
+                "enabled": false,
+                "weight": 0.2,
+                "min": 0.0,
+                "max": 60.0,
+                "invert": true
+            },
+            "sound_localization_time_s": {
+                "enabled": false,
+                "weight": 0.15,
+                "min": 0.0,
+                "max": 10.0,
+                "invert": true
+            },
+            "audio_performance_gain": {
+                "enabled": false,
+                "weight": 0.15,
+                "min": -1.0,
+                "max": 1.0,
+                "invert": false
+            }
+        }
+    },
+    "event_roles": {
+        "target_hit": "action_success",
+        "target_miss": "action_fail",
+        "goal_reached": "action_success",
+        "object_placed_correctly": "action_success",
+        "object_dropped": "action_fail",
+        "fall_detected": "action_fail",
+        "task_start": "task_start",
+        "task_end": "task_end",
+        "task_restart": "task_restart",
+        "task_timeout": "task_abandoned",
+        "task_abandoned": "task_abandoned",
+        "session_start": "session_start",
+        "session_end": "session_end",
+        "early_leave": "session_end",
+        "collision": "navigation_error",
+        "navigation_error": "navigation_error",
+        "controller_error": "interface_error",
+        "wrong_button": "interface_error",
+        "ui_interaction": "interface_action",
+        "ui_error": "interface_error",
+        "menu_opened": "interface_action",
+        "menu_closed": "interface_action",
+        "help_requested": "help_event",
+        "guide_used": "help_event",
+        "hint_used": "help_event",
+        "tutorial_step": "help_event",
+        "movement_frame": "movement_update",
+        "teleport_used": "movement_action",
+        "walk_step": "movement_action",
+        "sharp_turn": "movement_action",
+        "turn_event": "movement_action",
+        "inspect_object": "exploration_event",
+        "gaze_sustained": "gaze_event",
+        "gaze_frequency_change": "gaze_event",
+        "gaze_exit": "gaze_event",
+        "action_with_gaze_check": "gaze_action",
+        "eye_tracking_sample": "gaze_sample",
+        "controller_action": "interaction_event",
+        "object_grabbed": "interaction_event",
+        "object_released": "interaction_event",
+        "trigger_pull": "interaction_event",
+        "audio_triggered": "audio_event",
+        "sound_source_active": "audio_event",
+        "head_turn": "audio_reaction",
+        "inactivity_frame": "inactivity_event",
+        "timeout_detected": "inactivity_event",
+        "system_warning": "system_event",
+        "performance_drop": "system_event",
+        "latency_spike": "system_event",
+        "spawn_object": "task_start",
+        "bullet_hit": "action_success",
+        "reaction_time": "performance_measure",
+        "manual_despawn": "action_fail",
+        "custom_event": "custom_event"
+    },
+    "custom_events": {
+        "hand_movement": "motion_capture",
+        "body_rotation": "motion_capture",
+        "controller_vibration": "feedback_event",
+        "npc_interaction": "social_event",
+        "menu_navigation": "interface_action",
+        "object_throw": "interaction_event",
+        "object_collision": "physics_event",
+        "gaze_on_npc": "attention_event",
+        "camera_shake": "system_event",
+        "microphone_input": "voice_event"
+    }
+}

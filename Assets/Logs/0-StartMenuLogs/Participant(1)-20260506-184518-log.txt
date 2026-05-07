@@ -1,0 +1,5 @@
+Participant: 1
+Session start: 06/05/2026 18:45:18
+=========================================
+
+SessionStart

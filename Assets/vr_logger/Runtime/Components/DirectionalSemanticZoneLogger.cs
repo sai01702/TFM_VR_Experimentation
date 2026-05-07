@@ -148,12 +148,12 @@ namespace VRLogger.Components
                 string eventNameToLog = "zone_decision_point";
                 switch (resultType)
                 {
-                    case SemanticZoneType.Success: 
-                        eventNameToLog = "action_success"; 
+                    case SemanticZoneType.Success:
+                        eventNameToLog = "action_success";
                         break;
                     case SemanticZoneType.Fail:
-                    case SemanticZoneType.Backtrack: 
-                        eventNameToLog = "action_fail"; 
+                    case SemanticZoneType.Backtrack:
+                        eventNameToLog = "action_fail";
                         break;
                 }
 
@@ -161,14 +161,14 @@ namespace VRLogger.Components
                 LoggerService.LogEvent(
                     eventType: "metrics",
                     eventName: eventNameToLog,
-                    eventValue: new { 
-                        zoneId = this.zoneId, 
+                    eventValue: new {
+                        zoneId = this.zoneId,
                         zoneType = resultType.ToString(),
                         exitFace = exitFace
                     },
                     eventContext: null
                 );
-                
+
                 _hasLogged = true;
             }
         }

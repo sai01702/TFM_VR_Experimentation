@@ -1,0 +1,3 @@
+user_id,group_id,session_id,hit_ratio,success_rate,avg_task_duration_ms,efectividad_score,eficiencia_score,satisfaccion_score,presencia_score,global_score,independent_variable,sus_score,presence_score,satisfaction_score
+GrupoUnico_U001,GrupoUnico,6cc4d0ab-3e3f-467d-b8fc-12911dfb1882,0.6666666666666666,1.0,24093.0,0.8205128205128206,0.20368965517241377,0.0,0.0,0.2560506189213086,PathLine,,,
+GrupoUnico_U001_2,GrupoUnico,09bdd40c-2f1f-4358-bbea-2648af1982af,0.0,1.0,0.0,0.46153846153846156,1.0,0.0,0.0,0.3653846153846154,PathLine,,,

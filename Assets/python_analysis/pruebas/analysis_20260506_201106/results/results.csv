@@ -1,0 +1,9 @@
+metric,value
+efectividad.score,0.5443786982248521
+efectividad.hit_ratio,0.15384615384615385
+efectividad.success_rate,1.0
+eficiencia.score,0.17165517241379313
+eficiencia.avg_task_duration_ms,25022.0
+satisfaccion.score,0.0
+presencia.score,0.0
+global_score,0.1790084676596613

@@ -1,0 +1,18 @@
+{
+    "efectividad": {
+        "score": 0.7008547008547008,
+        "hit_ratio": 0.4444444444444444,
+        "success_rate": 1.0
+    },
+    "eficiencia": {
+        "score": 0.08109195402298852,
+        "avg_task_duration_ms": 27648.333333333332
+    },
+    "satisfaccion": {
+        "score": 0.0
+    },
+    "presencia": {
+        "score": 0.0
+    },
+    "global_score": 0.19548666371942233
+}

@@ -30,19 +30,27 @@ class SpatialVisualizer:
         import json
         from pathlib import Path
 
-        # --- NUEVO: Extraer la Variable Independiente o el Experiment ID del DataFrame ---
-        # Buscamos en el log de config de esta sesión para saber qué laberinto estamos jugando
         scenario_id = ""
-        config_logs = self.df[self.df["event_name"] == "experiment_config"]
-        if not config_logs.empty:
-            try:
-                first_val = config_logs.iloc[0]["event_context"]
-                if isinstance(first_val, str):
-                    first_val = json.loads(first_val.replace("'", '"'))
-                # Intentamos sacar la variable independiente (ideal para poner "Laberinto1", "Laberinto2")
-                scenario_id = first_val.get("session", {}).get("independent_variable", "")
-            except:
-                pass
+        if getattr(self, "experiment_config", None):
+            session_ctx = self.experiment_config.get("session", self.experiment_config)
+            scenario_id = session_ctx.get("map_name", "")
+        else:
+            config_logs = self.df[self.df["event_name"] == "experiment_config"]
+            if not config_logs.empty:
+                try:
+                    if "event_context" in config_logs.columns:
+                        first_val = config_logs.iloc[0]["event_context"]
+                        if isinstance(first_val, str):
+                            first_val = json.loads(first_val.replace("'", '"'))
+                        if isinstance(first_val, dict):
+                            session_ctx = first_val.get("session", first_val)
+                            scenario_id = session_ctx.get("map_name", "")
+                    elif "session.map_name" in config_logs.columns:
+                        scenario_id = config_logs.iloc[0]["session.map_name"]
+                    elif "map_name" in config_logs.columns:
+                        scenario_id = config_logs.iloc[0]["map_name"]
+                except:
+                    pass
 
         # -2. Dibujar la geometría interna del Labyrinth (Malla del suelo) si existe
         if draw_labyrinth_mesh:
@@ -397,48 +405,48 @@ class SpatialVisualizer:
         gaze_config = self.experiment_config.get("metrics", {}).get("efectividad", {}).get("gaze_on_path_ratio", {})
         if not gaze_config.get("enabled", False):
             return 0.0
-            
+
         import json
-        scenario_id = self.experiment_config.get("session", {}).get("independent_variable", "")
+        scenario_id = self.experiment_config.get("session", {}).get("map_name", "")
         ideal_file = Path(f"ideal_path_{scenario_id}.json") if scenario_id else Path("ideal_path.json")
         if not ideal_file.exists():
             ideal_file = Path("ideal_path.json")
-            
+
         if not ideal_file.exists():
             return 0.0
-            
+
         try:
             with open(ideal_file, "r", encoding="utf-8") as f:
                 ideal_data = json.load(f)
-            
+
             bx = "hit_position_x" if "hit_position_x" in df_frames.columns else "hit_point_x"
             bz = "hit_position_z" if "hit_position_z" in df_frames.columns else "hit_point_z"
             if bx not in df_frames.columns or bz not in df_frames.columns:
                 return 0.0
-                
+
             gx = pd.to_numeric(df_frames[bx], errors="coerce").values
             gz = pd.to_numeric(df_frames[bz], errors="coerce").values
             valid = ~np.isnan(gx) & ~np.isnan(gz)
             gx, gz = gx[valid], gz[valid]
             if len(gx) == 0: return 0.0
-            
+
             path_pts = np.array([[pt["x"], pt["z"]] for pt in ideal_data if "x" in pt and "z" in pt])
             if len(path_pts) < 2: return 0.0
-            
+
             P1 = path_pts[:-1]
             P2 = path_pts[1:]
             hits = 0
-            
+
             for i in range(len(gx)):
                 px, pz = gx[i], gz[i]
                 AB = P2 - P1
                 AP = np.column_stack((np.full(len(P1), px) - P1[:, 0], np.full(len(P1), pz) - P1[:, 1]))
-                ab_sq = np.sum(AB**2, axis=1)
+                ab_sq = np.sum(AB ** 2, axis=1)
                 ap_dot_ab = np.sum(AP * AB, axis=1)
                 t = np.clip(ap_dot_ab / np.maximum(ab_sq, 1e-8), 0.0, 1.0)
                 closest_x = P1[:, 0] + t * AB[:, 0]
                 closest_z = P1[:, 1] + t * AB[:, 1]
-                dists = np.sqrt((px - closest_x)**2 + (pz - closest_z)**2)
+                dists = np.sqrt((px - closest_x) ** 2 + (pz - closest_z) ** 2)
                 if np.min(dists) <= threshold:
                     hits += 1
             return float(hits * median_delta)
@@ -447,11 +455,13 @@ class SpatialVisualizer:
 
     def plot_gaze_targets(self):
         """Gráfico de barras con los objetos (targets) más mirados."""
-        self._plot_targets_base("gaze_frame", "Gaze_Targets_BarChart.png", "Objetos de Interés (Gaze Targets) Más Mirados", "magma")
+        self._plot_targets_base("gaze_frame", "Gaze_Targets_BarChart.png",
+                                "Objetos de Interés (Gaze Targets) Más Mirados", "magma")
 
     def plot_eye_targets(self):
         """Gráfico de barras con los objetos más mirados usando Eye Tracking (Pupilas)."""
-        self._plot_targets_base("eye_frame", "Eye_Targets_BarChart.png", "Objetos Más Mirados (Eye Tracking Real)", "mako")
+        self._plot_targets_base("eye_frame", "Eye_Targets_BarChart.png", "Objetos Más Mirados (Eye Tracking Real)",
+                                "mako")
 
     def _plot_targets_base(self, event_name, filename, title, palette):
         frames = self.df[self.df["event_name"] == event_name].copy()
@@ -460,8 +470,8 @@ class SpatialVisualizer:
             return
 
         frames_filtered = frames[~frames["target"].isin(["none", "null", "", "Ground", "Floor", "Suelo"])]
-        
-        median_delta = 0.1 
+
+        median_delta = 0.1
         if pd.api.types.is_datetime64_any_dtype(frames["timestamp"]):
             frames_sorted = frames.sort_values("timestamp")
             diffs = frames_sorted.groupby("session_id")["timestamp"].diff().dt.total_seconds()
@@ -472,15 +482,16 @@ class SpatialVisualizer:
         target_counts = frames_filtered["target"].value_counts().reset_index()
         target_counts.columns = ["Objeto", "Frames (Frecuencia)"]
         target_counts["Tiempo Total (s)"] = target_counts["Frames (Frecuencia)"] * median_delta
-        
+
         path_time = self._calculate_gaze_on_path_time(event_name, frames, median_delta)
         if path_time > 0:
-            path_row = pd.DataFrame([{"Objeto": "Guide Line (Path)", "Frames (Frecuencia)": path_time/median_delta, "Tiempo Total (s)": path_time}])
+            path_row = pd.DataFrame([{"Objeto": "Guide Line (Path)", "Frames (Frecuencia)": path_time / median_delta,
+                                      "Tiempo Total (s)": path_time}])
             target_counts = pd.concat([target_counts, path_row], ignore_index=True)
-            
+
         if target_counts.empty:
             return
-            
+
         target_counts = target_counts.sort_values(by="Tiempo Total (s)", ascending=False).head(10)
 
         plt.figure(figsize=(10, 6))

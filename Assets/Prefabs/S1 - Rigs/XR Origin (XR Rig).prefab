@@ -388,6 +388,7 @@ GameObject:
   - component: {fileID: 6720912756636889874}
   - component: {fileID: -5193312325242132740}
   - component: {fileID: -7357866855193946186}
+  - component: {fileID: -3916049784178906371}
   m_Layer: 2
   m_Name: XR Origin (XR Rig)
   m_TagString: Player
@@ -602,6 +603,21 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &-3916049784178906371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3043957973928987881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ad9321b979beb94f8346cec57767a48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackedObject: {fileID: 5252004644055361293}
+  checkInterval: 0.2
+  sharpTurnThreshold: 45
 --- !u!1 &3323245724280531881
 GameObject:
   m_ObjectHideFlags: 0

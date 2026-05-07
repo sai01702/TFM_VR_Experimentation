@@ -110665,11 +110665,6 @@ Transform:
   - {fileID: 2099702527}
   m_Father: {fileID: 1416695200}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &509569168 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 652680843537151190, guid: e8229f28b1b778244b3f0e307a1b1973, type: 3}
-  m_PrefabInstance: {fileID: 1157947471}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &509675363
 GameObject:
   m_ObjectHideFlags: 0
@@ -205052,12 +205047,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df58545af9903474e8caa15aa1ff8008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vrCamera: {fileID: 1635978308}
-  playerTransform: {fileID: 1157947479}
+  vrCamera: {fileID: 0}
+  playerTransform: {fileID: 0}
   leftFoot: {fileID: 0}
   rightFoot: {fileID: 0}
-  leftHand: {fileID: 1281229392}
-  rightHand: {fileID: 509569168}
+  leftHand: {fileID: 0}
+  rightHand: {fileID: 0}
 --- !u!114 &934497733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205087,12 +205082,12 @@ MonoBehaviour:
   FormulaProfile: default
   Description: "Laberinto con 3 modos de gu\xEDa diferentes. "
   UseGazeTracker: 1
-  UseEyeTracker: 1
+  UseEyeTracker: 0
   UseMovementTracker: 1
-  UseHandTracker: 1
+  UseHandTracker: 0
   UseFootTracker: 0
   UseRaycastLogger: 1
-  UseCollisionLogger: 1
+  UseCollisionLogger: 0
   EnableGMControls: 1
   FlowMode: 1
   EndCondition: 1
@@ -254741,11 +254736,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 896971463485266676, guid: e8229f28b1b778244b3f0e307a1b1973, type: 3}
   m_PrefabInstance: {fileID: 1157947471}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1157947479 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7036631218477760252, guid: e8229f28b1b778244b3f0e307a1b1973, type: 3}
-  m_PrefabInstance: {fileID: 1157947471}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1158594833
 GameObject:
   m_ObjectHideFlags: 0
@@ -280592,11 +280582,6 @@ Transform:
   - {fileID: 1486231789}
   m_Father: {fileID: 803972524}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1281229392 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7457028561171096448, guid: e8229f28b1b778244b3f0e307a1b1973, type: 3}
-  m_PrefabInstance: {fileID: 1157947471}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1281323941
 GameObject:
   m_ObjectHideFlags: 0
@@ -334360,7 +334345,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1532024601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356718,11 +356703,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!20 &1635978308 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 3619756199392411722, guid: e8229f28b1b778244b3f0e307a1b1973, type: 3}
-  m_PrefabInstance: {fileID: 1157947471}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1636250671
 GameObject:
   m_ObjectHideFlags: 0
