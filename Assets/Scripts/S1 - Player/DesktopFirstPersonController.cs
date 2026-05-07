@@ -95,6 +95,22 @@ public class DesktopFirstPersonController : MonoBehaviour
             Debug.LogWarning("Camera Pivot not set. Drag your PlayerCamera into the cameraPivot field.");
     }
 
+    /// <summary>
+    /// Sets horizontal facing from a world-space forward (y ignored), resets pitch. Safe to call while this component is disabled (e.g. Navigation round reset).
+    /// </summary>
+    public void SnapFacingToWorldDirection(Vector3 worldForward)
+    {
+        if (cameraPivot == null) return;
+
+        worldForward = Vector3.ProjectOnPlane(worldForward, Vector3.up);
+        if (worldForward.sqrMagnitude < 1e-6f)
+            return;
+
+        transform.rotation = Quaternion.LookRotation(worldForward.normalized);
+        pitch = 0f;
+        cameraPivot.localEulerAngles = Vector3.zero;
+    }
+
     void OnEnable()
     {
         moveAction?.Enable();

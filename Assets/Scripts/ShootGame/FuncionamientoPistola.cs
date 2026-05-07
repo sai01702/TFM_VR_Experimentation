@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using TMPro;
 
 public class FuncionamientoPistola : MonoBehaviour
@@ -15,21 +14,54 @@ public class FuncionamientoPistola : MonoBehaviour
     public bool disparo = false;
     public bool disparado = true;
     public TMP_Text scoreText;
+
+    [SerializeField] LocalizedString scoreLabel = new LocalizedString("ScoreShooting", "Score Shooting");
+
+    string _cachedScoreLabel = "Score";
+
+    void OnEnable()
+    {
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
+        RefreshScoreLabel();
+    }
+
+    void OnDisable()
+    {
+        LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
+    }
+
+    void OnLocaleChanged(Locale _) => RefreshScoreLabel();
+
+    void RefreshScoreLabel()
+    {
+        var handle = scoreLabel.GetLocalizedStringAsync();
+        handle.Completed += op =>
+        {
+            _cachedScoreLabel = op.Status == AsyncOperationStatus.Succeeded && !string.IsNullOrEmpty(op.Result)
+                ? op.Result
+                : "Score";
+        };
+    }
+
     void Update()
     {
         Puntaje();
         float shoot = shootAction.action.ReadValue<float>();
-        if(shoot == 1){
+        if (shoot == 1)
             disparo = true;
-        } else {
+        else
+        {
             disparo = false;
             disparado = true;
         }
-        if(disparo && disparado){
+
+        if (disparo && disparado)
+        {
             Shoot();
             disparado = false;
         }
     }
+
     public void Shoot()
     {
         Debug.Log("Shoot");
@@ -38,12 +70,13 @@ public class FuncionamientoPistola : MonoBehaviour
         bullet.transform.rotation = bulletSpawnPoint.rotation;
         bullet.SetActive(true);
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-        
     }
 
-    void Puntaje() { // función para mostrar el puntaje en pantalla
-        // GameObject.FindObjectOfType<UnityEngine.UI.Text>().text = "Puntuación  " + ObjetivosManager.Instance.puntos;
-        // GameObject.FindWithTag("Score").GetComponent<Text>().text = "Puntuación " + ObjetivosManager.Instance.puntos;
-        scoreText.text = "Score " + ObjetivosManager.Instance.puntos;
+    void Puntaje()
+    {
+        if (scoreText == null || ObjetivosManager.Instance == null)
+            return;
+
+        scoreText.text = $"{_cachedScoreLabel} {ObjetivosManager.Instance.puntos}";
     }
 }

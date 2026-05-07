@@ -31,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109950894710080233}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.046895433, z: -0, w: 0.9988998}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: -0.0000000055874487, y: 0.125, z: -0.19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -39,7 +39,7 @@ Transform:
   - {fileID: 936408822729585898}
   - {fileID: 992059943266641822}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -5.376, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!143 &8395775499734692902
 CharacterController:
   m_ObjectHideFlags: 0
@@ -166,6 +166,18 @@ MonoBehaviour:
   disparo: 0
   disparado: 1
   scoreText: {fileID: 4888474426699775614}
+  scoreLabel:
+    m_TableReference:
+      m_TableCollectionName: ScoreShooting
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: Score Shooting
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &7645641261419412010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,7 +321,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 332354560657428581}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.20644383, y: -0, z: -0, w: 0.9784585}
   m_LocalPosition: {x: 0, y: 2.017, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -317,7 +329,7 @@ Transform:
   - {fileID: 6496651996724349360}
   - {fileID: 7074937857624278066}
   m_Father: {fileID: 2033034337012559418}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 23.828, y: 0, z: 0}
 --- !u!20 &701807570875191214
 Camera:
   m_ObjectHideFlags: 0

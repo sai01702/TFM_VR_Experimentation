@@ -24,8 +24,9 @@ public class DesktopButtonInteractorGameOverScene : MonoBehaviour
 
     void Update()
     {
-        if (Keyboard.current == null) return;
-        if (!Keyboard.current[pressKey].wasPressedThisFrame) return;
+        bool keyPressed = Keyboard.current != null && Keyboard.current[pressKey].wasPressedThisFrame;
+        bool mousePressed = Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame;
+        if (!keyPressed && !mousePressed) return;
 
         TryPressButton();
     }

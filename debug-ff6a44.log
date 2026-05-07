@@ -1,0 +1,4 @@
+{"sessionId":"ff6a44","hypothesisId":"H_flow","location":"GameOverUISelector.Start","message":"prevScene=NavigationScene navigationActive=True","timestamp":1778079515323,"runId":"verify-post-fix"}
+{"sessionId":"ff6a44","hypothesisId":"H6","location":"GameOverResultsManager.DisplayResults NavigationScene","message":"frame=32449 navFoundByFind=True","timestamp":1778079515325,"runId":"verify-post-fix"}
+{"sessionId":"ff6a44","hypothesisId":"H1","location":"GameOverResultsManager.ApplyNavigationResults","message":"navChildOrder=[Image,Button_Exit,GameOver_text,NavigationRoundResults] statsRaycast=False statsSizeDelta=(640.00, 92.00) statsSiblingIdx=3 cursorLock=None cursorVis=True exitBtnInteractable=True","timestamp":1778079515329,"runId":"verify-post-fix"}
+{"sessionId":"ff6a44","hypothesisId":"H_click","location":"ExitAppButton.ExitApplication","message":"ExitApplication invoked","timestamp":1778079516414,"runId":"verify-post-fix"}

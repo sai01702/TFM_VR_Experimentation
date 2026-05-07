@@ -1,43 +1,71 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.Windows.Speech;
 using TMPro;
-using UnityEngine.Windows.Speech; //para usar KeywordRecognizer
-using System; //para usar Action
-using System.Linq; //para usar ToArray
 
 public class ReconocimientoVoz : MonoBehaviour
 {
     public Transform bulletSpawnPoint;
     public float bulletSpeed = 10;
     public TMP_Text scoreText;
-    //para reconocimiento de voz
+
+    [SerializeField] LocalizedString scoreLabel = new LocalizedString("ScoreShooting", "Score Shooting");
+
+    string _cachedScoreLabel = "Score";
+
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, Action> wordsToActions;
 
+    void OnEnable()
+    {
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
+        RefreshScoreLabel();
+    }
+
+    void OnDisable()
+    {
+        LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
+    }
+
+    void OnLocaleChanged(Locale _) => RefreshScoreLabel();
+
+    void RefreshScoreLabel()
+    {
+        var handle = scoreLabel.GetLocalizedStringAsync();
+        handle.Completed += op =>
+        {
+            _cachedScoreLabel = op.Status == AsyncOperationStatus.Succeeded && !string.IsNullOrEmpty(op.Result)
+                ? op.Result
+                : "Score";
+        };
+    }
+
     void Start()
     {
-        wordsToActions = new Dictionary<string, Action>(); //creamos un diccionario de palabras a acciones
-        wordsToActions.Add("shoot", Shoot); //agregamos la palabra "shoot" al diccionario y la accion Disparar
-        //keywordRecognizer = new KeywordRecognizer(wordsToActions.Keys.ToArray()); //creamos un KeywordRecognizer con las palabras del diccionario convertidas a un array, OLD SCRIPT
-        keywordRecognizer = new KeywordRecognizer(wordsToActions.Keys.ToArray(), ConfidenceLevel.Low); //creamos un KeywordRecognizer con las palabras del diccionario convertidas a un array, Also, I specified a low confidence level to improve recognition accuracy.
-        keywordRecognizer.OnPhraseRecognized += WordRecognizer; //asignamos el metodo WordRecognizer al evento OnPhraseRecognized del KeywordRecognizer
-        keywordRecognizer.Start(); //iniciamos el KeywordRecognizer
+        wordsToActions = new Dictionary<string, Action>();
+        wordsToActions.Add("shoot", Shoot);
+        keywordRecognizer = new KeywordRecognizer(wordsToActions.Keys.ToArray(), ConfidenceLevel.Low);
+        keywordRecognizer.OnPhraseRecognized += WordRecognizer;
+        keywordRecognizer.Start();
     }
 
     void Update()
     {
         Puntaje();
-
     }
-    private void WordRecognizer(PhraseRecognizedEventArgs word)
+
+    void WordRecognizer(PhraseRecognizedEventArgs word)
     {
         Debug.Log(word.text);
         wordsToActions[word.text].Invoke();
     }
+
     public void Shoot()
     {
         Debug.Log("Shoot");
@@ -46,13 +74,13 @@ public class ReconocimientoVoz : MonoBehaviour
         bullet.transform.rotation = bulletSpawnPoint.rotation;
         bullet.SetActive(true);
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-
     }
 
     void Puntaje()
-    { // función para mostrar el puntaje en pantalla
-        // GameObject.FindObjectOfType<UnityEngine.UI.Text>().text = "Puntuación  " + ObjetivosManager.Instance.puntos;
-        // GameObject.FindWithTag("Score").GetComponent<Text>().text = "Puntuación " + ObjetivosManager.Instance.puntos;
-        scoreText.text = "Puntuación " + ObjetivosManager.Instance.puntos;
+    {
+        if (scoreText == null || ObjetivosManager.Instance == null)
+            return;
+
+        scoreText.text = $"{_cachedScoreLabel} {ObjetivosManager.Instance.puntos}";
     }
 }

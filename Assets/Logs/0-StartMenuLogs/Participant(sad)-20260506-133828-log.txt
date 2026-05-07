@@ -1,0 +1,13 @@
+Participant: sad
+Session start: 06/05/2026 13:38:28
+=========================================
+
+SessionStart
+SessionStart
+SessionStart
+
+=== Navigation Game Log ===
+Mode: Desktop
+Started: 06/05/2026 13:38:37
+Lobby: Guide = Roadline, Maze 1
+

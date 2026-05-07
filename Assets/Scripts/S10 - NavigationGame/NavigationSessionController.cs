@@ -225,6 +225,9 @@ public class NavigationSessionController : MonoBehaviour
         SetLoadingVisible(true, BetweenRoundsLoading);
         SetBlocking(true);
 
+        // Desktop: freeze look/move before teleport so the player cannot rotate while we snap position & facing.
+        LockDesktopNavigationControls(true);
+
         DeactivateAllGuideModes();
 
         // Move player out of the goal before toggling the trigger; avoids instant overlap bugs
@@ -240,6 +243,9 @@ public class NavigationSessionController : MonoBehaviour
             Debug.LogWarning("NavigationSessionController: No GoalTrigger for round 2 — add one under the active maze (or assign 'goalTrigger').");
 
         yield return new WaitForSecondsRealtime(betweenRoundsDelaySeconds);
+
+        // Restore desktop controls after facing is set, then remove loading / blocking.
+        LockDesktopNavigationControls(false);
 
         SetLoadingVisible(false, null);
         SetBlocking(false);
@@ -388,6 +394,36 @@ public class NavigationSessionController : MonoBehaviour
         }
         else
             playerTransform.position = targetPos;
+
+        var fpc = playerTransform.GetComponentInChildren<DesktopFirstPersonController>(true);
+        if (fpc != null)
+            fpc.SnapFacingToWorldDirection(destination.forward);
+        else
+        {
+            Vector3 flatFwd = Vector3.ProjectOnPlane(destination.forward, Vector3.up);
+            if (flatFwd.sqrMagnitude > 1e-6f)
+                playerTransform.rotation = Quaternion.LookRotation(flatFwd.normalized);
+        }
+    }
+
+    /// <summary>Disables desktop FPS controller during round reset so mouse look cannot fight the scripted snap.</summary>
+    void LockDesktopNavigationControls(bool locked)
+    {
+        var tagged = GameObject.FindGameObjectWithTag("Player");
+        if (tagged == null)
+            return;
+
+        var fpc = tagged.GetComponentInParent<DesktopFirstPersonController>()
+                  ?? tagged.GetComponentInChildren<DesktopFirstPersonController>(true);
+        if (fpc != null)
+            fpc.enabled = !locked;
+
+        if (!locked)
+        {
+            var cursor = tagged.GetComponentInChildren<CursorHelper>(true);
+            if (cursor != null)
+                cursor.HideCursor();
+        }
     }
 
     void SetLoadingVisible(bool vis, string msg)

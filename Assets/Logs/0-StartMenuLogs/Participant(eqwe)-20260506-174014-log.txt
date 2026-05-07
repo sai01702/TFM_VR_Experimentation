@@ -1,0 +1,11 @@
+Participant: eqwe
+Session start: 06/05/2026 17:40:14
+=========================================
+
+SessionStart
+
+=== Navigation Game Log ===
+Mode: VR
+Started: 06/05/2026 17:40:25
+Lobby: Guide = Roadline, Maze 1
+

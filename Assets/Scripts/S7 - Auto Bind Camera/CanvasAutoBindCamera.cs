@@ -83,8 +83,11 @@ public class CanvasAlwaysWorldSpace : MonoBehaviour
                 transform.position = cam.transform.position + cam.transform.forward * distanceFromCamera + worldOffset;
         }
 
-        // World-space UI should be tiny scale (meters)
-        if (rt.localScale.x > 0.01f) rt.localScale = Vector3.one * 0.001f;
+        // World-space UI should be tiny scale (meters). Screen-space roots often serialize as ~0 scale.
+        const float defaultWorldScale = 0.001f;
+        float sMag = rt.localScale.sqrMagnitude;
+        if (sMag < 1e-12f || rt.localScale.x > 0.01f)
+            rt.localScale = Vector3.one * defaultWorldScale;
 
         // Prevent near-clip from cutting the UI if it’s close
         if (cam.nearClipPlane > 0.05f) cam.nearClipPlane = 0.03f;
