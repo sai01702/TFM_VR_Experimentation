@@ -1,0 +1,20 @@
+{
+    "Global": {
+        "efectividad": {
+            "score": 0.8923076923076924,
+            "hit_ratio": 0.8,
+            "success_rate": 1.0
+        },
+        "eficiencia": {
+            "score": 0.4117931034482759,
+            "avg_task_duration_ms": 18058.0
+        },
+        "satisfaccion": {
+            "score": 0.0
+        },
+        "presencia": {
+            "score": 0.0
+        },
+        "global_score": 0.32602519893899207
+    }
+}

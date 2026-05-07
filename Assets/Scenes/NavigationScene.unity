@@ -220875,7 +220875,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 391362151}
   goalPoint: {fileID: 1658215591}
+  limitSearchToSubtree: {fileID: 0}
+  pathManager: {fileID: 0}
   saveFolder: Assets/Logs/4-NavigationSceneLogs/
+  waitForGoalTimeoutSeconds: 60
 --- !u!4 &1024115129
 Transform:
   m_ObjectHideFlags: 0
@@ -289555,6 +289558,240 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.7659811, y: 1.6987458, z: 1.8364209}
   m_Center: {x: -0.0041454434, y: 0.9849145, z: 0.012630761}
+--- !u!1 &1337142821
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1337142825}
+  - component: {fileID: 1337142824}
+  - component: {fileID: 1337142823}
+  - component: {fileID: 1337142822}
+  m_Layer: 0
+  m_Name: vrLogger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1337142822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337142821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df58545af9903474e8caa15aa1ff8008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vrCamera: {fileID: 0}
+  playerTransform: {fileID: 0}
+  leftFoot: {fileID: 0}
+  rightFoot: {fileID: 0}
+  leftHand: {fileID: 0}
+  rightHand: {fileID: 0}
+--- !u!114 &1337142823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337142821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b689b42fef864e4eb94ba05bd3cc1d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectionString: mongodb+srv://mllhzhz_db_user:M0YVBvSUMwTVvnMq@vranalysis.0uwi8nl.mongodb.net/?appName=vrAnalysis
+  dbName: test
+  collectionName: tfg
+--- !u!114 &1337142824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337142821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c74969676ed21264083870b3fd95d67e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeProfile: {fileID: 11400000, guid: fbcdea55210dd3c43b76a3f599e2f979, type: 2}
+  SessionName: ExperimentoLaberinto
+  GroupName: GrupoUnico
+  IndependentVariable: PathLine
+  MapName: Maze3
+  TurnDurationSeconds: 60
+  PlayAreaWidth: 0
+  PlayAreaDepth: 0
+  ParticipantCount: 2
+  ParticipantOrder:
+  - U001
+  - U001_2
+  ManualParticipantName: 
+  ExperimentId: laberinto
+  FormulaProfile: default
+  Description: "Laberinto con 3 modos de gu\xEDa diferentes. "
+  UseGazeTracker: 1
+  UseEyeTracker: 0
+  UseMovementTracker: 1
+  UseHandTracker: 0
+  UseFootTracker: 0
+  UseRaycastLogger: 1
+  UseCollisionLogger: 0
+  EnableGMControls: 1
+  FlowMode: 1
+  EndCondition: 1
+  CustomMetrics: []
+  CustomEventRoles: []
+  Metrics:
+    HitRatio:
+      Enabled: 1
+      Weight: 0.35
+      Min: 0
+      Max: 1
+      Invert: 0
+    SuccessRate:
+      Enabled: 1
+      Weight: 0.3
+      Min: 0
+      Max: 1
+      Invert: 0
+    LearningCurveMean:
+      Enabled: 0
+      Weight: 0.15
+      Min: 0
+      Max: 1
+      Invert: 0
+    Progression:
+      Enabled: 0
+      Weight: 0.1
+      Min: 0
+      Max: 10
+      Invert: 0
+    SuccessAfterRestart:
+      Enabled: 0
+      Weight: 0.1
+      Min: 0
+      Max: 1
+      Invert: 0
+    PathEfficiency:
+      Enabled: 1
+      Weight: 0.2
+      Min: 0
+      Max: 1
+      Invert: 0
+    GazeOnPathRatio:
+      Enabled: 1
+      Weight: 0.2
+      Min: 0
+      Max: 1
+      Invert: 0
+    AvgReactionTimeMs:
+      Enabled: 0
+      Weight: 0.4
+      Min: 100
+      Max: 5000
+      Invert: 1
+    AvgTaskDurationMs:
+      Enabled: 1
+      Weight: 0.3
+      Min: 1000
+      Max: 30000
+      Invert: 1
+    TimePerSuccessS:
+      Enabled: 0
+      Weight: 0.2
+      Min: 0
+      Max: 60
+      Invert: 1
+    NavigationErrors:
+      Enabled: 0
+      Weight: 0.1
+      Min: 0
+      Max: 10
+      Invert: 1
+    LearningStability:
+      Enabled: 0
+      Weight: 0.122
+      Min: 0
+      Max: 1
+      Invert: 0
+    ErrorReductionRate:
+      Enabled: 0
+      Weight: 0.25
+      Min: 0
+      Max: 1
+      Invert: 0
+    VoluntaryPlayTimeS:
+      Enabled: 0
+      Weight: 0.25
+      Min: 0
+      Max: 60
+      Invert: 0
+    AidUsage:
+      Enabled: 0
+      Weight: 0.1
+      Min: 0
+      Max: 5
+      Invert: 1
+    InterfaceErrors:
+      Enabled: 0
+      Weight: 0.1
+      Min: 0
+      Max: 5
+      Invert: 1
+    ActivityLevelPerMin:
+      Enabled: 0
+      Weight: 0.25
+      Min: 0
+      Max: 100
+      Invert: 0
+    FirstSuccessTimeS:
+      Enabled: 0
+      Weight: 0.25
+      Min: 0
+      Max: 30
+      Invert: 1
+    InactivityTimeS:
+      Enabled: 0
+      Weight: 0.2
+      Min: 0
+      Max: 60
+      Invert: 1
+    SoundLocalizationTimeS:
+      Enabled: 0
+      Weight: 0.15
+      Min: 0
+      Max: 10
+      Invert: 1
+    AudioPerformanceGain:
+      Enabled: 0
+      Weight: 0.15
+      Min: -1
+      Max: 1
+      Invert: 0
+--- !u!4 &1337142825
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337142821}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.246044, y: 0, z: 4.7272425}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1337425680
 GameObject:
   m_ObjectHideFlags: 0
@@ -433364,8 +433601,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 391362151}
   goalPoint: {fileID: 1658215591}
-  mazeManager: {fileID: 0}
+  limitSearchToSubtree: {fileID: 0}
+  pathManager: {fileID: 0}
   saveFolder: Assets/Logs/4-NavigationSceneLogs/
+  waitForGoalTimeoutSeconds: 60
 --- !u!1 &2024177692
 GameObject:
   m_ObjectHideFlags: 0
@@ -456814,3 +457053,4 @@ SceneRoots:
   - {fileID: 837556051}
   - {fileID: 985770832}
   - {fileID: 1157947471}
+  - {fileID: 1337142825}

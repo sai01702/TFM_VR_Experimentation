@@ -200,7 +200,10 @@ def main():
         # Calculate means for comparison
         numeric_cols = ["efectividad_score", "eficiencia_score", "satisfaccion_score", "presencia_score",
                         "global_score", "sus_score"]
-        available_cols = [c for c in numeric_cols if c in df.columns]
+        available_cols = [
+            c for c in numeric_cols 
+            if c in df.columns and pd.to_numeric(df[c], errors="coerce").fillna(0).gt(0).any()
+        ]
 
         if available_cols and len(selected_vars) > 0:
             comp_df = df.groupby("independent_variable")[available_cols].mean().reset_index()
@@ -224,11 +227,15 @@ def main():
     # 🔹 Mostrar gráficas por categoría
     # ============================================================
     for cat_name, cols in cat_cols.items():
-        st.header(cat_name)
-        found = [c for c in cols if c in df.columns]
+        # Filtrar columnas que existen Y tienen al menos un valor != 0 / != NaN
+        found = [
+            c for c in cols
+            if c in df.columns
+            and pd.to_numeric(df[c], errors="coerce").fillna(0).gt(0).any()
+        ]
         if not found:
-            st.info(f"No hay métricas de {cat_name}.")
-            continue
+            continue  # Ocultar categorías enteras sin datos reales
+        st.header(cat_name)
         for col in found:
             if detected_mode == "agrupado" and "user_id" in df.columns:
                 fig = px.bar(
@@ -273,18 +280,21 @@ def main():
         "sus_score": "SUS Score (Cuestionario)"
     }
 
-    present = [c for c in score_candidates.keys() if c in df.columns]
+    # Solo mostrar columnas que existen Y tienen al menos un valor != 0 y != NaN
+    present = [
+        c for c in score_candidates.keys()
+        if c in df.columns
+        and pd.to_numeric(df[c], errors="coerce").fillna(0).gt(0).any()
+    ]
 
     if not present:
-        st.info("No se encontraron puntuaciones ponderadas en los resultados.")
+        st.info("No se encontraron puntuaciones ponderadas con datos en los resultados.")
     else:
         # --- Tabla por fila (usuario/grupo) con nombres bonitos ---
         pretty_df = pd.DataFrame({score_candidates[c]: pd.to_numeric(df[c], errors="coerce") for c in present})
-
-        # Si quieres que se vea por usuario/grupo:
         st.dataframe(pretty_df)
 
-        # --- Promedio por categoría (una barra por categoría) ---
+        # --- Promedio por categoría (una barra por categoría, solo las que tienen datos) ---
         mean_scores = pd.DataFrame({
             "Categoría": [score_candidates[c] for c in present],
             "Score": [pd.to_numeric(df[c], errors="coerce").mean() for c in present]
@@ -410,9 +420,19 @@ def main():
                         st.markdown("---")
 
                     if has_static:
-                        st.image(str(img_path), caption=f"{title} (Estático)", use_column_width=True)
+                        st.image(str(img_path), caption=f"{title} (Agregado)", use_column_width=True)
 
-                    if not has_static and not has_gif:
+                    # ── Gráficos individuales por usuario (Gaze/Eye BarCharts) ──
+                    stem = Path(static_file).stem  # ej: "Gaze_Targets_BarChart"
+                    per_user_files = sorted(d.glob(f"{stem}_*.png"))
+                    if per_user_files:
+                        st.markdown("##### 👤 Por usuario")
+                        for pu_path in per_user_files:
+                            # Extraer el user_id del nombre del archivo
+                            user_label = pu_path.stem.replace(stem + "_", "", 1)
+                            st.image(str(pu_path), caption=f"{title} — {user_label}", use_column_width=True)
+
+                    if not has_static and not has_gif and not per_user_files:
                         st.info(f"Visualización no disponible: {title}")
             st.markdown("---")
     else:

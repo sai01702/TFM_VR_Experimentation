@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Newtonsoft.Json.Linq;
 
 namespace VRLogger
