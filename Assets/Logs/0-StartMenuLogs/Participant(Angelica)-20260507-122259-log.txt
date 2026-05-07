@@ -1,0 +1,23 @@
+Participant: Angelica
+Session start: 07/05/2026 12:22:59
+=========================================
+
+SessionStart
+SessionStart
+SessionStart
+
+=== Navigation Game Log ===
+Mode: Desktop
+Started: 07/05/2026 12:23:28
+Lobby: Guide = Roadline, Maze 1
+
+
+=== Navigation Game Ended ===
+End time: 07/05/2026 12:24:19
+Guided round: 26.769s
+Unguided round: 14.233s
+Lobby: Guide = Roadline, Maze 1
+
+[GameOver] From scene 'NavigationScene' - Guided = 26.769s, Unguided = 14.233s
+Session finished.
+

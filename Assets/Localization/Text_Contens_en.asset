@@ -98,15 +98,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 126582957333852160
-    m_Localized: "\u25CB Roadline"
+    m_Localized: Roadline
     m_Metadata:
       m_Items: []
   - m_Id: 126583286448304128
-    m_Localized: "\u25CB Humanoid Agent\t"
+    m_Localized: "Humanoid Agent\t"
     m_Metadata:
       m_Items: []
   - m_Id: 126583592116596736
-    m_Localized: "\u25CB Verbal Agent"
+    m_Localized: Voice Assistant
     m_Metadata:
       m_Items: []
   - m_Id: 126583670348754944
@@ -114,15 +114,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 126583799478792192
-    m_Localized: "\u25A1 Maze 1"
+    m_Localized: Maze 1
     m_Metadata:
       m_Items: []
   - m_Id: 126583909763821568
-    m_Localized: "\u25A1 Maze 2"
+    m_Localized: Maze 2
     m_Metadata:
       m_Items: []
   - m_Id: 126583936431206400
-    m_Localized: "\u25A1 Maze 3"
+    m_Localized: Maze 3
     m_Metadata:
       m_Items: []
   references:

@@ -96,15 +96,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 126582957333852160
-    m_Localized: "\u25CB L\xEDnea de ruta"
+    m_Localized: "L\xEDnea de ruta"
     m_Metadata:
       m_Items: []
   - m_Id: 126583286448304128
-    m_Localized: "\u25CB Agente humanoide"
+    m_Localized: Agente humanoide
     m_Metadata:
       m_Items: []
   - m_Id: 126583592116596736
-    m_Localized: "\u25CB Agente verbal"
+    m_Localized: Asistente por voz
     m_Metadata:
       m_Items: []
   - m_Id: 126583670348754944
@@ -112,15 +112,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 126583799478792192
-    m_Localized: "\u25A1 Laberinto 1"
+    m_Localized: Laberinto 1
     m_Metadata:
       m_Items: []
   - m_Id: 126583909763821568
-    m_Localized: "\u25A1 Laberinto 2"
+    m_Localized: Laberinto 2
     m_Metadata:
       m_Items: []
   - m_Id: 126583936431206400
-    m_Localized: "\u25A1 Laberinto 3"
+    m_Localized: Laberinto 3
     m_Metadata:
       m_Items: []
   references:

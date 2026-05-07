@@ -15429,6 +15429,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 521769608194954077, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: m_text
+      value: Maze 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 521769608194954077, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_fontSize
       value: 16
       objectReference: {fileID: 0}
@@ -15498,7 +15502,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 786648387306355515, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_text
-      value: "\u25CB Roadline"
+      value: Roadline
       objectReference: {fileID: 0}
     - target: {fileID: 786648387306355515, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_fontSize
@@ -15630,7 +15634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1374691674222584256, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_text
-      value: "\u25CB Humanoid Agent"
+      value: Humanoid Agent
       objectReference: {fileID: 0}
     - target: {fileID: 1374691674222584256, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_fontSize
@@ -15847,9 +15851,21 @@ PrefabInstance:
     - target: {fileID: 2568189568187658229, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: 11400000, guid: f8e2489d3f096014a94e522f3db1859a, type: 2}
     - target: {fileID: 2568189568187658229, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2568189568187658229, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2568189568187658229, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2568189568187658229, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: m_fontColor.r
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2568189568187658229, guid: 326a13103f95f7549bbe88807709218f, type: 3}
@@ -15863,14 +15879,14 @@ PrefabInstance:
     - target: {fileID: 2568189568187658229, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: 2180264, guid: f8e2489d3f096014a94e522f3db1859a, type: 2}
     - target: {fileID: 2568189568187658229, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_characterSpacing
       value: 53.15
       objectReference: {fileID: 0}
     - target: {fileID: 2568189568187658229, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4280690214
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 2568189568187658229, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_TextStyleHashCode
@@ -15879,6 +15895,10 @@ PrefabInstance:
     - target: {fileID: 2568189568187658229, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659367900749764131, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: m_text
+      value: Maze 3
       objectReference: {fileID: 0}
     - target: {fileID: 2659367900749764131, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_fontSize
@@ -16157,6 +16177,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4792081470893345223, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: m_text
+      value: Maze 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792081470893345223, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_fontSize
       value: 16
       objectReference: {fileID: 0}
@@ -16235,6 +16259,10 @@ PrefabInstance:
     - target: {fileID: 5309986512044863638, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 31.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5442535558896135685, guid: 326a13103f95f7549bbe88807709218f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5459041340282227842, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_AnchorMax.x
@@ -16858,7 +16886,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8495704809436231966, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_text
-      value: "\u25CB Verbal Agent"
+      value: Voice Assistant
       objectReference: {fileID: 0}
     - target: {fileID: 8495704809436231966, guid: 326a13103f95f7549bbe88807709218f, type: 3}
       propertyPath: m_fontSize
