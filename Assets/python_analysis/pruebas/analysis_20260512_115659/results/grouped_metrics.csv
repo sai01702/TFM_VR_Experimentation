@@ -1,0 +1,9 @@
+user_id,group_id,session_id,hit_ratio,success_rate,avg_task_duration_ms,efectividad_score,eficiencia_score,satisfaccion_score,presencia_score,global_score,independent_variable,sus_score,subj_efectividad,subj_eficiencia,subj_satisfaccion,subj_presencia
+GrupoUnico_U001,GrupoUnico,72b905a3-3a9e-4670-88c4-68850a2fbb32,1.0,1.0,14688.0,1.0,0.528,0.0,0.0,0.764,PathLine,,,,,
+GrupoUnico_U001_2,GrupoUnico,a38ad5e2-d504-4654-95e3-3e0abea6263a,0.75,1.0,14169.0,0.8653846153846155,0.5458965517241379,0.0,0.0,0.7056405835543766,PathLine,,,,,
+GrupoUnico_U001_3,GrupoUnico,bc9de416-280f-49b7-b140-8f1eeb696455,1.0,1.0,14498.0,1.0,0.5345517241379311,0.0,0.0,0.7672758620689655,PathLine,,,,,
+GrupoUnico_U001_4,GrupoUnico,e79dc170-b369-4673-86fa-de3fc8779113,0.7142857142857143,1.0,14930.0,0.8461538461538464,0.5196551724137931,0.0,0.0,0.6829045092838197,PathLine,,,,,
+GrupoUnico_U001_5,GrupoUnico,aac46539-94a2-49d7-8db3-31c4786bc532,1.0,1.0,13396.0,1.0,0.572551724137931,0.0,0.0,0.7862758620689655,Audio,,,,,
+GrupoUnico_U001_6,GrupoUnico,81fbe614-b456-45bc-8a2a-cc1448945d41,0.75,1.0,20890.0,0.8653846153846155,0.31413793103448273,0.0,0.0,0.5897612732095492,Audio,,,,,
+GrupoUnico_U002_1,GrupoUnico,7ab46946-bac8-4cfc-8fc2-fd32634bd46d,1.0,1.0,10956.0,1.0,0.6566896551724137,0.0,0.0,0.8283448275862069,Audio,,,,,
+GrupoUnico_U002_2,GrupoUnico,7755e2fa-2aa6-4f88-a665-4b454f610ace,0.75,1.0,15892.0,0.8653846153846155,0.4864827586206896,0.0,0.0,0.6759336870026526,Audio,,,,,
