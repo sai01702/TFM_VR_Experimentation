@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SessionName: ExperimentoLaberinto
   GroupName: GrupoUnico
-  IndependentVariable: PathLine
+  IndependentVariable: Audio
   MapName: Maze3
   TurnDurationSeconds: 60
   ParticipantCount: 2
   ParticipantOrder:
-  - U001
-  - U001_2
+  - U002_1
+  - U002_2
   ManualParticipantName: 
   ExperimentId: laberinto
   FormulaProfile: default
@@ -38,13 +38,13 @@ MonoBehaviour:
   Metrics:
     HitRatio:
       Enabled: 1
-      Weight: 0.35
+      Weight: 0.5
       Min: 0
       Max: 1
       Invert: 0
     SuccessRate:
       Enabled: 1
-      Weight: 0.3
+      Weight: 0.5
       Min: 0
       Max: 1
       Invert: 0
@@ -68,12 +68,12 @@ MonoBehaviour:
       Invert: 0
     PathEfficiency:
       Enabled: 1
-      Weight: 0.2
+      Weight: 0.5
       Min: 0
       Max: 1
       Invert: 0
     GazeOnPathRatio:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.2
       Min: 0
       Max: 1
@@ -86,7 +86,7 @@ MonoBehaviour:
       Invert: 1
     AvgTaskDurationMs:
       Enabled: 1
-      Weight: 0.3
+      Weight: 0.5
       Min: 1000
       Max: 30000
       Invert: 1

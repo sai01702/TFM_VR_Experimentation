@@ -111408,6 +111408,7 @@ GameObject:
   - component: {fileID: 512637966}
   - component: {fileID: 512637965}
   - component: {fileID: 512637964}
+  - component: {fileID: 512637967}
   m_Layer: 0
   m_Name: V1_FloorPathRenderer
   m_TagString: Untagged
@@ -111549,6 +111550,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &512637967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512637963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea761637e87014f42be0275f97ed179d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderRadius: 0.05
+  segmentTag: PathLine
+  segmentLayer: -1
 --- !u!1 &512876313
 GameObject:
   m_ObjectHideFlags: 0
@@ -292722,15 +292738,15 @@ MonoBehaviour:
   activeProfile: {fileID: 11400000, guid: fbcdea55210dd3c43b76a3f599e2f979, type: 2}
   SessionName: ExperimentoLaberinto
   GroupName: GrupoUnico
-  IndependentVariable: PathLine
+  IndependentVariable: Audio
   MapName: Maze3
   TurnDurationSeconds: 60
   PlayAreaWidth: 0
   PlayAreaDepth: 0
   ParticipantCount: 2
   ParticipantOrder:
-  - U001
-  - U001_2
+  - U002_1
+  - U002_2
   ManualParticipantName: 
   ExperimentId: laberinto
   FormulaProfile: default
@@ -292785,7 +292801,7 @@ MonoBehaviour:
       Max: 1
       Invert: 0
     GazeOnPathRatio:
-      Enabled: 1
+      Enabled: 0
       Weight: 0.2
       Min: 0
       Max: 1
