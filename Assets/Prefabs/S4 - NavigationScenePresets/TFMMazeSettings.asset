@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c71c47fccd2d74fa26bce49cc523bb, type: 3}
   m_Name: TFMMazeSettings
   m_EditorClassIdentifier: 
-  seed: 44948
-  sizeX: 20
-  sizeY: 20
+  seed: 31922
+  sizeX: 12
+  sizeY: 12
   splitProbability: 0.5

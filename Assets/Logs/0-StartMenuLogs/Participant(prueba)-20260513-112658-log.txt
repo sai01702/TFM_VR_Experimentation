@@ -1,0 +1,5 @@
+Participant: prueba
+Session start: 13/05/2026 11:26:58
+=========================================
+
+SessionStart

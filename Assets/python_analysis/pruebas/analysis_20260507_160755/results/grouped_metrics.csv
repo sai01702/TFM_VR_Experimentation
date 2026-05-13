@@ -1,0 +1,5 @@
+user_id,group_id,session_id,hit_ratio,success_rate,avg_task_duration_ms,efectividad_score,eficiencia_score,satisfaccion_score,presencia_score,global_score,independent_variable
+GrupoUnico_U001,GrupoUnico,1368804b-c318-4e4e-b364-f2d2005c6603,0.8571428571428571,1.0,48579.0,0.9230769230769231,0.0,0.0,0.0,0.46153846153846156,PathLine
+GrupoUnico_U001,GrupoUnico,8d2e6947-b8cc-481d-94e6-89e960b96a71,1.0,1.0,13334.0,1.0,0.5746896551724138,0.0,0.0,0.7873448275862069,PathLine
+GrupoUnico_U001_2,GrupoUnico,6dffe0f7-5662-4984-a932-d4e8672dc038,0.5,1.0,0.0,0.7307692307692308,1.0,0.0,0.0,0.8653846153846154,PathLine
+GrupoUnico_U001_2,GrupoUnico,7ef73b8a-29ce-462e-96e9-c8be335e87c5,0.75,1.0,18318.0,0.8653846153846155,0.4028275862068965,0.0,0.0,0.634106100795756,PathLine

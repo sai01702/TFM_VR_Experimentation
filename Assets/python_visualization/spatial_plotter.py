@@ -1,0 +1,859 @@
+import matplotlib
+
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+from pathlib import Path
+import numpy as np
+import io
+from PIL import Image
+
+
+class SpatialVisualizer:
+    def __init__(self, df, output_dir, play_area_width=None, play_area_depth=None, experiment_config=None):
+        """
+        df: DataFrame RAW con eventos (debe tener event_name, timestamp, y columnas de posición expandidas)
+        output_dir: ruta donde guardar las imágenes
+        """
+        self.df = df
+        self.output_dir = Path(output_dir)
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+        self.play_area_width = play_area_width
+        self.play_area_depth = play_area_depth
+        self.experiment_config = experiment_config
+
+    def _draw_play_area(self, ax=None, draw_ideal_path=False, draw_labyrinth_mesh=False):
+        ax = ax or plt.gca()
+        import matplotlib.patches as patches
+        import numpy as np
+        import json
+        from pathlib import Path
+
+        scenario_id = ""
+        if getattr(self, "experiment_config", None):
+            session_ctx = self.experiment_config.get("session", self.experiment_config)
+            scenario_id = session_ctx.get("map_name", "")
+        else:
+            config_logs = self.df[self.df["event_name"] == "experiment_config"]
+            if not config_logs.empty:
+                try:
+                    if "event_context" in config_logs.columns:
+                        first_val = config_logs.iloc[0]["event_context"]
+                        if isinstance(first_val, str):
+                            first_val = json.loads(first_val.replace("'", '"'))
+                        if isinstance(first_val, dict):
+                            session_ctx = first_val.get("session", first_val)
+                            scenario_id = session_ctx.get("map_name", "")
+                    elif "session.map_name" in config_logs.columns:
+                        scenario_id = config_logs.iloc[0]["session.map_name"]
+                    elif "map_name" in config_logs.columns:
+                        scenario_id = config_logs.iloc[0]["map_name"]
+                except:
+                    pass
+
+        # -2. Dibujar la geometría interna del Labyrinth (Malla del suelo) si existe
+        if draw_labyrinth_mesh:
+            # Buscamos primero el fichero con el nombre del escenario (ej: labyrinth_mesh_Laberinto1.json)
+            mesh_file = Path(f"labyrinth_mesh_{scenario_id}.json") if scenario_id else Path("labyrinth_mesh.json")
+            if not mesh_file.exists():
+                mesh_file = Path("labyrinth_mesh.json")  # Fallback al genérico
+
+            if mesh_file.exists():
+                try:
+                    with open(mesh_file, 'r', encoding='utf-8') as f:
+                        mesh_data = json.load(f)
+                    if "vertices" in mesh_data and "indices" in mesh_data:
+                        import matplotlib.collections as mcoll
+                        indices = mesh_data["indices"]
+                        vertices = mesh_data["vertices"]
+                        pts = np.array([[pt["x"], pt["z"]] for pt in vertices if "x" in pt and "z" in pt])
+                        if len(pts) >= 3:
+                            polys = []
+                            for i in range(0, len(indices), 3):
+                                if i + 2 < len(indices):
+                                    polys.append([pts[indices[i]], pts[indices[i + 1]], pts[indices[i + 2]]])
+                            if polys:
+                                collection = mcoll.PolyCollection(polys, facecolors='lightgray', edgecolors='black',
+                                                                  linewidths=0.5, alpha=0.4, zorder=1)
+                                ax.add_collection(collection)
+
+                    # Dibujar marcadores de inicio y fin si están presentes en el JSON del mapa
+                    if "start_point" in mesh_data:
+                        sp = mesh_data["start_point"]
+                        if "x" in sp and "z" in sp:
+                            ax.scatter(sp["x"], sp["z"], color="blue", marker="o", s=150, label="Start Point", zorder=5,
+                                       edgecolors='white', linewidths=2)
+                    if "end_point" in mesh_data:
+                        ep = mesh_data["end_point"]
+                        if "x" in ep and "z" in ep:
+                            ax.scatter(ep["x"], ep["z"], color="red", marker="*", s=250, label="End Point", zorder=5,
+                                       edgecolors='white', linewidths=2)
+                except Exception as e:
+                    print(f"[SpatialVisualizer] Aviso: No se pudo dibujar la malla {mesh_file.name}: {e}")
+
+        # -1. Dibujar el Labyrinth Ideal Path si existe y si fue solicitado
+        if draw_ideal_path:
+            ideal_file = Path(f"ideal_path_{scenario_id}.json") if scenario_id else Path("ideal_path.json")
+            if not ideal_file.exists():
+                ideal_file = Path("ideal_path.json")  # Fallback genérico
+
+            if ideal_file.exists():
+                try:
+                    with open(ideal_file, 'r', encoding='utf-8') as f:
+                        ideal_data = json.load(f)
+                    if isinstance(ideal_data, list) and len(ideal_data) > 1:
+                        ix = [pt["x"] for pt in ideal_data if "x" in pt and "z" in pt]
+                        iz = [pt["z"] for pt in ideal_data if "x" in pt and "z" in pt]
+                        if len(ix) > 1:
+                            ax.plot(ix, iz, color='#39FF14', linewidth=4, alpha=0.9, linestyle='-', label="Ideal Path",
+                                    zorder=3, solid_capstyle='round', solid_joinstyle='round')
+                except Exception as e:
+                    print(f"[SpatialVisualizer] Aviso: No se pudo dibujar el ideal_path.json: {e}")
+
+        # 0. Intentar usar NavMesh_Boundary (Prioridad 1)
+        navmesh_logs = self.df[self.df["event_name"] == "NAVMESH_BOUNDARY"]
+        if not navmesh_logs.empty:
+            for val in navmesh_logs["event_value"]:
+                if isinstance(val, str):
+                    try:
+                        val = json.loads(val.replace("'", '"'))
+                    except:
+                        pass
+                if isinstance(val, dict) and "vertices_x" in val and "vertices_z" in val:
+                    vx = val["vertices_x"]
+                    vz = val["vertices_z"]
+                    if len(vx) >= 3 and len(vx) == len(vz):
+                        from scipy.spatial import ConvexHull
+                        pts = np.column_stack((vx, vz))
+                        try:
+                            hull = ConvexHull(pts)
+                            hull_points = pts[hull.vertices]
+                            poly = patches.Polygon(hull_points, closed=True, linewidth=2, edgecolor='blue',
+                                                   facecolor='none', linestyle='-', label="Límites Reales (NavMesh)",
+                                                   zorder=4)
+                            ax.add_patch(poly)
+                            return  # Salir exitosamente
+                        except Exception as e:
+                            print(f"[SpatialVisualizer] Aviso: Error calculando ConvexHull para NavMesh: {e}")
+
+        # 1. Intentar usar los marcadores de entorno (EnvironmentBoundsMarker)
+        markers = self.df[self.df["event_name"] == "ENVIRONMENT_BOUNDARY_MARKER"]
+        if not markers.empty:
+            points = []
+            for val in markers["event_value"]:
+                if isinstance(val, str):
+                    import json
+                    try:
+                        # Reemplazar comillas simples de python dict strings si existen
+                        val = json.loads(val.replace("'", '"'))
+                    except:
+                        pass
+                if isinstance(val, dict) and "marker_x" in val and "marker_z" in val:
+                    points.append([float(val["marker_x"]), float(val["marker_z"])])
+
+            # Necesitamos al menos 3 puntos para hacer un polígono convexo visible y que el hull no falle
+            if len(points) >= 3:
+                from scipy.spatial import ConvexHull
+                pts = np.array(points)
+                try:
+                    hull = ConvexHull(pts)
+                    hull_points = pts[hull.vertices]
+                    poly = patches.Polygon(hull_points, closed=True, linewidth=2, edgecolor='red', facecolor='none',
+                                           linestyle='--', label="Límites Reales (Markers)", zorder=4)
+                    ax.add_patch(poly)
+                    return  # Si dibujó el polígono con éxito, salir
+                except Exception as e:
+                    print(f"[SpatialVisualizer] Aviso: Error calculando ConvexHull para marcadores: {e}")
+
+        # 2. Fallback al rectángulo clásico (si width y depth existen y > 0)
+        if self.play_area_width is not None and self.play_area_depth is not None:
+            if self.play_area_width > 0 and self.play_area_depth > 0:
+                w = self.play_area_width
+                d = self.play_area_depth
+                # Centro en 0,0, así que la esquina inferior izq es -w/2, -d/2
+                rect = patches.Rectangle((-w / 2, -d / 2), w, d, linewidth=2, edgecolor='red', facecolor='none',
+                                         linestyle='--', label="Límites Zona VR", zorder=4)
+                ax.add_patch(rect)
+
+    def generate_all(self):
+        print("[SpatialVisualizer] 🗺️ Generando gráficos espaciales...")
+        try:
+            self.plot_trajectories()
+            self.plot_position_heatmap()
+            self.plot_gaze_heatmap()
+            self.plot_gaze_targets()  # <-- NUEVO GRAFICO DE BARRAS DE OBJETOS
+            self.plot_eye_targets()  # <-- GRAFICO DE BARRAS DE EYE TRACKING
+            self.plot_pupilometry()
+
+            self.plot_hand_heatmap()
+            self.plot_foot_heatmap()
+
+            # Generar GIFs
+            print("[SpatialVisualizer] 🎬 Generando animaciones (GIF)...")
+            self.plot_trajectory_gif()
+            self.plot_gaze_heatmap_gif()
+            self.plot_pupilometry_gif()
+
+            self.plot_hand_heatmap_gif()
+            self.plot_foot_heatmap_gif()
+
+            print(f"[SpatialVisualizer] ✅ Gráficos espaciales guardados en {self.output_dir}")
+        except Exception as e:
+            print(f"[SpatialVisualizer] ⚠️ Error generando gráficos espaciales: {e}")
+            import traceback
+            traceback.print_exc()
+
+    def plot_trajectories(self):
+        """Dibuja la ruta recorrida (X vs Z) por cada usuario."""
+        moves = self.df[self.df["event_name"] == "movement_frame"].copy()
+
+        if "position_x" not in moves.columns or "position_z" not in moves.columns:
+            return
+
+        plt.figure(figsize=(10, 10))
+
+        # Graficar una línea por sesión/usuario
+        sns.lineplot(
+            data=moves,
+            x="position_x",
+            y="position_z",
+            hue="user_id",
+            alpha=0.7,
+            sort=False,
+            lw=1.5
+        )
+
+        # Marcar inicio y fin (promedio de primeros y últimos puntos para no saturar)
+        last_points = moves.groupby("session_id").last().reset_index()
+        sns.scatterplot(data=last_points, x="position_x", y="position_z", color="red", marker="X", s=100, label="End",
+                        zorder=5)
+
+        plt.title("Trayectorias de Jugadores (Vista Superior - XZ)")
+        plt.xlabel("X (m)")
+        plt.ylabel("Z (m)")
+        self._draw_play_area(draw_ideal_path=True, draw_labyrinth_mesh=True)
+        plt.axis("equal")
+        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.grid(True, linestyle="--", alpha=0.5)
+
+        plt.savefig(self.output_dir / "Spatial_Trajectories.png", bbox_inches="tight")
+        plt.close()
+
+    def plot_trajectory_gif(self, max_frames=60):
+        """Genera un GIF animado de la trayectoria."""
+        moves = self.df[self.df["event_name"] == "movement_frame"].copy()
+        if "position_x" not in moves.columns or "position_z" not in moves.columns:
+            return
+
+        # Ordenar por tiempo
+        if not pd.api.types.is_datetime64_any_dtype(moves["timestamp"]):
+            moves["timestamp"] = pd.to_datetime(moves["timestamp"])
+        moves = moves.sort_values("timestamp")
+
+        sessions = moves["session_id"].unique()
+
+        # Crear frames
+        frames = []
+
+        # Vamos a samplear el tiempo globalmente para sincronizar
+        # Tomamos el tiempo relativo min y max
+        # Para simplificar, iteraremos por porcentaje del total de puntos (0% a 100%)
+        # Esto asume que los puntos estan distribuidos uniformemente en el tiempo, lo cual es aprox cierto si el framerate es constante
+
+        step_size = max(1, len(moves) // max_frames)
+        indices = list(range(step_size, len(moves), step_size))
+        if len(moves) - 1 not in indices:
+            indices.append(len(moves) - 1)
+
+        print(f"[SpatialVisualizer] Generando {len(indices)} frames para Trajectory GIF...")
+
+        # Pre-calcular limites para mantener la escala fija
+        x_min, x_max = moves["position_x"].min(), moves["position_x"].max()
+        z_min, z_max = moves["position_z"].min(), moves["position_z"].max()
+        margin = 1.0
+
+        for idx in indices:
+            current_data = moves.iloc[:idx]
+
+            fig, ax = plt.subplots(figsize=(8, 8))
+
+            # Dibujar trayectoria acumulada
+            sns.lineplot(
+                data=current_data,
+                x="position_x",
+                y="position_z",
+                hue="user_id",
+                alpha=0.8,
+                sort=False,
+                lw=2,
+                ax=ax,
+                legend=False
+            )
+
+            # Dibujar punto actual (cabeza de la serptiente)
+            # El ultimo punto de cada sesion en current_data
+            heads = current_data.groupby("session_id").last().reset_index()
+            sns.scatterplot(
+                data=heads,
+                x="position_x",
+                y="position_z",
+                hue="user_id",
+                s=100,
+                marker="o",
+                ax=ax,
+                legend=False
+            )
+
+            ax.set_xlim(x_min - margin, x_max + margin)
+            ax.set_ylim(z_min - margin, z_max + margin)
+            ax.set_title("Evolución de Trayectorias")
+            ax.set_xlabel("X (m)")
+            ax.set_ylabel("Z (m)")
+            ax.grid(True, linestyle="--", alpha=0.3)
+            self._draw_play_area(ax, draw_ideal_path=True, draw_labyrinth_mesh=True)
+            ax.axis("equal")
+
+            # Guardar en buffer
+            buf = io.BytesIO()
+            plt.savefig(buf, format='png', bbox_inches='tight')
+            buf.seek(0)
+            frames.append(Image.open(buf))
+            plt.close(fig)
+
+        if frames:
+            frames[0].save(
+                self.output_dir / "Spatial_Trajectories.gif",
+                save_all=True,
+                append_images=frames[1:],
+                optimize=True,
+                duration=200,  # ms por frame
+                loop=0
+            )
+
+    def plot_position_heatmap(self):
+        """Mapa de calor de densidad de ocupación del espacio (X vs Z)."""
+        moves = self.df[self.df["event_name"] == "movement_frame"]
+
+        if "position_x" not in moves.columns or "position_z" not in moves.columns:
+            return
+
+        plt.figure(figsize=(10, 8))
+
+        try:
+            sns.kdeplot(
+                data=moves,
+                x="position_x",
+                y="position_z",
+                fill=True,
+                cmap="inferno",
+                thresh=0.05,
+                alpha=0.8,
+                gridsize=100
+            )
+        except:
+            sns.scatterplot(data=moves, x="position_x", y="position_z", alpha=0.3, color="orange")
+
+        plt.title("Mapa de Calor: Ocupación del Espacio (Global)")
+        plt.xlabel("X (m)")
+        plt.ylabel("Z (m)")
+        # Borde de escena omitido intencionalmente: solo se muestra en el mapa de trayectorias.
+        plt.axis("equal")
+        plt.grid(True, alpha=0.3)
+
+        plt.savefig(self.output_dir / "Spatial_Heatmap_Global.png", bbox_inches="tight")
+        plt.close()
+
+    def plot_gaze_heatmap(self):
+        """Mapa de calor de la MIRADA (Gaze)."""
+        gazes = self.df[self.df["event_name"] == "gaze_frame"].copy()
+
+        bx = "hit_position_x" if "hit_position_x" in gazes.columns else "hit_point_x"
+        bz = "hit_position_z" if "hit_position_z" in gazes.columns else "hit_point_z"
+
+        if bx not in gazes.columns or bz not in gazes.columns:
+            return
+
+        plt.figure(figsize=(10, 8))
+
+        try:
+            sns.kdeplot(
+                data=gazes,
+                x=bx,
+                y=bz,
+                fill=True,
+                cmap="viridis",
+                thresh=0.05,
+                alpha=0.8
+            )
+        except:
+            sns.scatterplot(data=gazes, x=bx, y=bz, alpha=0.5, color="purple")
+
+        plt.title("Mapa de Calor: Atención Visual (Gaze Fixations)")
+        plt.xlabel("World X (m)")
+        plt.ylabel("World Z (m)")
+        # Borde de escena omitido intencionalmente: solo se muestra en el mapa de trayectorias.
+        plt.axis("equal")
+        plt.grid(True, alpha=0.3)
+
+        plt.savefig(self.output_dir / "Gaze_Heatmap.png", bbox_inches="tight")
+        plt.close()
+
+    def _calculate_gaze_on_path_time(self, event_type, df_frames, median_delta, threshold=0.3):
+        if not self.experiment_config:
+            return 0.0
+        gaze_config = self.experiment_config.get("metrics", {}).get("efectividad", {}).get("gaze_on_path_ratio", {})
+        if not gaze_config.get("enabled", False):
+            return 0.0
+
+        import json
+        scenario_id = self.experiment_config.get("session", {}).get("map_name", "")
+        ideal_file = Path(f"ideal_path_{scenario_id}.json") if scenario_id else Path("ideal_path.json")
+        if not ideal_file.exists():
+            ideal_file = Path("ideal_path.json")
+
+        if not ideal_file.exists():
+            return 0.0
+
+        try:
+            with open(ideal_file, "r", encoding="utf-8") as f:
+                ideal_data = json.load(f)
+
+            bx = "hit_position_x" if "hit_position_x" in df_frames.columns else "hit_point_x"
+            bz = "hit_position_z" if "hit_position_z" in df_frames.columns else "hit_point_z"
+            if bx not in df_frames.columns or bz not in df_frames.columns:
+                return 0.0
+
+            gx = pd.to_numeric(df_frames[bx], errors="coerce").values
+            gz = pd.to_numeric(df_frames[bz], errors="coerce").values
+            valid = ~np.isnan(gx) & ~np.isnan(gz)
+            gx, gz = gx[valid], gz[valid]
+            if len(gx) == 0: return 0.0
+
+            path_pts = np.array([[pt["x"], pt["z"]] for pt in ideal_data if "x" in pt and "z" in pt])
+            if len(path_pts) < 2: return 0.0
+
+            P1 = path_pts[:-1]
+            P2 = path_pts[1:]
+            hits = 0
+
+            for i in range(len(gx)):
+                px, pz = gx[i], gz[i]
+                AB = P2 - P1
+                AP = np.column_stack((np.full(len(P1), px) - P1[:, 0], np.full(len(P1), pz) - P1[:, 1]))
+                ab_sq = np.sum(AB ** 2, axis=1)
+                ap_dot_ab = np.sum(AP * AB, axis=1)
+                t = np.clip(ap_dot_ab / np.maximum(ab_sq, 1e-8), 0.0, 1.0)
+                closest_x = P1[:, 0] + t * AB[:, 0]
+                closest_z = P1[:, 1] + t * AB[:, 1]
+                dists = np.sqrt((px - closest_x) ** 2 + (pz - closest_z) ** 2)
+                if np.min(dists) <= threshold:
+                    hits += 1
+            return float(hits * median_delta)
+        except:
+            return 0.0
+
+    def plot_gaze_targets(self):
+        """Gráfico de barras con los objetos (targets) más mirados."""
+        self._plot_targets_base("gaze_frame", "Gaze_Targets_BarChart.png",
+                                "Objetos de Interés (Gaze Targets) Más Mirados", "magma")
+
+    def plot_eye_targets(self):
+        """Gráfico de barras con los objetos más mirados usando Eye Tracking (Pupilas)."""
+        self._plot_targets_base("eye_frame", "Eye_Targets_BarChart.png", "Objetos Más Mirados (Eye Tracking Real)",
+                                "mako")
+
+    # Targets a ignorar siempre en los bar charts de mirada.
+    # Los "Cube (N)" son colliders invisibles del DirectionalSemanticZoneLogger.
+    _GAZE_IGNORE_TARGETS = {"none", "null", "", "Ground", "Floor", "Suelo"}
+    _CUBE_FILTER_PATTERN = None  # se inicializa en el primer uso (ver _filter_gaze_targets)
+
+    @staticmethod
+    def _filter_gaze_targets(df_targets):
+        """Elimina targets que no tienen interés visual (suelo, nulos, Cube (N)…)."""
+        import re
+        # Compilar el patrón sólo una vez
+        # Coincide con "Cube" (sin número) Y "Cube (N)" (con número entre paréntesis)
+        cube_re = re.compile(r"^Cube(\s*\(\d+\))?$", re.IGNORECASE)
+
+        mask_trivial = df_targets["target"].isin(SpatialVisualizer._GAZE_IGNORE_TARGETS)
+        mask_cube    = df_targets["target"].str.match(cube_re, na=False)
+        return df_targets[~mask_trivial & ~mask_cube]
+
+    def _plot_targets_base(self, event_name, filename, title, palette):
+        frames = self.df[self.df["event_name"] == event_name].copy()
+
+        if "target" not in frames.columns or frames.empty:
+            return
+
+        # ── FILTRO 1: targets sin interés (suelo, nulos, Cube (N)) ──────────
+        frames_filtered = self._filter_gaze_targets(frames)
+
+        median_delta = 0.1
+        if pd.api.types.is_datetime64_any_dtype(frames["timestamp"]):
+            frames_sorted = frames.sort_values("timestamp")
+            diffs = frames_sorted.groupby("session_id")["timestamp"].diff().dt.total_seconds()
+            calc_median = diffs.median()
+            if not pd.isna(calc_median) and calc_median > 0:
+                median_delta = calc_median
+
+        # ── GRÁFICO GLOBAL (igual que antes, para compatibilidad) ─────────────
+        target_counts = frames_filtered["target"].value_counts().reset_index()
+        target_counts.columns = ["Objeto", "Frames (Frecuencia)"]
+        target_counts["Tiempo Total (s)"] = target_counts["Frames (Frecuencia)"] * median_delta
+
+        path_time = self._calculate_gaze_on_path_time(event_name, frames, median_delta)
+        if path_time > 0:
+            path_row = pd.DataFrame([{"Objeto": "Guide Line (Path)", "Frames (Frecuencia)": path_time / median_delta,
+                                      "Tiempo Total (s)": path_time}])
+            target_counts = pd.concat([target_counts, path_row], ignore_index=True)
+
+        if target_counts.empty:
+            return
+
+        target_counts = target_counts.sort_values(by="Tiempo Total (s)", ascending=False).head(10)
+
+        plt.figure(figsize=(10, 6))
+        sns.barplot(data=target_counts, x="Tiempo Total (s)", y="Objeto", palette=palette)
+        plt.title(title)
+        plt.xlabel("Tiempo Total Mirado (Segundos)")
+        plt.ylabel("Nombre del Objeto en Unity")
+        plt.grid(True, axis="x", linestyle="--", alpha=0.7)
+        plt.savefig(self.output_dir / filename, bbox_inches="tight")
+        plt.close()
+
+        # ── GRÁFICO INDIVIDUAL POR USUARIO ────────────────────────────────────
+        if "user_id" not in frames_filtered.columns:
+            return  # sin columna user_id no podemos separar
+
+        stem   = Path(filename).stem    # ej: "Gaze_Targets_BarChart"
+        suffix = Path(filename).suffix  # ej: ".png"
+
+        for user_id, user_frames in frames_filtered.groupby("user_id"):
+            tc = user_frames["target"].value_counts().reset_index()
+            tc.columns = ["Objeto", "Frames (Frecuencia)"]
+            tc["Tiempo Total (s)"] = tc["Frames (Frecuencia)"] * median_delta
+            tc = tc.sort_values(by="Tiempo Total (s)", ascending=False).head(10)
+
+            if tc.empty:
+                continue
+
+            # Nombre seguro para el archivo (reemplaza caracteres problemáticos)
+            safe_uid = str(user_id).replace("/", "_").replace("\\", "_")
+            out_file = self.output_dir / f"{stem}_{safe_uid}{suffix}"
+
+            plt.figure(figsize=(10, 6))
+            sns.barplot(data=tc, x="Tiempo Total (s)", y="Objeto", palette=palette)
+            plt.title(f"{title} — {user_id}")
+            plt.xlabel("Tiempo Total Mirado (Segundos)")
+            plt.ylabel("Nombre del Objeto en Unity")
+            plt.grid(True, axis="x", linestyle="--", alpha=0.7)
+            plt.savefig(out_file, bbox_inches="tight")
+            plt.close()
+            print(f"[SpatialVisualizer] 📊 Bar chart individual guardado: {out_file.name}")
+
+    def plot_gaze_heatmap_gif(self, max_frames=60):
+        """Genera GIF de la evolución de la mirada."""
+        gazes = self.df[self.df["event_name"] == "gaze_frame"].copy()
+
+        bx = "hit_position_x" if "hit_position_x" in gazes.columns else "hit_point_x"
+        bz = "hit_position_z" if "hit_position_z" in gazes.columns else "hit_point_z"
+
+        if bx not in gazes.columns or bz not in gazes.columns:
+            return
+
+        if not pd.api.types.is_datetime64_any_dtype(gazes["timestamp"]):
+            gazes["timestamp"] = pd.to_datetime(gazes["timestamp"])
+        gazes = gazes.sort_values("timestamp")
+
+        # Limitar rango si hay outliers extremos (opcional, pero buena practica en gaze)
+        # x_min, x_max = gazes[bx].quantile(0.01), gazes[bx].quantile(0.99)
+        x_min, x_max = gazes[bx].min(), gazes[bx].max()
+        z_min, z_max = gazes[bz].min(), gazes[bz].max()
+
+        step_size = max(1, len(gazes) // max_frames)
+        indices = list(range(step_size, len(gazes), step_size))
+        if len(gazes) - 1 not in indices:
+            indices.append(len(gazes) - 1)
+
+        print(f"[SpatialVisualizer] Generando {len(indices)} frames para Gaze GIF...")
+        frames = []
+
+        for idx in indices:
+            current_data = gazes.iloc[:idx]
+
+            fig, ax = plt.subplots(figsize=(8, 8))
+
+            # Usaremos scatter acumulativo para simular "heatmap" construyéndose
+            # alpha bajo para que la superposición cree densidad
+            sns.scatterplot(
+                data=current_data,
+                x=bx,
+                y=bz,
+                alpha=0.1,
+                color="purple",
+                s=50,
+                edgecolor=None,
+                ax=ax
+            )
+
+            ax.set_xlim(x_min, x_max)
+            ax.set_ylim(z_min, z_max)
+            ax.set_title("Atención Visual Acumulada")
+            ax.set_xlabel("World X (m)")
+            ax.set_ylabel("World Z (m)")
+            self._draw_play_area(ax)
+            ax.axis("equal")
+            ax.grid(True, linestyle="--", alpha=0.3)
+            ax.axis("equal")
+            ax.grid(True, alpha=0.3)
+
+            buf = io.BytesIO()
+            plt.savefig(buf, format='png', bbox_inches='tight')
+            buf.seek(0)
+            frames.append(Image.open(buf))
+            plt.close(fig)
+
+        if frames:
+            frames[0].save(
+                self.output_dir / "Gaze_Heatmap.gif",
+                save_all=True,
+                append_images=frames[1:],
+                optimize=True,
+                duration=200,
+                loop=0
+            )
+
+    def plot_pupilometry(self):
+        """Gráfico de evolución temporal del diámetro pupilar promedio."""
+        eyes = self.df[self.df["event_name"] == "eye_frame"].copy()
+
+        if eyes.empty: return
+
+        # Verificar si hay datos de pupilas
+        cols_to_avg = []
+        if "pupil_diameter_left" in eyes.columns: cols_to_avg.append("pupil_diameter_left")
+        if "pupil_diameter_right" in eyes.columns: cols_to_avg.append("pupil_diameter_right")
+
+        if not cols_to_avg:
+            return
+
+        # Calcular promedio
+        eyes["avg_pupil"] = eyes[cols_to_avg].mean(axis=1)
+
+        # Normalizar tiempo por sesión (empezar en 0)
+        if not pd.api.types.is_datetime64_any_dtype(eyes["timestamp"]):
+            eyes["timestamp"] = pd.to_datetime(eyes["timestamp"])
+
+        eyes["time_norm"] = eyes.groupby("session_id")["timestamp"].transform(
+            lambda x: (x - x.min()).dt.total_seconds())
+
+        plt.figure(figsize=(12, 6))
+        sns.lineplot(data=eyes, x="time_norm", y="avg_pupil", hue="user_id", alpha=0.6)
+
+        plt.title("Evolución del Diámetro Pupilar")
+        plt.xlabel("Tiempo de sesión (s)")
+        plt.ylabel("Diámetro (mm)")
+        plt.tight_layout()
+
+        plt.savefig(self.output_dir / "Eye_Pupilometry_OverTime.png")
+        plt.close()
+
+    def plot_pupilometry_gif(self, max_frames=60):
+        """Genera GIF de la evolución del diámetro pupilar."""
+        eyes = self.df[self.df["event_name"] == "eye_frame"].copy()
+
+        if eyes.empty: return
+
+        cols_to_avg = []
+        if "pupil_diameter_left" in eyes.columns: cols_to_avg.append("pupil_diameter_left")
+        if "pupil_diameter_right" in eyes.columns: cols_to_avg.append("pupil_diameter_right")
+
+        if not cols_to_avg: return
+
+        eyes["avg_pupil"] = eyes[cols_to_avg].mean(axis=1)
+
+        if not pd.api.types.is_datetime64_any_dtype(eyes["timestamp"]):
+            eyes["timestamp"] = pd.to_datetime(eyes["timestamp"])
+
+        eyes["time_norm"] = eyes.groupby("session_id")["timestamp"].transform(
+            lambda x: (x - x.min()).dt.total_seconds())
+        eyes = eyes.sort_values("time_norm")
+
+        step_size = max(1, len(eyes) // max_frames)
+        indices = list(range(step_size, len(eyes), step_size))
+        if len(eyes) - 1 not in indices: indices.append(len(eyes) - 1)
+
+        print(f"[SpatialVisualizer] Generando {len(indices)} frames para Pupilometry GIF...")
+
+        # Pre-calc limites
+        y_min, y_max = eyes["avg_pupil"].min(), eyes["avg_pupil"].max()
+        x_max = eyes["time_norm"].max()
+
+        frames = []
+        for idx in indices:
+            current_data = eyes.iloc[:idx]
+
+            fig, ax = plt.subplots(figsize=(10, 5))
+            sns.lineplot(data=current_data, x="time_norm", y="avg_pupil", hue="user_id", alpha=0.8, ax=ax)
+
+            ax.set_ylim(y_min * 0.9, y_max * 1.1)
+            ax.set_xlim(0, x_max)
+            ax.set_title("Evolución del Diámetro Pupilar (Tiempo Real)")
+            ax.set_xlabel("Tiempo (s)")
+            ax.set_ylabel("Diámetro (mm)")
+            ax.grid(True, linestyle="--", alpha=0.3)
+
+            buf = io.BytesIO()
+            plt.savefig(buf, format='png', bbox_inches='tight')
+            buf.seek(0)
+            frames.append(Image.open(buf))
+            plt.close(fig)
+
+        if frames:
+            frames[0].save(
+                self.output_dir / "Eye_Pupilometry_OverTime.gif",
+                save_all=True,
+                append_images=frames[1:],
+                optimize=True,
+                duration=200,
+                loop=0
+            )
+
+    def plot_hand_heatmap(self):
+        """Mapa de calor de posición de manos (X vs Z)."""
+        hands = self.df[self.df["event_name"] == "hand_movement"].copy()
+
+        if "position_x" not in hands.columns or "position_z" not in hands.columns or hands.empty:
+            return
+
+        plt.figure(figsize=(10, 8))
+
+        try:
+            sns.kdeplot(
+                data=hands,
+                x="position_x",
+                y="position_z",
+                fill=True,
+                cmap="YlGnBu",
+                thresh=0.05,
+                alpha=0.8
+            )
+        except:
+            sns.scatterplot(data=hands, x="position_x", y="position_z", alpha=0.3,
+                            hue="hand" if "hand" in hands.columns else None)
+
+        plt.title("Mapa de Calor: Ocupación de Manos")
+        plt.xlabel("X (m)")
+        plt.ylabel("Z (m)")
+        self._draw_play_area()
+        plt.axis("equal")
+        plt.grid(True, alpha=0.3)
+        if "hand" in hands.columns and plt.gca().get_legend() is not None:
+            plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+
+        plt.savefig(self.output_dir / "Hand_Heatmap.png", bbox_inches="tight")
+        plt.close()
+
+    def plot_foot_heatmap(self):
+        """Mapa de calor de posición de pies (X vs Z)."""
+        feet = self.df[self.df["event_name"] == "foot_movement"].copy()
+
+        if "position_x" not in feet.columns or "position_z" not in feet.columns or feet.empty:
+            return
+
+        plt.figure(figsize=(10, 8))
+
+        try:
+            sns.kdeplot(
+                data=feet,
+                x="position_x",
+                y="position_z",
+                fill=True,
+                cmap="YlOrRd",
+                thresh=0.05,
+                alpha=0.8
+            )
+        except:
+            sns.scatterplot(data=feet, x="position_x", y="position_z", alpha=0.3,
+                            hue="foot" if "foot" in feet.columns else None)
+
+        plt.title("Mapa de Calor: Ocupación de Pies")
+        plt.xlabel("X (m)")
+        plt.ylabel("Z (m)")
+        self._draw_play_area()
+        plt.axis("equal")
+        plt.grid(True, alpha=0.3)
+        if "foot" in feet.columns and plt.gca().get_legend() is not None:
+            plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+
+        plt.savefig(self.output_dir / "Foot_Heatmap.png", bbox_inches="tight")
+        plt.close()
+
+    def plot_hand_heatmap_gif(self, max_frames=60):
+        self._plot_tracker_gif("hand_movement", "Hand_Heatmap.gif", "hand", "Evolución de Manos", max_frames)
+
+    def plot_foot_heatmap_gif(self, max_frames=60):
+        self._plot_tracker_gif("foot_movement", "Foot_Heatmap.gif", "foot", "Evolución de Pies", max_frames)
+
+    def _plot_tracker_gif(self, event_name, filename, hue_col, title, max_frames):
+        df_track = self.df[self.df["event_name"] == event_name].copy()
+        if "position_x" not in df_track.columns or "position_z" not in df_track.columns or df_track.empty:
+            return
+
+        if not pd.api.types.is_datetime64_any_dtype(df_track["timestamp"]):
+            df_track["timestamp"] = pd.to_datetime(df_track["timestamp"])
+        df_track = df_track.sort_values("timestamp")
+
+        x_min, x_max = df_track["position_x"].min(), df_track["position_x"].max()
+        z_min, z_max = df_track["position_z"].min(), df_track["position_z"].max()
+
+        step_size = max(1, len(df_track) // max_frames)
+        indices = list(range(step_size, len(df_track), step_size))
+        if len(df_track) - 1 not in indices:
+            indices.append(len(df_track) - 1)
+
+        print(f"[SpatialVisualizer] Generando {len(indices)} frames para {filename}...")
+        frames = []
+
+        for idx in indices:
+            current_data = df_track.iloc[:idx]
+
+            fig, ax = plt.subplots(figsize=(8, 8))
+
+            sns.scatterplot(
+                data=current_data,
+                x="position_x",
+                y="position_z",
+                hue=hue_col if hue_col in current_data.columns else None,
+                alpha=0.3,
+                s=50,
+                edgecolor=None,
+                ax=ax,
+                palette=None if hue_col not in current_data.columns else "Set1"
+            )
+
+            ax.set_xlim(x_min, x_max)
+            ax.set_ylim(z_min, z_max)
+            ax.set_title(title)
+            ax.set_xlabel("X (m)")
+            ax.set_ylabel("Z (m)")
+            self._draw_play_area(ax)
+            ax.axis("equal")
+            ax.grid(True, alpha=0.3)
+
+            buf = io.BytesIO()
+            plt.savefig(buf, format='png', bbox_inches='tight')
+            buf.seek(0)
+            frames.append(Image.open(buf))
+            plt.close(fig)
+
+        if frames:
+            frames[0].save(
+                self.output_dir / filename,
+                save_all=True,
+                append_images=frames[1:],
+                optimize=True,
+                duration=200,
+                loop=0
+            )
