@@ -1,0 +1,21 @@
+Participant: qwe
+Session start: 13/05/2026 13:20:01
+=========================================
+
+SessionStart
+
+=== Navigation Game Log ===
+Mode: Desktop
+Started: 13/05/2026 13:20:09
+Lobby: Guide = Humanoid agent, Maze 2
+
+
+=== Navigation Game Ended ===
+End time: 13/05/2026 13:21:01
+Guided round: 21.604s
+Unguided round: 19.593s
+Lobby: Guide = Humanoid agent, Maze 2
+
+[GameOver] From scene 'NavigationScene' - Guided = 21.604s, Unguided = 19.593s
+Session finished.
+

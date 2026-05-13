@@ -1,0 +1,21 @@
+Participant: asdas
+Session start: 13/05/2026 13:21:10
+=========================================
+
+SessionStart
+
+=== Navigation Game Log ===
+Mode: Desktop
+Started: 13/05/2026 13:21:18
+Lobby: Guide = Verbal agent, Maze 3
+
+
+=== Navigation Game Ended ===
+End time: 13/05/2026 13:21:54
+Guided round: 17.106s
+Unguided round: 7.273s
+Lobby: Guide = Verbal agent, Maze 3
+
+[GameOver] From scene 'NavigationScene' - Guided = 17.106s, Unguided = 7.273s
+Session finished.
+

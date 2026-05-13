@@ -1,0 +1,11 @@
+Participant: dsfdasfds
+Session start: 13/05/2026 13:00:37
+=========================================
+
+SessionStart
+
+=== Navigation Game Log ===
+Mode: Desktop
+Started: 13/05/2026 13:00:42
+Lobby: Guide = Roadline, Maze 1
+

@@ -1,0 +1,11 @@
+Participant: sdf
+Session start: 13/05/2026 12:46:53
+=========================================
+
+SessionStart
+
+=== Navigation Game Log ===
+Mode: Desktop
+Started: 13/05/2026 12:46:57
+Lobby: Guide = Verbal agent, Maze 3
+

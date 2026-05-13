@@ -1,0 +1,11 @@
+Participant: 23
+Session start: 13/05/2026 12:43:42
+=========================================
+
+SessionStart
+
+=== Navigation Game Log ===
+Mode: Desktop
+Started: 13/05/2026 12:43:46
+Lobby: Guide = Roadline, Maze 1
+

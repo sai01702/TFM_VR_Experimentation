@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 352592666287535807, guid: eeb08177f802dd2499947301d5fdca5e, type: 3}
       propertyPath: m_TagString
-      value: MazeExit
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 352592666287535807, guid: eeb08177f802dd2499947301d5fdca5e, type: 3}
       propertyPath: m_StaticEditorFlags

@@ -1,0 +1,11 @@
+Participant: sadasd
+Session start: 13/05/2026 12:46:11
+=========================================
+
+SessionStart
+
+=== Navigation Game Log ===
+Mode: Desktop
+Started: 13/05/2026 12:46:17
+Lobby: Guide = Humanoid agent, Maze 2
+

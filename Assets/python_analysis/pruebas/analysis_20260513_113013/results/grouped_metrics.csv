@@ -1,0 +1,3 @@
+user_id,group_id,session_id,hit_ratio,success_rate,avg_task_duration_ms,efectividad_score,eficiencia_score,satisfaccion_score,presencia_score,global_score,independent_variable
+Groupt_U001,Groupt,edb5509a-6897-4c4a-92e4-0097c0811d01,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.5,Guidance
+Groupt_U002,Groupt,d9a6da10-cc44-476e-9bf9-33ccd9f374f3,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.5,Guidance
